@@ -159,6 +159,8 @@ dist
 #
 # Recommended template: Node.gitignore
 
+static/sw.js
+
 # Nuxt build
 
  # Nuxt generate
