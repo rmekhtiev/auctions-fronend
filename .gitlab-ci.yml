@@ -1,0 +1,32 @@
+image: node:dubnium-alpine
+
+stages:
+  - prepare
+  - test
+
+variables: &global-variables
+  DOCKER_DRIVER: overlay2
+
+cache:
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - node_modules/
+    - .env
+
+before_script:
+  - yarn install --frozen-lockfile
+
+install:yarn:
+  stage: prepare
+  script:
+    - yarn install --frozen-lockfile
+    # - cp .env.example .env
+  artifacts:
+    paths:
+      - node_modules/
+      - .env
+    expire_in: 1 days
+    when: always
+  cache:
+    paths:
+      - node_modules/
