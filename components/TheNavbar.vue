@@ -48,12 +48,12 @@
           <div class="flex-shrink-0">
             <img
               class="block lg:hidden h-8 w-auto"
-              src="/img/logos/workflow-mark-on-dark.svg"
+              src="https://tailwindui.com/img/logos/workflow-mark-on-dark.svg"
               alt="Workflow logo"
             />
             <img
               class="hidden lg:block h-8 w-auto"
-              src="/img/logos/workflow-logo-on-dark.svg"
+              src="https://tailwindui.com/img/logos/workflow-logo-on-dark.svg"
               alt="Workflow logo"
             />
           </div>
@@ -119,7 +119,7 @@
               From: "transform opacity-100 scale-100"
               To: "transform opacity-0 scale-95"
           -->
-            <div
+            <!-- <div
               class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg"
             >
               <div
@@ -147,7 +147,7 @@
                   >Sign out
                 </a>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

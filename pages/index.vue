@@ -1,27 +1,66 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        auctions-frontend
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
+  <div class="mt-8 flex-grow flex justify-center items-center">
+    <div class="mx-auto px-4 sm:px-8 py-2 text-center">
+      <div class="text-center max-w-lg mx-auto mt-6">
+        <div class="h-4 bg-gray-500 w-40 block mx-auto rounded-sm"></div>
+        <div class="h-2 bg-gray-400 w-64 mt-4 block mx-auto rounded-sm"></div>
+        <div class="h-2 bg-gray-400 w-48 mt-2 block mx-auto rounded-sm"></div>
+      </div>
+
+      <div class="grid grid-cols-6 gap-4 items-start mt-8 mx-auto px-8">
+        <div
+          class="col-span-6 sm:col-span-6 md:col-span-3 lg:col-span-2 xl:col-span-2"
         >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
+          <div class="bg-white shadow-lg rounded-lg px-4 py-6 mx-4 my-4">
+            <div class="mx-auto h-40 bg-gray-200 rounded-md"></div>
+            <div
+              class="h-4 bg-gray-200 w-40 mt-8 block mx-auto rounded-sm"
+            ></div>
+            <div
+              class="h-2 bg-gray-200 w-64 mt-2 block mx-auto rounded-sm"
+            ></div>
+            <div class="flex justify-center mt-4">
+              <div class="rounded-sm h-8 w-20 px-4 bg-gray-200 mr-2"></div>
+              <div class="rounded-sm h-8 w-20 px-4 bg-green-300"></div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="col-span-6 sm:col-span-6 md:col-span-3 lg:col-span-2 xl:col-span-2"
         >
-          GitHub
-        </a>
+          <div class="bg-white shadow-lg rounded-lg px-4 py-6 mx-4 my-4">
+            <div class="mx-auto h-40 bg-gray-200 rounded-md"></div>
+            <div
+              class="h-4 bg-gray-200 w-40 mt-8 block mx-auto rounded-sm"
+            ></div>
+            <div
+              class="h-2 bg-gray-200 w-64 mt-2 block mx-auto rounded-sm"
+            ></div>
+            <div class="flex justify-center mt-4">
+              <div class="rounded-sm h-8 w-20 px-4 bg-gray-200 mr-2"></div>
+              <div class="rounded-sm h-8 w-20 px-4 bg-green-300"></div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="col-span-6 sm:col-span-6 md:col-span-6 lg:col-span-2 xl:col-span-2"
+        >
+          <div class="bg-white shadow-lg rounded-lg px-4 py-6 mx-4 my-4">
+            <div class="mx-auto h-40 bg-gray-200 rounded-md"></div>
+            <div
+              class="h-4 bg-gray-200 w-40 mt-8 block mx-auto rounded-sm"
+            ></div>
+            <div
+              class="h-2 bg-gray-200 w-64 mt-2 block mx-auto rounded-sm"
+            ></div>
+            <div class="flex justify-center mt-4">
+              <div class="rounded-sm h-8 w-20 px-4 bg-gray-200 mr-2"></div>
+              <div class="rounded-sm h-8 w-20 px-4 bg-green-300"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -32,41 +71,3 @@ import Vue from 'vue'
 
 export default Vue.extend({})
 </script>
-
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>
