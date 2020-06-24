@@ -1,9 +1,9 @@
 <template>
   <div
-    class="flex flex-col justify-center items-center md:w-1/2 max-w-lg mx-auto"
+    class="mt-16 flex flex-col justify-center items-center md:w-1/2 max-w-lg mx-auto"
   >
     <div
-      class="bg-white shadow-md rounded px-8 pt-6 pb-8 flex flex-col mt-16 mx-4 p-4 w-full"
+      class="bg-white shadow-md rounded px-8 pb-8 flex flex-col mx-4 p-4 w-full"
     >
       <form @submit.prevent="submit()">
         <div class="flex flex-col">
