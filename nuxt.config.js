@@ -68,14 +68,22 @@ export default {
   },
 
   auth: {
+    redirect: {
+      login: '/auth',
+      logout: '/auth',
+      callback: '/auth',
+      home: '/',
+    },
+
     strategies: {
       local: {
         endpoints: {
           login: {
             url: '/auth/token',
             method: 'post',
-            propertyName: 'token',
+            propertyName: 'jwt',
           },
+          logout: { url: '/auth/token', method: 'delete' },
           user: { url: '/auth/me', method: 'get', propertyName: 'data' },
         },
       },
