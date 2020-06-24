@@ -56,13 +56,36 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
     '@nuxtjs/pwa',
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    baseURL: 'http://auctions-backend.test/api',
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: '/auth/token',
+            method: 'post',
+            propertyName: 'token',
+          },
+          user: { url: '/auth/me', method: 'get', propertyName: 'data' },
+        },
+      },
+    },
+  },
+
+  router: {
+    middleware: ['auth'],
+  },
+
   /*
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/

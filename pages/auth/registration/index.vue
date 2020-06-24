@@ -1,12 +1,15 @@
 <template>
-  <form class="mt-8 mx-4 md:mx-auto p-4 w-full md:w-2/3 xl:w-1/2">
+  <form
+    class="mt-8 mx-4 md:mx-auto p-4 w-full md:w-2/3 xl:w-1/2"
+    @submit.prevent="submit"
+  >
     <div class="flex flex-wrap">
       <div class="w-full md:w-1/2 md:pr-4">
         <div class="py-2">
           <label for="firstName" class="px-1 text-sm text-gray-600">Имя</label>
           <input
             id="firstName"
-            v-model="formData.firstName"
+            v-model="formData.first_name"
             placeholder="Александр"
             name="first_name"
             type="text"
@@ -23,7 +26,7 @@
           </label>
           <input
             id="lastName"
-            v-model="formData.lastName"
+            v-model="formData.last_name"
             placeholder="Пушкин"
             name="last_name"
             type="text"
@@ -87,7 +90,7 @@
           </label>
           <input
             id="passwordConfirmation"
-            v-model="formData.passwordConfirmation"
+            v-model="formData.password_confirmation"
             placeholder="Что бы не опечататься"
             name="password_confirmation"
             type="password"
@@ -136,12 +139,12 @@
 export default {
   data: () => ({
     formData: {
-      firstName: '',
-      lastName: '',
+      first_name: '',
+      last_name: '',
       email: '',
       login: '',
       password: '',
-      passwordConfirmation: '',
+      password_confirmation: '',
       policy: false,
     },
   }),
@@ -157,6 +160,11 @@ export default {
       if (oldPossibleLogin === this.formData.login) {
         this.formData.login = newPossibleLogin
       }
+    },
+  },
+  methods: {
+    submit() {
+      this.$axios.post('auth/register', this.formData)
     },
   },
 }
