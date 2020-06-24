@@ -1,7 +1,10 @@
 <template>
   <div>
     <the-navbar />
-    <Nuxt />
+
+    <main class="container mx-auto">
+      <Nuxt />
+    </main>
   </div>
 </template>
 

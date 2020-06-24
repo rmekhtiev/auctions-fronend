@@ -1,6 +1,6 @@
 <template>
-  <div class="p-5">
-    <div class="mx-4 md:mx-auto p-4 w-full md:w-1/2">
+  <div class="flex flex-col justify-center items-center">
+    <div class="mx-8 mb-8 md:mx-auto p-4 w-full md:w-1/2">
       <div class="flex items-center">
         <div class="flex items-center text-gray-800 relative">
           <div
