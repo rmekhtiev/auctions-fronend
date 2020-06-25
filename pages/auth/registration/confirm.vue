@@ -7,10 +7,11 @@
     >
       <form @submit.prevent="submit()">
         <div class="flex flex-col">
-          <p class="mb-3 text-sm text-gray-600">
+          <p class="mb-3 text-center text-sm text-gray-600">
             Мы отправили вам на Email, указанный ранее, код активации. Введите
             код в поле ниже, или нажмите на ссылку в письме.
           </p>
+
           <div class="w-full py-3 mb-3 text-center">
             <a
               href="#"
@@ -21,6 +22,12 @@
             </a>
           </div>
           <div class="w-full">
+            <label
+              for="otp"
+              class="block mb-2 text-xs text-center font-bold tracking-wide uppercase text-grey-darker"
+            >
+              Ваш код номер № {{ formData.counter }}
+            </label>
             <input
               id="otp"
               v-model="formData.otp"
@@ -37,11 +44,15 @@
             <button
               type="submit"
               class="block w-full px-6 py-3 mt-3 text-lg font-semibold text-white bg-gray-800 border-2 border-transparent rounded-lg hover:text-white hover:bg-black focus:border-gray-600 focus:outline-none"
+              @click="verify"
             >
               Подтвердить
             </button>
 
-            <div class="mt-3 font-bold text-center text-gray-500">
+            <div
+              class="mt-3 font-bold text-center text-gray-500"
+              @click="sendCode"
+            >
               <small>Отправить еще раз</small>
             </div>
           </div>
@@ -56,8 +67,37 @@ export default {
   data: () => ({
     formData: {
       otp: '',
-      counter: null,
+      counter: '',
     },
   }),
+  // mounted: {
+  //   email() {
+  //     this.email = this.$auth.user.attributes.email
+  //   }
+  // },
+  methods: {
+    sendCode() {
+      this.$axios
+        .post('auth/verification/ask')
+        .then((response) => {
+          this.formData.counter = response.data.counter
+          console.log('Counter - ' + this.formData.counter)
+        })
+        .catch((_err) => {
+          console.error(_err)
+        })
+    },
+    verify() {
+      console.log(this.formData)
+      this.$axios
+        .post('auth/verification/verify', this.formData)
+        .then(() => {
+          console.log('Counter - ' + this.counter)
+        })
+        .catch((_err) => {
+          console.error(_err)
+        })
+    },
+  },
 }
 </script>

@@ -200,6 +200,11 @@ export default {
           this.$auth.loginWith('local', { data: this.formData })
         })
         .catch((_err) => {})
+        .then(() => {
+          this.$router.push({
+            name: 'auth-registration-confirm',
+          })
+        })
     },
   },
 }
