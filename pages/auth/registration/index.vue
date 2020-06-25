@@ -127,6 +127,112 @@
             </div>
           </div>
 
+          <div class="flex justify-start mt-3 ml-4 p-1">
+            <ul>
+              <li class="flex items-center py-1">
+                <div
+                  :class="{
+                    'bg-green-200 text-green-700':
+                      formData.password == formData.password_confirmation &&
+                      formData.password.length > 0,
+                    'bg-red-200 text-red-700':
+                      formData.password != formData.password_confirmation ||
+                      formData.password.length == 0,
+                  }"
+                  class="rounded-full p-1 fill-current"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      v-show="
+                        formData.password == formData.password_confirmation &&
+                        formData.password.length > 0
+                      "
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                    <path
+                      v-show="
+                        formData.password != formData.password_confirmation ||
+                        formData.password.length == 0
+                      "
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </div>
+                <span
+                  :class="{
+                    'text-green-700':
+                      formData.password == formData.password_confirmation &&
+                      formData.password.length > 0,
+                    'text-red-700':
+                      formData.password != formData.password_confirmation ||
+                      formData.password.length == 0,
+                  }"
+                  class="font-medium text-sm ml-3"
+                  v-html="
+                    formData.password == formData.password_confirmation &&
+                    formData.password.length > 0
+                      ? 'Пароль и подтверждение совпадают'
+                      : 'Проверьте корректность подтверждения пароля'
+                  "
+                ></span>
+              </li>
+              <li class="flex items-center py-1">
+                <div
+                  :class="{
+                    'bg-green-200 text-green-700': formData.password.length > 7,
+                    'bg-red-200 text-red-700': formData.password.length < 7,
+                  }"
+                  class="rounded-full p-1 fill-current"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      v-show="formData.password.length > 7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                    <path
+                      v-show="formData.password.length < 7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </div>
+                <span
+                  :class="{
+                    'text-green-700': formData.password.length > 7,
+                    'text-red-700': formData.password.length < 7,
+                  }"
+                  class="font-medium text-sm ml-3"
+                  v-html="
+                    formData.password.length > 7
+                      ? 'Минимальная длина пароля соответствует требованиям платформы'
+                      : 'Минимальная длина пароля 8 символов'
+                  "
+                ></span>
+              </li>
+            </ul>
+          </div>
+
           <div class="flex justify-start">
             <label class="flex items-center my-4 font-bold text-gray-500">
               <input
@@ -198,12 +304,12 @@ export default {
         .post('auth/register', this.formData)
         .then((_result) => {
           this.$auth.loginWith('local', { data: this.formData })
-        })
-        .catch((_err) => {})
-        .then(() => {
           this.$router.push({
             name: 'auth-registration-confirm',
           })
+        })
+        .catch((_err) => {
+          console.error(_err)
         })
     },
   },
