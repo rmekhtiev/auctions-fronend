@@ -5,7 +5,7 @@
     <div
       class="flex flex-col w-full p-4 px-8 pt-6 pb-8 mx-4 mt-16 bg-white rounded shadow-md"
     >
-      <form @submit.prevent="submit()">
+      <form @submit.prevent="verify">
         <div class="flex flex-col">
           <p class="mb-3 text-center text-sm text-gray-600">
             Мы отправили вам на Email, указанный ранее, код активации. Введите
@@ -92,7 +92,10 @@ export default {
       this.$axios
         .post('auth/verification/verify', this.formData)
         .then(() => {
-          console.log('Counter - ' + this.counter)
+          console.log('success')
+          this.$router.push({
+            name: 'auth-registration-success',
+          })
         })
         .catch((_err) => {
           console.error(_err)
