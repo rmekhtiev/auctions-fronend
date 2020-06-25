@@ -101,6 +101,7 @@
                 class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-white transition duration-150 ease-in-out"
                 aria-label="User menu"
                 aria-haspopup="true"
+                @click="profile = !profile"
               >
                 <img
                   class="h-8 w-8 rounded-full"
@@ -119,8 +120,9 @@
               From: "transform opacity-100 scale-100"
               To: "transform opacity-0 scale-95"
           -->
-            <!-- <div
+            <div
               class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg"
+              :class="{ block: profile, hidden: !profile }"
             >
               <div
                 class="py-1 rounded-md bg-white shadow-xs"
@@ -144,10 +146,11 @@
                   href="#"
                   class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
                   role="menuitem"
+                  @click.prevent="logout"
                   >Sign out
                 </a>
               </div>
-            </div> -->
+            </div>
           </div>
         </div>
       </div>
@@ -179,6 +182,7 @@ export default {
   data: () => ({
     appName: 'Auctions',
     open: false,
+    profile: false,
     menu: [
       {
         title: 'Аукционы',
@@ -202,5 +206,14 @@ export default {
       },
     ],
   }),
+  methods: {
+    logout() {
+      return this.$auth.logout().then(() => {
+        this.$router.push({
+          name: 'auth',
+        })
+      })
+    },
+  },
 }
 </script>
