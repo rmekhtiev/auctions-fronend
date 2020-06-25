@@ -7,7 +7,7 @@
     >
       <form @submit.prevent="verify">
         <div class="flex flex-col">
-          <p class="mb-3 text-center text-sm text-gray-600">
+          <p class="mb-3 text-sm text-center text-gray-600">
             Мы отправили вам на Email, указанный ранее, код активации. Введите
             код в поле ниже, или нажмите на ссылку в письме.
           </p>
@@ -22,24 +22,30 @@
             </a>
           </div>
           <div class="w-full">
-            <label
-              for="otp"
-              class="block mb-2 text-xs text-center font-bold tracking-wide uppercase text-grey-darker"
-            >
-              Ваш код номер № {{ formData.counter }}
-            </label>
-            <input
-              id="otp"
-              v-model="formData.otp"
-              name="otp"
-              type="tel"
-              pattern="######"
-              inputmode="tel"
-              autocomplete="one-time-code"
-              minlength="6"
-              maxlength="6"
-              class="block w-full px-4 py-3 tracking-widest text-center border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-            />
+            <div>
+              <label
+                for="otp"
+                class="block mb-2 text-xs font-bold tracking-wide text-center uppercase text-grey-darker"
+              >
+                Ваш код номер № {{ formData.counter }}
+              </label>
+              <input
+                id="otp"
+                v-model="formData.otp"
+                name="otp"
+                type="tel"
+                pattern="######"
+                inputmode="tel"
+                autocomplete="one-time-code"
+                minlength="6"
+                maxlength="6"
+                class="block w-full px-4 py-3 mb-3 tracking-widest text-center border-2 border-red-600 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+              />
+
+              <p class="text-xs italic text-red-600">
+                Please fill out this field.
+              </p>
+            </div>
 
             <button
               type="submit"
