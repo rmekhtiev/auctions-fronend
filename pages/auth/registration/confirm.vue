@@ -34,7 +34,7 @@
                 v-model="formData.otp"
                 name="otp"
                 type="tel"
-                pattern="######"
+                pattern="[0-9]{3}"
                 inputmode="tel"
                 autocomplete="one-time-code"
                 minlength="6"

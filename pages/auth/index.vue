@@ -47,9 +47,9 @@
           </div>
 
           <div class="flex justify-between">
-            <label class="block my-4 font-bold text-gray-500">
-              <input type="checkbox" class="leading-loose text-pink-600" />
-              <span class="py-2 text-sm leading-snug text-gray-600">
+            <label class="inline-flex items-center my-4 font-bold">
+              <input type="checkbox" class="text-gray-600 form-checkbox" />
+              <span class="ml-2 text-sm leading-snug text-gray-600">
                 Запомнить меня
               </span>
             </label>

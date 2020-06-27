@@ -127,7 +127,7 @@
             </div>
           </div>
 
-          <div class="flex justify-start mt-3 ml-4 p-1">
+          <div class="flex justify-start p-1 mt-3 ml-4">
             <ul>
               <li class="flex items-center py-1">
                 <div
@@ -139,7 +139,7 @@
                       formData.password != formData.password_confirmation ||
                       formData.password.length == 0,
                   }"
-                  class="rounded-full p-1 fill-current"
+                  class="p-1 rounded-full fill-current"
                 >
                   <svg
                     class="w-4 h-4"
@@ -178,7 +178,7 @@
                       formData.password != formData.password_confirmation ||
                       formData.password.length == 0,
                   }"
-                  class="font-medium text-sm ml-3"
+                  class="ml-3 text-sm font-medium"
                   v-html="
                     formData.password == formData.password_confirmation &&
                     formData.password.length > 0
@@ -193,7 +193,7 @@
                     'bg-green-200 text-green-700': formData.password.length > 7,
                     'bg-red-200 text-red-700': formData.password.length < 7,
                   }"
-                  class="rounded-full p-1 fill-current"
+                  class="p-1 rounded-full fill-current"
                 >
                   <svg
                     class="w-4 h-4"
@@ -222,7 +222,7 @@
                     'text-green-700': formData.password.length > 7,
                     'text-red-700': formData.password.length < 7,
                   }"
-                  class="font-medium text-sm ml-3"
+                  class="ml-3 text-sm font-medium"
                   v-html="
                     formData.password.length > 7
                       ? 'Минимальная длина пароля соответствует требованиям платформы'
@@ -237,7 +237,7 @@
             <label class="flex items-center my-4 font-bold text-gray-500">
               <input
                 v-model="formData.policy"
-                class="top-0 leading-loose text-pink-600"
+                class="top-0 leading-loose text-gray-600 form-checkbox"
                 type="checkbox"
               />
               <span class="py-2 ml-2 text-sm text-left text-gray-600">
