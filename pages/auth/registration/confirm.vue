@@ -42,8 +42,8 @@
                 class="block w-full px-4 py-3 mb-3 tracking-widest text-center border-2 border-red-600 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
 
-              <p class="text-xs italic text-red-600">
-                Please fill out this field.
+              <p v-if="errors" class="text-xs italic text-red-600 text-center">
+                {{ errors }}
               </p>
             </div>
 
@@ -75,6 +75,7 @@ export default {
       otp: '',
       counter: '',
     },
+    errors: null,
   }),
   // mounted: {
   //   email() {
@@ -105,6 +106,7 @@ export default {
         })
         .catch((_err) => {
           console.error(_err)
+          this.errors = _err.response.data.message
         })
     },
   },
