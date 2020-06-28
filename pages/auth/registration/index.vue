@@ -24,6 +24,11 @@
                 autocomplete="given-name"
                 class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
+              <div v-if="errors" class="text-xs italic text-red-600">
+                <p v-for="error in errors.name" :key="error">
+                  {{ error }}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -44,6 +49,11 @@
                 autocomplete="family-name"
                 class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
+              <div v-if="errors" class="text-xs italic text-red-600">
+                <p v-for="error in errors.surname" :key="error">
+                  {{ error }}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -63,6 +73,11 @@
                 autocomplete="email"
                 class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
+              <div v-if="errors" class="text-xs italic text-red-600">
+                <p v-for="error in errors.email" :key="error">
+                  {{ error }}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -84,6 +99,11 @@
                 inputmode="verbatim"
                 class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
+              <div v-if="errors" class="text-xs italic text-red-600">
+                <p v-for="error in errors.login" :key="error">
+                  {{ error }}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -259,6 +279,14 @@
             </label>
           </div>
 
+          <!--          <div v-if="errors" class="bg-red-500 text-white py-2 px-4 pr-0 rounded font-bold mb-4 shadow-lg">-->
+          <!--            <div v-for="(v, k) in errors" :key="k">-->
+          <!--              <p v-for="error in v" :key="error" class="text-sm">-->
+          <!--                {{ error }}-->
+          <!--              </p>-->
+          <!--            </div>-->
+          <!--          </div>-->
+
           <button
             type="submit"
             class="block w-full px-6 py-3 mt-3 text-lg font-semibold text-white bg-gray-800 border-2 border-transparent rounded-lg hover:text-white hover:bg-black focus:border-gray-600 focus:outline-none"
@@ -283,6 +311,7 @@ export default {
       password_confirmation: '',
       policy: false,
     },
+    errors: null,
   }),
   watch: {
     'formData.email'(val, old) {
@@ -310,6 +339,8 @@ export default {
         })
         .catch((_err) => {
           console.error(_err)
+          this.errors = _err.response.data.errors
+          console.error(this.errors)
         })
     },
   },
