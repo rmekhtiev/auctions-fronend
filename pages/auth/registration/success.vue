@@ -6,10 +6,10 @@
       class="flex flex-col w-full p-4 px-8 pt-6 pb-8 mx-4 mt-16 bg-white rounded shadow-md"
     >
       <div class="flex flex-col">
-        <h3 class="text-center pb-3 text-2xl">
+        <h3 class="pb-3 text-2xl text-center">
           Поздравляем!
         </h3>
-        <p class="mb-3 text-center text-sm text-gray-600">
+        <p class="mb-3 text-sm text-center text-gray-600">
           Ваш аккаунт подтвержден. Вы можете перейти в личный кабинет, дополнить
           свою учетную запись и пройти модерацию. Это не займет много времени)
         </p>
@@ -30,31 +30,6 @@
 
 <script>
 export default {
-  methods: {
-    sendCode() {
-      this.$axios
-        .post('auth/verification/ask')
-        .then((response) => {
-          this.formData.counter = response.data.counter
-          console.log('Counter - ' + this.formData.counter)
-        })
-        .catch((_err) => {
-          console.error(_err)
-        })
-    },
-    verify() {
-      console.log(this.formData)
-      this.$axios
-        .post('auth/verification/verify', this.formData)
-        .then(() => {
-          this.$router.push({
-            name: 'auth-registration-confirm',
-          })
-        })
-        .catch((_err) => {
-          console.error(_err)
-        })
-    },
-  },
+  methods: {},
 }
 </script>

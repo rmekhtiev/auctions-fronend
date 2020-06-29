@@ -14,11 +14,11 @@
 
           <div class="w-full py-3 mb-3 text-center">
             <a
-              href="#"
+              :href="`https://${domain}/`"
               target="_blank"
               class="font-semibold text-black border-b-2 border-gray-200 hover:border-gray-500"
             >
-              Открыть Gmail
+              Открыть {{ domain | capitalize }}
             </a>
           </div>
           <div class="w-full">
@@ -34,15 +34,16 @@
                 v-model="formData.otp"
                 name="otp"
                 type="tel"
-                pattern="[0-9]{3}"
+                pattern="[0-9]{6}"
                 inputmode="tel"
                 autocomplete="one-time-code"
                 minlength="6"
                 maxlength="6"
-                class="block w-full px-4 py-3 mb-3 tracking-widest text-center border-2 border-red-600 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+                :class="{ 'border-red-600': errors }"
+                class="block w-full px-4 py-3 mb-3 tracking-widest text-center border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
 
-              <p v-if="errors" class="text-xs italic text-red-600 text-center">
+              <p v-if="errors" class="text-xs italic text-center text-red-600">
                 {{ errors }}
               </p>
             </div>
@@ -50,7 +51,6 @@
             <button
               type="submit"
               class="block w-full px-6 py-3 mt-3 text-lg font-semibold text-white bg-gray-800 border-2 border-transparent rounded-lg hover:text-white hover:bg-black focus:border-gray-600 focus:outline-none"
-              @click="verify"
             >
               Подтвердить
             </button>
@@ -70,6 +70,7 @@
 
 <script>
 export default {
+  verified: false,
   data: () => ({
     formData: {
       otp: '',
@@ -77,35 +78,32 @@ export default {
     },
     errors: null,
   }),
-  // mounted: {
-  //   email() {
-  //     this.email = this.$auth.user.attributes.email
-  //   }
-  // },
+  computed: {
+    email() {
+      return this.$auth.user.attributes.email
+    },
+    domain() {
+      return this.email.replace(/.*@/, '')
+    },
+  },
   methods: {
     sendCode() {
       this.$axios
         .post('auth/verification/ask')
         .then((response) => {
           this.formData.counter = response.data.counter
-          console.log('Counter - ' + this.formData.counter)
         })
-        .catch((_err) => {
-          console.error(_err)
-        })
+        .catch((_err) => {})
     },
     verify() {
-      console.log(this.formData)
       this.$axios
         .post('auth/verification/verify', this.formData)
         .then(() => {
-          console.log('success')
           this.$router.push({
             name: 'auth-registration-success',
           })
         })
         .catch((_err) => {
-          console.error(_err)
           this.errors = _err.response.data.message
         })
     },

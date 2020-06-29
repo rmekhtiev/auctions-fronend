@@ -34,7 +34,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [],
+  plugins: ['plugins/vue-string-filter'],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -70,7 +70,7 @@ export default {
   auth: {
     redirect: {
       login: '/auth',
-      logout: '/auth',
+      logout: '/',
       callback: '/auth',
       home: '/',
     },
@@ -91,7 +91,7 @@ export default {
   },
 
   router: {
-    middleware: ['auth'],
+    middleware: ['auth', 'verified'],
   },
 
   /*

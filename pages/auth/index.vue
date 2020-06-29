@@ -115,6 +115,8 @@
 
 <script>
 export default {
+  verified: false,
+  auth: 'guest',
   data: () => ({
     formData: {
       email: '',

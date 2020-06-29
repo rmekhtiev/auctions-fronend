@@ -292,6 +292,8 @@
 
 <script>
 export default {
+  auth: false,
+  verified: false,
   data: () => ({
     formData: {
       first_name: '',
@@ -329,9 +331,7 @@ export default {
           })
         })
         .catch((_err) => {
-          console.error(_err)
           this.errors = _err.response.data.errors
-          console.error(this.errors)
         })
     },
   },
