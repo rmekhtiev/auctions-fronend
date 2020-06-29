@@ -22,10 +22,11 @@
                 name="first_name"
                 type="text"
                 autocomplete="given-name"
-                class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+                :class="{ 'border-red-600': errors && errors.first_name }"
+                class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
               <div v-if="errors" class="text-xs italic text-red-600">
-                <p v-for="error in errors.name" :key="error">
+                <p v-for="error in errors.first_name" :key="error" class="pt-3">
                   {{ error }}
                 </p>
               </div>
@@ -47,10 +48,11 @@
                 name="last_name"
                 type="text"
                 autocomplete="family-name"
-                class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+                :class="{ 'border-red-600': errors && errors.last_name }"
+                class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
               <div v-if="errors" class="text-xs italic text-red-600">
-                <p v-for="error in errors.surname" :key="error">
+                <p v-for="error in errors.last_name" :key="error" class="pt-3">
                   {{ error }}
                 </p>
               </div>
@@ -71,10 +73,11 @@
                 name="email"
                 type="email"
                 autocomplete="email"
-                class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+                :class="{ 'border-red-600': errors && errors.email }"
+                class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
               <div v-if="errors" class="text-xs italic text-red-600">
-                <p v-for="error in errors.email" :key="error">
+                <p v-for="error in errors.email" :key="error" class="pt-3">
                   {{ error }}
                 </p>
               </div>
@@ -97,10 +100,11 @@
                 type="text"
                 autocomplete="no"
                 inputmode="verbatim"
-                class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+                :class="{ 'border-red-600': errors && errors.login }"
+                class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
               <div v-if="errors" class="text-xs italic text-red-600">
-                <p v-for="error in errors.login" :key="error">
+                <p v-for="error in errors.login" :key="error" class="pt-3">
                   {{ error }}
                 </p>
               </div>
@@ -122,8 +126,14 @@
                 name="password"
                 type="password"
                 autocomplete="new-password"
-                class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+                :class="{ 'border-red-600': errors && errors.password }"
+                class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
+              <div v-if="errors" class="text-xs italic text-red-600">
+                <p v-for="error in errors.password" :key="error" class="pt-3">
+                  {{ error }}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -142,8 +152,20 @@
                 name="password_confirmation"
                 type="password"
                 autocomplete="new-password"
-                class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+                :class="{
+                  'border-red-600': errors && errors.password_confirmation,
+                }"
+                class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
+              <div v-if="errors" class="text-xs italic text-red-600">
+                <p
+                  v-for="error in errors.password_confirmation"
+                  :key="error"
+                  class="pt-3"
+                >
+                  {{ error }}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -203,15 +225,16 @@
                     formData.password == formData.password_confirmation &&
                     formData.password.length > 0
                       ? 'Пароль и подтверждение совпадают'
-                      : 'Проверьте корректность подтверждения пароля'
+                      : 'Пароль не совпадают'
                   "
                 ></span>
               </li>
               <li class="flex items-center py-1">
                 <div
                   :class="{
-                    'bg-green-200 text-green-700': formData.password.length > 7,
-                    'bg-red-200 text-red-700': formData.password.length < 7,
+                    'bg-green-200 text-green-700':
+                      formData.password.length >= 8,
+                    'bg-red-200 text-red-700': formData.password.length < 8,
                   }"
                   class="p-1 rounded-full fill-current"
                 >
@@ -222,14 +245,14 @@
                     stroke="currentColor"
                   >
                     <path
-                      v-show="formData.password.length > 7"
+                      v-show="formData.password.length >= 8"
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       stroke-width="2"
                       d="M5 13l4 4L19 7"
                     />
                     <path
-                      v-show="formData.password.length < 7"
+                      v-show="formData.password.length < 8"
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       stroke-width="2"
@@ -239,8 +262,8 @@
                 </div>
                 <span
                   :class="{
-                    'text-green-700': formData.password.length > 7,
-                    'text-red-700': formData.password.length < 7,
+                    'text-green-700': formData.password.length >= 8,
+                    'text-red-700': formData.password.length < 8,
                   }"
                   class="ml-3 text-sm font-medium"
                   v-html="
@@ -280,7 +303,12 @@
           </div>
           <button
             type="submit"
-            class="block w-full px-6 py-3 mt-3 text-lg font-semibold text-white bg-gray-800 border-2 border-transparent rounded-lg hover:text-white hover:bg-black focus:border-gray-600 focus:outline-none"
+            :disabled="!formData.policy"
+            :class="{
+              'cursor-not-allowed bg-gray-500': !formData.policy,
+              'bg-gray-800 hover:text-white hover:bg-black': formData.policy,
+            }"
+            class="block w-full px-6 py-3 mt-3 text-lg font-semibold text-white transition duration-150 border-2 border-transparent rounded-lg focus:border-gray-600 focus:outline-none"
           >
             Продолжить
           </button>
