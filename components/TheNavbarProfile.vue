@@ -6,7 +6,7 @@
         profile = false
       }
     "
-    class="relative ml-3"
+    class="relative"
   >
     <div>
       <button

@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 export default {
   /*
    ** Nuxt rendering mode
@@ -54,6 +56,8 @@ export default {
     '@nuxtjs/stylelint-module',
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/dotenv',
+    '@nuxtjs/google-analytics',
     '@nuxtjs/moment',
   ],
   /*
@@ -64,8 +68,14 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/auth',
     '@nuxtjs/pwa',
+    'nuxt-google-optimize',
     '@nuxtjs/toast',
   ],
+
+  googleAnalytics: {
+    id: process.env.GA_ID || 'UA-167845392-3',
+  },
+
 
   toast: {
     position: 'top-right',

@@ -68,13 +68,24 @@
               >
                 {{ item.title }}
               </nuxt-link>
+
+              <nuxt-link
+                v-if="displayNotifications"
+                :to="'#'"
+                class="px-3 py-2 ml-4 text-sm font-medium leading-5 text-gray-300 transition duration-150 ease-in-out rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+              >
+                Контакты
+              </nuxt-link>
             </div>
           </div>
         </div>
         <div
           class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
         >
-          <div class="flex flex-col items-end">
+          <div
+            v-if="!displayNotifications"
+            class="flex flex-col items-end mr-4"
+          >
             <a
               href="#"
               class="font-sans text-xl font-bold leading-none text-gray-300 no-underline hover:text-white focus:text-white"
@@ -89,9 +100,9 @@
             </a>
           </div>
           <template v-if="$auth.$state.loggedIn">
-            <!--
             <button
-              class="p-1 text-gray-400 transition duration-150 ease-in-out border-2 border-transparent rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700"
+              v-if="displayNotifications"
+              class="p-1 mr-3 text-gray-400 transition duration-150 ease-in-out border-2 border-transparent rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700"
               aria-label="Notifications"
             >
               <svg
@@ -108,7 +119,6 @@
                 />
               </svg>
             </button>
-            -->
 
             <the-navbar-profile />
           </template>
@@ -173,5 +183,13 @@ export default {
       },
     ],
   }),
+  computed: {
+    displayNotifications() {
+      return (
+        this.$exp.name === 'navbar-contacts' &&
+        this.$exp.$activeVariants.some(({ name }) => name === 'notifications')
+      )
+    },
+  },
 }
 </script>
