@@ -1,126 +1,46 @@
 <template>
-  <div class="mt-16 flex flex-col justify-center items-center">
-    <div class="mx-8 mb-8 md:mx-auto p-4 w-full md:w-1/2">
+  <div class="flex flex-col items-center justify-center mt-16">
+    <div class="w-full p-4 mx-8 mb-8 md:mx-auto md:w-1/2">
       <div class="flex items-center">
-        <div class="flex items-center text-gray-800 relative">
+        <template v-for="(step, key, index) in steps">
           <div
-            class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-gray-800"
+            :key="`step-${key}`"
+            :class="{
+              'text-gray-00': isPrevious(key),
+              'text-white': isCurrent(key),
+              'text-gray-500': !isCurrent(key) && isFuture(key),
+            }"
+            class="relative flex items-center"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="100%"
-              height="100%"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-bookmark"
+            <div
+              :class="{
+                'bg-gray-800': isCurrent(key),
+                'border-gray-800': isPrevious(key) || isCurrent(key),
+                'border-gray-300': isFuture(key),
+              }"
+              class="w-12 h-12 py-3 transition duration-500 ease-in-out border-2 border-gray-300 rounded-full"
             >
-              <path
-                d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"
-              ></path>
-            </svg>
+              <component :is="step.icon" width="100%" height="100%" />
+            </div>
+            <div
+              :class="{
+                'text-gray-800': isPrevious(key) || isCurrent(key),
+                'text-gray-500': isFuture(key),
+              }"
+              class="absolute top-0 w-32 mt-16 -ml-10 text-xs font-medium text-center uppercase"
+              v-text="/* $t(`registration.steps.${key}`) */ key"
+            />
           </div>
           <div
-            class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-gray-800"
-          >
-            Personal
-          </div>
-        </div>
-        <div
-          class="flex-auto border-t-2 transition duration-500 ease-in-out border-gray-800"
-        ></div>
-        <div class="flex items-center text-white relative">
-          <div
-            class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 bg-gray-800 border-gray-800"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="100%"
-              height="100%"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-user-plus"
-            >
-              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-              <circle cx="8.5" cy="7" r="4"></circle>
-              <line x1="20" y1="8" x2="20" y2="14"></line>
-              <line x1="23" y1="11" x2="17" y2="11"></line>
-            </svg>
-          </div>
-          <div
-            class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-gray-800"
-          >
-            Account
-          </div>
-        </div>
-        <div
-          class="flex-auto border-t-2 transition duration-500 ease-in-out border-gray-300"
-        ></div>
-        <div class="flex items-center text-gray-500 relative">
-          <div
-            class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-gray-300"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="100%"
-              height="100%"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-mail"
-            >
-              <path
-                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-              ></path>
-              <polyline points="22,6 12,13 2,6"></polyline>
-            </svg>
-          </div>
-          <div
-            class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-gray-500"
-          >
-            Message
-          </div>
-        </div>
-        <div
-          class="flex-auto border-t-2 transition duration-500 ease-in-out border-gray-300"
-        ></div>
-        <div class="flex items-center text-gray-500 relative">
-          <div
-            class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-gray-300"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="100%"
-              height="100%"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-database"
-            >
-              <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-              <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-              <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-            </svg>
-          </div>
-          <div
-            class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-gray-500"
-          >
-            Confirm
-          </div>
-        </div>
+            v-if="index != Object.keys(steps).length - 1"
+            :key="`step-${key}-line`"
+            :class="{
+              'border-gray-300': !isPrevious(key),
+              'border-gray-800': isPrevious(key),
+            }"
+            class="flex-auto transition duration-500 ease-in-out border-t-2 border-gray-300"
+          ></div>
+        </template>
       </div>
     </div>
 
@@ -129,7 +49,68 @@
 </template>
 
 <script>
+import { UserPlusIcon, MailIcon, CheckIcon } from 'vue-feather-icons'
+
 export default {
-  auth: false,
+  // verified: false,
+  // auth: false,
+  components: {
+    // eslint-disable-next-line vue/no-unused-components
+    UserPlusIcon,
+    // eslint-disable-next-line vue/no-unused-components
+    MailIcon,
+    // eslint-disable-next-line vue/no-unused-components
+    CheckIcon,
+  },
+  data: () => ({
+    steps: {
+      index: {
+        icon: 'UserPlusIcon',
+        route: {
+          name: 'auth-registration',
+        },
+      },
+      verify: {
+        icon: 'MailIcon',
+        route: {
+          name: 'auth-registration-confirm',
+        },
+      },
+      success: {
+        icon: 'CheckIcon',
+        route: {
+          name: 'auth-registration-success',
+        },
+      },
+    },
+  }),
+  computed: {
+    stepsKeys() {
+      return Object.keys(this.steps)
+    },
+    stepsRoutes() {
+      return Object.values(this.steps).map(({ route: { name } }) => name)
+    },
+    currentRouteName() {
+      return this.$route.name
+    },
+  },
+  methods: {
+    isPrevious(_step) {
+      return (
+        this.stepsKeys.indexOf(_step) <
+        this.stepsRoutes.indexOf(this.currentRouteName)
+      )
+    },
+    isCurrent(key) {
+      return this.currentRouteName === this.steps[key].route.name
+    },
+    isFuture(_step) {
+      return (
+        this.stepsKeys.indexOf(_step) >
+        this.stepsRoutes.indexOf(this.currentRouteName)
+      )
+    },
+  },
 }
 </script>

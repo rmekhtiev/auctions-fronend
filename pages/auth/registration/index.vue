@@ -24,6 +24,11 @@
                 autocomplete="given-name"
                 class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
+              <div v-if="errors" class="text-xs italic text-red-600">
+                <p v-for="error in errors.name" :key="error">
+                  {{ error }}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -44,6 +49,11 @@
                 autocomplete="family-name"
                 class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
+              <div v-if="errors" class="text-xs italic text-red-600">
+                <p v-for="error in errors.surname" :key="error">
+                  {{ error }}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -63,6 +73,11 @@
                 autocomplete="email"
                 class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
+              <div v-if="errors" class="text-xs italic text-red-600">
+                <p v-for="error in errors.email" :key="error">
+                  {{ error }}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -84,6 +99,11 @@
                 inputmode="verbatim"
                 class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
+              <div v-if="errors" class="text-xs italic text-red-600">
+                <p v-for="error in errors.login" :key="error">
+                  {{ error }}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -127,11 +147,117 @@
             </div>
           </div>
 
+          <div class="flex justify-start p-1 mt-3 ml-4">
+            <ul>
+              <li class="flex items-center py-1">
+                <div
+                  :class="{
+                    'bg-green-200 text-green-700':
+                      formData.password == formData.password_confirmation &&
+                      formData.password.length > 0,
+                    'bg-red-200 text-red-700':
+                      formData.password != formData.password_confirmation ||
+                      formData.password.length == 0,
+                  }"
+                  class="p-1 rounded-full fill-current"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      v-show="
+                        formData.password == formData.password_confirmation &&
+                        formData.password.length > 0
+                      "
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                    <path
+                      v-show="
+                        formData.password != formData.password_confirmation ||
+                        formData.password.length == 0
+                      "
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </div>
+                <span
+                  :class="{
+                    'text-green-700':
+                      formData.password == formData.password_confirmation &&
+                      formData.password.length > 0,
+                    'text-red-700':
+                      formData.password != formData.password_confirmation ||
+                      formData.password.length == 0,
+                  }"
+                  class="ml-3 text-sm font-medium"
+                  v-html="
+                    formData.password == formData.password_confirmation &&
+                    formData.password.length > 0
+                      ? 'Пароль и подтверждение совпадают'
+                      : 'Проверьте корректность подтверждения пароля'
+                  "
+                ></span>
+              </li>
+              <li class="flex items-center py-1">
+                <div
+                  :class="{
+                    'bg-green-200 text-green-700': formData.password.length > 7,
+                    'bg-red-200 text-red-700': formData.password.length < 7,
+                  }"
+                  class="p-1 rounded-full fill-current"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      v-show="formData.password.length > 7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                    <path
+                      v-show="formData.password.length < 7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </div>
+                <span
+                  :class="{
+                    'text-green-700': formData.password.length > 7,
+                    'text-red-700': formData.password.length < 7,
+                  }"
+                  class="ml-3 text-sm font-medium"
+                  v-html="
+                    formData.password.length > 7
+                      ? 'Минимальная длина пароля соответствует требованиям платформы'
+                      : 'Минимальная длина пароля 8 символов'
+                  "
+                ></span>
+              </li>
+            </ul>
+          </div>
+
           <div class="flex justify-start">
             <label class="flex items-center my-4 font-bold text-gray-500">
               <input
                 v-model="formData.policy"
-                class="top-0 leading-loose text-pink-600"
+                class="top-0 leading-loose text-gray-600 form-checkbox"
                 type="checkbox"
               />
               <span class="py-2 ml-2 text-sm text-left text-gray-600">
@@ -152,7 +278,6 @@
               </span>
             </label>
           </div>
-
           <button
             type="submit"
             class="block w-full px-6 py-3 mt-3 text-lg font-semibold text-white bg-gray-800 border-2 border-transparent rounded-lg hover:text-white hover:bg-black focus:border-gray-600 focus:outline-none"
@@ -167,6 +292,8 @@
 
 <script>
 export default {
+  auth: false,
+  verified: false,
   data: () => ({
     formData: {
       first_name: '',
@@ -177,6 +304,7 @@ export default {
       password_confirmation: '',
       policy: false,
     },
+    errors: null,
   }),
   watch: {
     'formData.email'(val, old) {
@@ -196,10 +324,13 @@ export default {
     submit() {
       this.$axios
         .post('auth/register', this.formData)
-        .then((_result) => {
-          this.$auth.loginWith('local', { data: this.formData })
+        .then(async (_result) => {
+          await this.$auth.loginWith('local', { data: this.formData })
+          await this.$router.push({ name: 'auth-registration-confirm' })
         })
-        .catch((_err) => {})
+        .catch((_err) => {
+          this.errors = _err.response.data.errors
+        })
     },
   },
 }

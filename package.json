@@ -26,7 +26,8 @@
     "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/axios": "^5.11.0",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
-    "nuxt": "^2.13.0"
+    "nuxt": "^2.13.0",
+    "vue-feather-icons": "^5.0.0"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^1.0.3",
@@ -35,6 +36,7 @@
     "@nuxtjs/eslint-module": "^2.0.0",
     "@nuxtjs/stylelint-module": "^4.0.0",
     "@nuxtjs/tailwindcss": "^2.0.0",
+    "@tailwindcss/custom-forms": "^0.2.1",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.2.0",
     "eslint-config-prettier": "^6.11.0",
@@ -48,6 +50,8 @@
     "prettier": "^2.0.5",
     "stylelint": "^13.6.1",
     "stylelint-config-prettier": "^8.0.1",
-    "stylelint-config-standard": "^20.0.0"
+    "stylelint-config-standard": "^20.0.0",
+    "vue-click-outside": "^1.1.0",
+    "vue-string-filter": "^2.0.0"
   }
 }
