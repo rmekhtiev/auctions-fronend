@@ -6,7 +6,7 @@ export default function ({ $auth, redirect, route }) {
   }
 
   // If the user is not verified
-  if ($auth.$state.loggedIn || !$auth.user.attributes.verified_at) {
+  if (!$auth.$state.loggedIn || $auth.user.attributes.verified_at == null) {
     return redirect({ name: 'auth-registration-confirm' })
   }
 }

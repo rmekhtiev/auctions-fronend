@@ -27,7 +27,7 @@
                 for="otp"
                 class="block mb-2 text-xs font-bold tracking-wide text-center uppercase text-grey-darker"
               >
-                Ваш код номер № {{ formData.counter }}
+                Ваш код номер №{{ formData.counter }}
               </label>
               <input
                 id="otp"
@@ -86,6 +86,9 @@ export default {
       return this.email.replace(/.*@/, '')
     },
   },
+  created() {
+    this.sendCode()
+  },
   methods: {
     sendCode() {
       this.$axios
@@ -99,8 +102,8 @@ export default {
       this.$axios
         .post('auth/verification/verify', this.formData)
         .then(() => {
-          this.$router.push({
-            name: 'auth-registration-success',
+          this.$auth.fetchUser().then(() => {
+            this.$router.push({ name: 'auth-registration-success' })
           })
         })
         .catch((_err) => {

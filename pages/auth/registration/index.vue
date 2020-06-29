@@ -324,11 +324,9 @@ export default {
     submit() {
       this.$axios
         .post('auth/register', this.formData)
-        .then((_result) => {
-          this.$auth.loginWith('local', { data: this.formData })
-          this.$router.push({
-            name: 'auth-registration-confirm',
-          })
+        .then(async (_result) => {
+          await this.$auth.loginWith('local', { data: this.formData })
+          await this.$router.push({ name: 'auth-registration-confirm' })
         })
         .catch((_err) => {
           this.errors = _err.response.data.errors

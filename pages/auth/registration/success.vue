@@ -11,17 +11,17 @@
         </h3>
         <p class="mb-3 text-sm text-center text-gray-600">
           Ваш аккаунт подтвержден. Вы можете перейти в личный кабинет, дополнить
-          свою учетную запись и пройти модерацию. Это не займет много времени)
+          свою учетную запись и пройти модерацию. <br />
+          Это не займет много времени
         </p>
 
         <div class="w-full py-3 mb-3 text-center">
-          <a
-            href="#"
-            target="_blank"
+          <nuxt-link
+            :to="{ name: 'index' }"
             class="font-semibold text-black border-b-2 border-gray-200 hover:border-gray-500"
           >
             На главную
-          </a>
+          </nuxt-link>
         </div>
       </div>
     </div>
