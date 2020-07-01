@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-gray-800">
+  <nav class="fixed z-40 w-full bg-gray-800">
     <div class="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
       <div class="relative flex items-center justify-between h-16">
         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -45,7 +45,7 @@
         <div
           class="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start"
         >
-          <div class="flex-shrink-0">
+          <nuxt-link :to="{ name: 'index' }" class="flex-shrink-0">
             <img
               class="block w-auto h-8 lg:hidden"
               src="https://tailwindui.com/img/logos/workflow-mark-on-dark.svg"
@@ -56,7 +56,7 @@
               src="https://tailwindui.com/img/logos/workflow-logo-on-dark.svg"
               alt="Workflow logo"
             />
-          </div>
+          </nuxt-link>
           <div class="hidden sm:block sm:ml-6">
             <div class="flex">
               <nuxt-link

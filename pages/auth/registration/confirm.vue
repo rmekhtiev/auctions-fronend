@@ -35,7 +35,7 @@
                 name="otp"
                 type="tel"
                 pattern="[0-9]{6}"
-                inputmode="tel"
+                inputmode="number"
                 autocomplete="one-time-code"
                 minlength="6"
                 maxlength="6"
