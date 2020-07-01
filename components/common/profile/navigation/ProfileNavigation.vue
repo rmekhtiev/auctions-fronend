@@ -4,17 +4,23 @@
       <nuxt-link
         :to="{ name: 'account' }"
         exact-active-class="bg-gray-200 border-r-4 border-gray-700"
-        class="flex items-center px-8 py-2 mb-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:bg-gray-200"
+        class="flex items-center py-2 pl-8 pr-2 mb-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:bg-gray-200"
       >
         <inbox-icon class="w-5 h-5" />
 
         <span class="mx-4 font-medium">Уведомления</span>
+
+        <span
+          class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full"
+        >
+          24
+        </span>
       </nuxt-link>
 
       <nuxt-link
         :to="{ name: 'account-profile' }"
         active-class="bg-gray-200 border-r-4 border-gray-700"
-        class="flex items-center px-8 py-2 mb-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:bg-gray-200"
+        class="flex items-center py-2 pl-8 pr-2 mb-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:bg-gray-200"
       >
         <users-icon class="w-5 h-5" />
 
@@ -24,7 +30,7 @@
       <nuxt-link
         :to="'#'"
         active-class="bg-gray-200 border-r-4 border-gray-700"
-        class="flex items-center px-8 py-2 mb-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:bg-gray-200"
+        class="flex items-center py-2 pl-8 pr-2 mb-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:bg-gray-200"
       >
         <settings-icon class="w-5 h-5" />
 
@@ -34,7 +40,7 @@
 
     <nav class="my-10">
       <a
-        class="flex items-center px-8 py-2 text-gray-500 transition duration-150 ease-in-out hover:text-gray-600"
+        class="flex items-center py-2 pl-8 pr-2 text-gray-500 transition duration-150 ease-in-out hover:text-gray-600"
         href="#"
       >
         <help-circle-icon class="w-5 h-5" />

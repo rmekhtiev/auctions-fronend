@@ -3,7 +3,18 @@
     <div
       class="flex flex-col w-full p-4 px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md"
     >
-      <div class="mb-2 text-xl font-bold">Новый профиль</div>
+      <div class="flex items-center mb-2">
+        <div
+          v-show="false"
+          class="flex items-center justify-center w-12 h-12 mr-4 text-gray-500 bg-gray-100 rounded-full"
+        >
+          <user-plus-icon class="w-6 h-6" />
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold text-gray-600">Новый профиль</h3>
+          <p class="text-sm text-gray-500">Profit Share between customers</p>
+        </div>
+      </div>
 
       <div class="flex flex-wrap">
         <div class="w-full lg:w-1/3 lg:pr-4">
@@ -47,15 +58,30 @@
     <div
       class="flex flex-col w-full p-4 px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md"
     >
-      <div class="mb-2 text-xl font-bold">Основные данные</div>
-
+      <div class="flex items-center mb-2">
+        <div
+          v-show="false"
+          class="flex items-center justify-center w-12 h-12 mr-4 text-gray-500 bg-gray-100 rounded-full"
+        >
+          <user-plus-icon class="w-6 h-6" />
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold text-gray-600">Основные данные</h3>
+          <p class="text-sm text-gray-500">Profit Share between customers</p>
+        </div>
+      </div>
       <legal-entity-form v-model="counterparty" />
     </div>
   </div>
 </template>
 
 <script>
+import { UserPlusIcon } from 'vue-feather-icons'
+
 export default {
+  components: {
+    UserPlusIcon,
+  },
   data: () => ({
     counterparty: {
       type: 'UL',
