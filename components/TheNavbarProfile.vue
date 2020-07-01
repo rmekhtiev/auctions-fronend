@@ -33,40 +33,49 @@
         From: "transform opacity-100 scale-100"
         To: "transform opacity-0 scale-95"
     -->
-    <div
-      class="absolute right-0 w-48 mt-2 origin-top-right rounded-md shadow-lg"
-      :class="{ block: profile, hidden: !profile }"
+    <transition
+      enter-active-class="transition duration-100 ease-out transform"
+      enter-class="scale-95 opacity-0"
+      enter-to-class="scale-100 opacity-100"
+      leave-active-class="transition duration-75 ease-in transform"
+      leave-class="scale-100 opacity-100"
+      leave-to-class="scale-95 opacity-0"
     >
       <div
-        class="py-1 bg-white rounded-md shadow-xs"
-        role="menu"
-        aria-orientation="vertical"
-        aria-labelledby="user-menu"
+        v-show="profile"
+        class="absolute right-0 w-48 mt-2 origin-top-right rounded-md shadow-lg"
       >
-        <a
-          href="#"
-          class="block px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-          role="menuitem"
+        <div
+          class="py-1 bg-white rounded-md shadow-xs"
+          role="menu"
+          aria-orientation="vertical"
+          aria-labelledby="user-menu"
         >
-          Личный кабинет
-        </a>
-        <a
-          href="#"
-          class="block px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-          role="menuitem"
-        >
-          Настройки
-        </a>
-        <a
-          href="#"
-          class="block px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-          role="menuitem"
-          @click.prevent="logout"
-        >
-          Выйти
-        </a>
+          <nuxt-link
+            :to="{ name: 'account' }"
+            class="block px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+            role="menuitem"
+          >
+            Личный кабинет
+          </nuxt-link>
+          <a
+            href="#"
+            class="block px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+            role="menuitem"
+          >
+            Настройки
+          </a>
+          <a
+            href="#"
+            class="block px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+            role="menuitem"
+            @click.prevent="logout"
+          >
+            Выйти
+          </a>
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 

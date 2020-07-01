@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-between w-64 bg-white">
+  <div class="flex flex-col justify-between w-64 bg-white shadow-md">
     <nav class="my-10">
       <nuxt-link
         :to="{ name: 'account' }"
@@ -13,7 +13,7 @@
 
       <nuxt-link
         :to="{ name: 'account-profile' }"
-        exact-active-class="bg-gray-200 border-r-4 border-gray-700"
+        active-class="bg-gray-200 border-r-4 border-gray-700"
         class="flex items-center px-8 py-2 mb-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:bg-gray-200"
       >
         <users-icon class="w-5 h-5" />

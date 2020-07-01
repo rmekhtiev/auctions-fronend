@@ -11,7 +11,6 @@
 <style>
 html,
 body {
-  background: #f7fafc;
-  min-height: 100vh;
+  @apply bg-gray-100 h-screen;
 }
 </style>
