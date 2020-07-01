@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col">
     <div
       class="flex flex-col w-full p-4 px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md"
     >
@@ -17,7 +17,7 @@
       </div>
 
       <div class="flex flex-wrap">
-        <div class="w-full lg:w-1/3 lg:pr-4">
+        <div class="w-full lg:w-1/2 xl:w-1/3 lg:pr-4">
           <div class="py-3">
             <label
               for="type"

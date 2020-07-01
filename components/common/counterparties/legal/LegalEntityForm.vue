@@ -15,7 +15,7 @@
           name="inn"
           type="tel"
           pattern="[0-9]{9}"
-          inputmode="tel"
+          inputmode="number"
           autocomplete="no"
           minlength="9"
           maxlength="9"
@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div class="w-full lg:w-1/2 xl:w-1/3 lg:pr-4">
+    <div class="w-full lg:w-1/2 xl:w-1/3 lg:pl-4 xl:px-4">
       <div class="py-3">
         <label
           for="shortName"
@@ -44,7 +44,7 @@
       </div>
     </div>
 
-    <div class="w-full xl:w-1/3 lg:pr-4">
+    <div class="w-full xl:w-1/3 xl:pl-4">
       <div class="py-3">
         <label
           for="fullName"
@@ -84,7 +84,7 @@
       </div>
     </div>
 
-    <div class="w-full lg:w-1/3 lg:pr-4">
+    <div class="w-full lg:w-1/3 lg:px-4">
       <div class="py-3">
         <label
           for="email"
@@ -104,7 +104,7 @@
       </div>
     </div>
 
-    <div class="w-full lg:w-1/3 lg:pr-4">
+    <div class="w-full lg:w-1/3 lg:pl-4">
       <div class="py-3">
         <label
           for="phone"
