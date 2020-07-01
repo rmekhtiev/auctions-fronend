@@ -120,7 +120,42 @@
               </svg>
             </button>
 
-            <the-navbar-profile />
+            <!-- Profile dropdown -->
+            <div
+              v-click-outside="
+                () => {
+                  profile = false
+                }
+              "
+              class="relative"
+            >
+              <div>
+                <button
+                  id="user-menu"
+                  class="flex text-sm transition duration-150 ease-in-out border-2 border-transparent rounded-full focus:outline-none focus:border-white"
+                  aria-label="User menu"
+                  aria-haspopup="true"
+                  @click="profile = !profile"
+                >
+                  <img
+                    class="w-8 h-8 rounded-full"
+                    :src="user.attributes.avatar"
+                    :alt="user.attributes.login"
+                  />
+                </button>
+              </div>
+
+              <transition
+                enter-active-class="transition duration-100 ease-out transform"
+                enter-class="scale-95 opacity-0"
+                enter-to-class="scale-100 opacity-100"
+                leave-active-class="transition duration-75 ease-in transform"
+                leave-class="scale-100 opacity-100"
+                leave-to-class="scale-95 opacity-0"
+              >
+                <the-navbar-profile v-show="profile" class="absolute right-0" />
+              </transition>
+            </div>
           </template>
           <template v-else>
             <nuxt-link
@@ -156,10 +191,16 @@
 </template>
 
 <script>
+import clickOutside from 'vue-click-outside'
+
 export default {
+  directives: {
+    clickOutside,
+  },
   data: () => ({
     appName: 'Auctions',
     open: false,
+    profile: false,
     menu: [
       {
         title: 'Аукционы',
@@ -184,6 +225,9 @@ export default {
     ],
   }),
   computed: {
+    user() {
+      return this.$auth.user
+    },
     displayNotifications() {
       return (
         this.$exp.name === 'navbar-contacts' &&
