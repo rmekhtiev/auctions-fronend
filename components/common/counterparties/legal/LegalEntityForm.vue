@@ -67,16 +67,16 @@
     <div class="w-full lg:w-1/3 lg:pr-4">
       <div class="py-3">
         <label
-          for="registrationDate"
+          for="egrDate"
           class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
         >
           Дата регистрации ЕГР <span class="text-red-700">*</span>
         </label>
         <input
-          id="registrationDate"
+          id="egrDate"
           v-model="formData.egr_date"
           placeholder="Введите дату регистрации"
-          name="registration_date"
+          name="egr_date"
           type="date"
           autocomplete="no"
           class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"

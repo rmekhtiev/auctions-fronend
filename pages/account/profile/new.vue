@@ -37,16 +37,20 @@
                 <option value="UL">Юридическое лицо</option>
               </select>
               <div
-                class="absolute top-0 bottom-0 right-0 flex items-center px-4 pointer-events-none text-grey-darker"
+                class="absolute top-0 bottom-0 right-0 flex items-center px-4 text-gray-400 pointer-events-none"
               >
                 <svg
-                  class="w-4 h-4"
-                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5"
                   viewBox="0 0 20 20"
+                  fill="none"
+                  stroke="currentColor"
                 >
                   <path
-                    d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-                  ></path>
+                    d="M7 7l3-3 3 3m0 6l-3 3-3-3"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
                 </svg>
               </div>
             </div>
