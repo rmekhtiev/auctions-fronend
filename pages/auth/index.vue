@@ -21,7 +21,7 @@
                 name="email"
                 type="email"
                 autocomplete="email"
-                class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+                class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
             </div>
           </div>
@@ -41,7 +41,7 @@
                 name="password"
                 type="password"
                 autocomplete="password"
-                class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+                class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
             </div>
           </div>
@@ -65,7 +65,7 @@
 
           <button
             type="submit"
-            class="block w-full px-6 py-3 mt-3 text-lg font-semibold text-white bg-gray-800 border-2 border-transparent rounded-lg hover:text-white hover:bg-black focus:border-gray-600 focus:outline-none"
+            class="block w-full px-6 py-3 mt-3 text-lg font-semibold text-white transition duration-150 bg-gray-800 border-2 border-transparent rounded-lg hover:text-white hover:bg-black focus:border-gray-600 focus:outline-none"
           >
             Войти
           </button>
@@ -73,13 +73,13 @@
           <!-- <div class="flex mt-4">
             <button
               type="submit"
-              class="block w-1/2 px-6 py-3 mr-2 text-lg font-semibold text-center text-black bg-white border-2 rounded-lg hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
+              class="block w-1/2 px-6 py-3 mr-2 text-lg font-semibold text-center text-black transition duration-150 bg-white border-2 rounded-lg hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
             >
               Google
             </button>
             <button
               type="submit"
-              class="block w-1/2 px-6 py-3 ml-2 text-lg font-semibold text-center text-black bg-white border-2 rounded-lg hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
+              class="block w-1/2 px-6 py-3 ml-2 text-lg font-semibold text-center text-black transition duration-150 bg-white border-2 rounded-lg hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
             >
               Apple
             </button>
@@ -105,7 +105,7 @@
     <div class="w-full px-8">
       <nuxt-link
         :to="{ name: 'auth-registration' }"
-        class="block w-full px-6 py-3 text-lg font-semibold text-center text-black bg-white border-2 rounded-lg hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
+        class="block w-full px-6 py-3 text-lg font-semibold text-center text-black transition duration-150 bg-white border-2 rounded-lg hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
       >
         Зарегистрироваться
       </nuxt-link>
