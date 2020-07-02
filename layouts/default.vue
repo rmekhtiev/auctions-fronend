@@ -5,6 +5,7 @@
     <main class="relative h-0 min-h-screen pt-16">
       <Nuxt />
     </main>
+    <the-footer />
   </div>
 </template>
 
