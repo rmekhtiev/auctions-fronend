@@ -91,7 +91,7 @@
           <p class="text-sm text-gray-500">Profit Share between customers</p>
         </div>
       </div>
-      <address-entry-form v-model="counterparty" />
+      <address-entry-form v-model="counterparty" no-country />
     </div>
 
     <div class="flex flex-row justify-end">
