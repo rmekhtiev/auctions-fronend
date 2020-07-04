@@ -1,7 +1,7 @@
 <template>
   <div v-if="Array.isArray(accounts) && accounts.length" class="flex flex-col">
     <div
-      class="min-w-full align-middle bg-white border-b border-gray-200 rounded shadow-md"
+      class="min-w-full mb-4 align-middle bg-white border-b border-gray-200 rounded shadow-md"
     >
       <table class="min-w-full">
         <thead>
@@ -32,6 +32,14 @@
           />
         </tbody>
       </table>
+    </div>
+    <div class="flex flex-row justify-end">
+      <nuxt-link
+        :to="{ name: 'account-profile-new' }"
+        class="block px-6 py-3 text-sm font-semibold text-white transition duration-150 bg-gray-800 border-2 border-transparent rounded-lg hover:text-white hover:bg-black focus:border-gray-600 focus:outline-none"
+      >
+        Добавить
+      </nuxt-link>
     </div>
   </div>
   <div

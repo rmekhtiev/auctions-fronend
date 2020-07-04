@@ -3,6 +3,11 @@
     v-if="counterparty.attributes._type === 'UL'"
     :account="account"
     :counterparty="counterparty"
+    :class="{
+      'bg-yellow-100':
+        $store.getters['counterparties/lastCreated'] &&
+        counterparty.id === $store.getters['counterparties/lastCreated'].id,
+    }"
   />
 </template>
 
