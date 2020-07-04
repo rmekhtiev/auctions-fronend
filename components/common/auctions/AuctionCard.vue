@@ -1,0 +1,50 @@
+<template>
+  <article
+    class="relative flex flex-col overflow-hidden bg-white rounded shadow-md"
+  >
+    <div>
+      <picture>
+        <img
+          class="object-cover object-center w-full h-56 lg:h-48 xl:h-56"
+          src="https://via.placeholder.com/450x450"
+          alt="avatar"
+        />
+      </picture>
+    </div>
+    <h2 class="flex-grow px-6 pt-4 text-lg font-semibold text-gray-800">
+      Patterson johnson
+    </h2>
+    <ul class="px-6">
+      <li class="flex items-center mt-2 text-gray-700">
+        <clock-icon class="w-4 h-4" />
+        <div class="px-2 text-sm">15 августа в в 9:00</div>
+      </li>
+      <li class="flex items-center mt-2 text-gray-700">
+        <users-icon class="w-4 h-4" />
+        <div class="px-2 text-sm">Участников еще нет</div>
+      </li>
+      <li class="flex items-center mt-2 text-gray-700">
+        <map-pin-icon class="w-4 h-4" />
+        <div class="px-2 text-sm">Минская область</div>
+      </li>
+    </ul>
+    <button
+      type="submit"
+      class="block px-6 py-3 m-4 text-lg font-semibold text-center text-black transition duration-150 bg-white border-2 rounded-lg hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
+    >
+      623 695.41 BYN
+    </button>
+  </article>
+</template>
+
+<script>
+import { ClockIcon, UsersIcon, MapPinIcon } from 'vue-feather-icons'
+
+export default {
+  components: {
+    ClockIcon,
+    UsersIcon,
+    MapPinIcon,
+  },
+}
+</script>
