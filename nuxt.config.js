@@ -64,7 +64,9 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'http://auctions-backend.test/api',
+    host: 'auctions-backend.test',
+    prefix: '/api/v1',
+    port: '80',
   },
 
   auth: {
