@@ -34,7 +34,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['plugins/vue-string-filter'],
+  plugins: ['~/plugins/vue-string-filter', '~/plugins/reststate-vuex'],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -100,5 +100,11 @@ export default {
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
-  build: {},
+  build: {
+    transpile: [
+      //
+      '@reststate/vuex',
+      '@reststate/client',
+    ],
+  },
 }
