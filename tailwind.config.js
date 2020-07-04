@@ -6,7 +6,9 @@
  */
 module.exports = {
   theme: {},
-  variants: {},
+  variants: {
+    borderWidth: ['responsive', 'last'],
+  },
   plugins: [require('@tailwindcss/custom-forms')],
   purge: {
     // Learn more on https://tailwindcss.com/docs/controlling-file-size/#removing-unused-css

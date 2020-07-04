@@ -1,221 +1,86 @@
 <template>
-  <div class="flex flex-col">
+  <div v-if="Array.isArray(accounts) && accounts.length" class="flex flex-col">
     <div
-      class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg"
+      class="min-w-full align-middle bg-white border-b border-gray-200 rounded shadow-md"
     >
       <table class="min-w-full">
-        <thead class="bg-white">
+        <thead>
           <tr>
             <th
               class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200"
             >
-              Name
+              Название
             </th>
             <th
               class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200"
             >
-              Title
+              Идентификатор
             </th>
             <th
               class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200"
             >
-              Status
-            </th>
-            <th
-              class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200"
-            >
-              Role
+              Статус
             </th>
             <th class="px-6 py-3 border-b border-gray-200"></th>
           </tr>
         </thead>
-        <tbody class="bg-white">
-          <tr>
-            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-              <div class="flex items-center">
-                <div class="flex-shrink-0 w-10 h-10">
-                  <img
-                    class="w-10 h-10 rounded-full"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                  />
-                </div>
-                <div class="ml-4">
-                  <div class="text-sm font-medium leading-5 text-gray-900">
-                    Bernard Lane
-                  </div>
-                  <div class="text-sm leading-5 text-gray-500">
-                    bernardlane@example.com
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-              <div class="text-sm leading-5 text-gray-900">Director</div>
-              <div class="text-sm leading-5 text-gray-500">
-                Human Resources
-              </div>
-            </td>
-            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-              <span
-                class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full"
-              >
-                Active
-              </span>
-            </td>
-            <td
-              class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200"
-            >
-              Owner
-            </td>
-            <td
-              class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap border-b border-gray-200"
-            >
-              <a href="#" class="text-indigo-600 hover:text-indigo-900"
-                >Edit
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-              <div class="flex items-center">
-                <div class="flex-shrink-0 w-10 h-10">
-                  <img
-                    class="w-10 h-10 rounded-full"
-                    src="https://images.unsplash.com/photo-1532910404247-7ee9488d7292?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                  />
-                </div>
-                <div class="ml-4">
-                  <div class="text-sm font-medium leading-5 text-gray-900">
-                    Bernard Lane
-                  </div>
-                  <div class="text-sm leading-5 text-gray-500">
-                    bernardlane@example.com
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-              <div class="text-sm leading-5 text-gray-900">Director</div>
-              <div class="text-sm leading-5 text-gray-500">
-                Human Resources
-              </div>
-            </td>
-            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-              <span
-                class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full"
-              >
-                Active
-              </span>
-            </td>
-            <td
-              class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200"
-            >
-              Owner
-            </td>
-            <td
-              class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap border-b border-gray-200"
-            >
-              <a href="#" class="text-indigo-600 hover:text-indigo-900"
-                >Edit
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-              <div class="flex items-center">
-                <div class="flex-shrink-0 w-10 h-10">
-                  <img
-                    class="w-10 h-10 rounded-full"
-                    src="https://images.unsplash.com/photo-1505503693641-1926193e8d57?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                  />
-                </div>
-                <div class="ml-4">
-                  <div class="text-sm font-medium leading-5 text-gray-900">
-                    Bernard Lane
-                  </div>
-                  <div class="text-sm leading-5 text-gray-500">
-                    bernardlane@example.com
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-              <div class="text-sm leading-5 text-gray-900">Director</div>
-              <div class="text-sm leading-5 text-gray-500">
-                Human Resources
-              </div>
-            </td>
-            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-              <span
-                class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full"
-              >
-                Inactive
-              </span>
-            </td>
-            <td
-              class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200"
-            >
-              Owner
-            </td>
-            <td
-              class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap border-b border-gray-200"
-            >
-              <a href="#" class="text-indigo-600 hover:text-indigo-900"
-                >Edit
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td class="px-6 py-4 whitespace-no-wrap">
-              <div class="flex items-center">
-                <div class="flex-shrink-0 w-10 h-10">
-                  <img
-                    class="w-10 h-10 rounded-full"
-                    src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                  />
-                </div>
-                <div class="ml-4">
-                  <div class="text-sm font-medium leading-5 text-gray-900">
-                    Bernard Lane
-                  </div>
-                  <div class="text-sm leading-5 text-gray-500">
-                    bernardlane@example.com
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td class="px-6 py-4 whitespace-no-wrap">
-              <div class="text-sm leading-5 text-gray-900">Director</div>
-              <div class="text-sm leading-5 text-gray-500">
-                Human Resources
-              </div>
-            </td>
-            <td class="px-6 py-4 whitespace-no-wrap">
-              <span
-                class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full"
-              >
-                Inactive
-              </span>
-            </td>
-            <td
-              class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap"
-            >
-              Owner
-            </td>
-            <td
-              class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap"
-            >
-              <a href="#" class="text-indigo-600 hover:text-indigo-900"
-                >Edit
-              </a>
-            </td>
-          </tr>
+        <tbody>
+          <account-row
+            v-for="(account, index) in accounts"
+            :key="`account-${index}`"
+            :account="account"
+          />
         </tbody>
       </table>
     </div>
   </div>
+  <div
+    v-else
+    class="flex flex-col items-center justify-center min-h-full mx-auto"
+  >
+    <div
+      class="flex flex-col items-center justify-center max-w-sm text-center text-gray-700"
+    >
+      <nuxt-link
+        :to="{ name: 'account-profile-new' }"
+        class="flex items-center justify-center w-24 h-24 m-4 bg-gray-200 rounded-full"
+      >
+        <plus-icon class="w-16 h-16" />
+      </nuxt-link>
+      <span class="mx-4 mb-4 text-xl font-medium">Добавьте профиль</span>
+      <p class="mx-4 italic">
+        Что бы участвовать в торгах, сначала надо
+        <nuxt-link
+          :to="{ name: 'account-profile-new' }"
+          class="font-bold text-black border-b-2 border-gray-200 cursor-pointer hover:border-gray-400"
+        >
+          заполнить профиль
+        </nuxt-link>
+      </p>
+    </div>
+  </div>
 </template>
+
+<script>
+import { PlusIcon } from 'vue-feather-icons'
+
+export default {
+  components: {
+    PlusIcon,
+  },
+
+  async fetch() {
+    await this.$store.dispatch('accounts/loadRelated', {
+      parent: this.$auth.user,
+    })
+  },
+
+  computed: {
+    accounts() {
+      return this.$store.getters['accounts/related']({
+        parent: this.$auth.user,
+      })
+    },
+  },
+}
+</script>
