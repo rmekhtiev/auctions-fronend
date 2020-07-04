@@ -10,6 +10,7 @@
         </label>
         <input
           id="inn"
+          key="inn"
           v-model.trim="formData.inn"
           placeholder="Введите УНП"
           name="inn"
@@ -34,6 +35,7 @@
         </label>
         <input
           id="shortName"
+          key="shortName"
           v-model.trim="formData.name.short_name"
           placeholder="Введите короткое название организации"
           name="short_name"
@@ -54,6 +56,7 @@
         </label>
         <input
           id="fullName"
+          key="fullName"
           v-model.trim="formData.name.full_name"
           placeholder="Введите полное название организации"
           name="full_name"
@@ -74,6 +77,7 @@
         </label>
         <input
           id="egrDate"
+          key="egrDate"
           v-model="formData.egr_date"
           placeholder="Введите дату регистрации"
           name="egr_date"
@@ -94,6 +98,7 @@
         </label>
         <input
           id="email"
+          key="email"
           v-model.trim="formData.email"
           placeholder="Введите электронную почту"
           name="email"
@@ -114,6 +119,7 @@
         </label>
         <input
           id="phone"
+          key="phone"
           v-model="formData.phone"
           placeholder="Введите номер телефона"
           name="phone"

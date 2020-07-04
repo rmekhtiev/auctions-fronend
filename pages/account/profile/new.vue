@@ -28,7 +28,7 @@
             <div class="relative">
               <select
                 id="type"
-                v-model="counterparty.type"
+                v-model="counterparty._type"
                 name="type"
                 type="text"
                 autocomplete="no"
@@ -76,6 +76,15 @@
       </div>
       <legal-entity-form v-model="counterparty" />
     </div>
+
+    <div class="flex flex-row justify-end">
+      <button
+        class="block px-6 py-3 text-lg font-semibold text-white transition duration-150 bg-gray-800 border-2 border-transparent rounded-lg hover:text-white hover:bg-black focus:border-gray-600 focus:outline-none"
+        @click="save()"
+      >
+        Сохранить
+      </button>
+    </div>
   </div>
 </template>
 
@@ -88,9 +97,32 @@ export default {
   },
   data: () => ({
     counterparty: {
-      type: 'UL',
+      _type: 'UL',
       name: {},
     },
   }),
+  methods: {
+    save() {
+      const recordData = {
+        attributes: this.counterparty,
+        relationships: {
+          users: {
+            data: [
+              {
+                id: `${this.$auth.user.id}`,
+                type: 'users',
+              },
+            ],
+          },
+        },
+      }
+
+      this.$store
+        .dispatch('counterparties/create', recordData)
+        .then((_response) => {
+          this.$router.push({ name: 'account-profile' })
+        })
+    },
+  },
 }
 </script>

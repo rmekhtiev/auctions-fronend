@@ -7,3 +7,14 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  async fetch() {
+    await this.$store.dispatch('users/loadById', this.$auth.user)
+    await this.$auth.fetchUser(
+      this.$store.getters['users/byId'](this.$auth.user).links.self
+    )
+  },
+}
+</script>

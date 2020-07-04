@@ -34,7 +34,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['plugins/vue-string-filter'],
+  plugins: ['~/plugins/vue-string-filter', '~/plugins/reststate-vuex'],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -64,7 +64,9 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'http://auctions-backend.test/api',
+    host: 'auctions-backend.test',
+    prefix: '/api/v1',
+    port: '80',
   },
 
   auth: {
@@ -98,5 +100,11 @@ export default {
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
-  build: {},
+  build: {
+    transpile: [
+      //
+      '@reststate/vuex',
+      '@reststate/client',
+    ],
+  },
 }
