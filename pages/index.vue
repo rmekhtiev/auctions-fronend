@@ -8,21 +8,16 @@
 
 <script>
 export default {
+  async asyncData({ store }) {
+    await store.dispatch('auctions/loadAll')
+
+    return {
+      auctions: store.getters['auctions/all'],
+    }
+  },
+
   data: () => ({
-    auctions: [
-      {
-        id: '1',
-      },
-      {
-        id: '2',
-      },
-      {
-        id: '3',
-      },
-      {
-        id: '3',
-      },
-    ],
+    //
   }),
 }
 </script>

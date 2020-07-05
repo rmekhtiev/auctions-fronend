@@ -12,7 +12,7 @@
       </picture>
     </div>
     <h2 class="flex-grow px-6 pt-4 text-lg font-semibold text-gray-800">
-      Patterson johnson
+      {{ auction.attributes.display_title }}
     </h2>
     <ul class="px-6">
       <li class="flex items-center mt-2 text-gray-700">
@@ -45,6 +45,12 @@ export default {
     ClockIcon,
     UsersIcon,
     MapPinIcon,
+  },
+  props: {
+    auction: {
+      type: Object,
+      required: true,
+    },
   },
 }
 </script>

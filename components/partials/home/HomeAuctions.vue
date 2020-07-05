@@ -40,11 +40,12 @@
       <auction-card
         v-for="(auction, index) in auctions"
         :key="`home-auctions-${index}`"
+        :auction="auction"
       />
     </div>
     <div class="flex flex-row justify-end">
       <nuxt-link
-        :to="'#'"
+        :to="{ name: 'auctions' }"
         class="block px-6 py-3 text-sm font-semibold text-white transition duration-150 bg-gray-800 border-2 border-transparent rounded-lg hover:text-white hover:bg-black focus:border-gray-600 focus:outline-none"
       >
         Смотреть все
