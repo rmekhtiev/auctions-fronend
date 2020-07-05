@@ -27,14 +27,17 @@
     "@nuxtjs/axios": "^5.11.0",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
     "@reststate/vuex": "^0.2.2",
+    "lodash.groupby": "^4.6.0",
     "nuxt": "^2.13.0",
-    "vue-feather-icons": "^5.0.0"
+    "vue-feather-icons": "^5.0.0",
+    "vue-moment": "^4.1.0"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^1.0.3",
     "@nuxtjs/eslint-config": "^3.0.0",
     "@nuxtjs/eslint-config-typescript": "^2.0.0",
     "@nuxtjs/eslint-module": "^2.0.0",
+    "@nuxtjs/moment": "^1.6.1",
     "@nuxtjs/stylelint-module": "^4.0.0",
     "@nuxtjs/tailwindcss": "^2.0.0",
     "@tailwindcss/custom-forms": "^0.2.1",

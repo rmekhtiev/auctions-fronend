@@ -49,6 +49,7 @@ export default {
     '@nuxtjs/stylelint-module',
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/moment',
   ],
   /*
    ** Nuxt.js modules
@@ -90,6 +91,12 @@ export default {
         },
       },
     },
+  },
+
+  moment: {
+    defaultTimezone: 'Europe/Minsk',
+    defaultLocale: 'ru',
+    locales: ['ru'],
   },
 
   router: {
