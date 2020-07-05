@@ -58,8 +58,8 @@
       >
         <plus-icon class="w-16 h-16" />
       </nuxt-link>
-      <span class="mx-4 mb-4 text-xl font-medium">Добавьте профиль</span>
-      <p class="mx-4 italic">
+      <span class="mx-4 text-xl font-medium">Добавьте профиль</span>
+      <p class="m-4 italic">
         Что бы участвовать в торгах, сначала надо
         <nuxt-link
           :to="{ name: 'account-profiles-new' }"
