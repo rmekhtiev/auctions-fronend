@@ -6,6 +6,8 @@
 export default {
   layout: 'with-sidebar',
 
+  middleware: ['auth', 'verified'],
+
   async fetch() {
     await this.$store.dispatch('users/loadById', this.$auth.user)
     await this.$auth.fetchUser(
