@@ -40,7 +40,7 @@
           placeholder="ООО «Ромашка»"
           name="short_name"
           type="text"
-          autocomplete="no"
+          autocomplete="organization"
           class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
         />
       </div>
@@ -61,7 +61,7 @@
           placeholder="Общество с ограниченной ответственностью «Ромашка»"
           name="full_name"
           type="text"
-          autocomplete="no"
+          autocomplete="organization"
           class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
         />
       </div>
