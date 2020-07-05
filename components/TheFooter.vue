@@ -1,52 +1,39 @@
 <template>
-  <div>
-    <div class="bg-gray-100">
-      <div class="max-w-6xl m-auto text-gray-800 flex flex-wrap justify-center">
-        <div class="flex">
-          <div class="w-48 p-5">
-            <nuxt-link :to="{ name: 'index' }" class="flex-shrink-0">
-              <img
-                class="block w-auto h-8 lg:hidden"
-                src="https://tailwindui.com/img/logos/workflow-mark-on-dark.svg"
-                alt="Workflow logo"
-              />
-              <img
-                class="hidden w-auto h-8 lg:block"
-                src="https://tailwindui.com/img/logos/workflow-logo-on-white.svg"
-                alt="Workflow logo"
-              />
+  <footer>
+    <div
+      class="container grid grid-cols-1 gap-4 mx-auto my-4 text-gray-800 md:grid-cols-5"
+    >
+      <div v-for="(item, index) in menu" :key="`menu-item-${index}`">
+        <div class="flex flex-row flex-wrap justify-start">
+          <div class="w-full mb-3 text-xs font-medium text-gray-500 uppercase">
+            {{ item.name }}
+          </div>
+          <div
+            v-for="(child, cIndex) in item.children"
+            :key="`menu-item-${index}-child-${cIndex}`"
+            class="w-full mb-3"
+          >
+            <nuxt-link :to="child.to">
+              {{ child.name }}
+              <span v-if="child.tag" class="p-1 text-xs text-teal-600">{{
+                child.tag
+              }}</span>
             </nuxt-link>
           </div>
-          <nuxt-link
-            v-for="(item, index) in menu"
-            :key="`menu-item-${index}`"
-            :to="item.to"
-            :class="{ 'ml-12': index !== 0 }"
-            class="w-48 p-5"
-          >
-            <div class="text-xs uppercase text-gray-500 font-medium">
-              {{ item.title }}
-            </div>
-            <a
-              v-for="(item, index) in item.children"
-              :key="`item.children-item-${index}`"
-              class="my-3 block"
-              href="/#"
-              >{{ item.name }}</a
-            >
-          </nuxt-link>
         </div>
       </div>
+
+      <div class="col-span-2"></div>
     </div>
-    <div class="bg-gray-100 pt-2">
+    <div class="container pt-2 mx-auto bg-gray-100">
       <div
-        class="flex pb-5 px-3 m-auto pt-5 border-t text-gray-800 text-sm flex-col md:flex-row max-w-6xl"
+        class="flex flex-col py-5 m-auto text-sm text-gray-800 border-t md:flex-row"
       >
-        <div class="mt-2">© Copyright 2020. All Rights Reserved.</div>
-        <div class="md:flex-auto md:flex-row-reverse mt-2 flex-row flex">
+        <div class="mt-2">&copy; Copyright 2020. All Rights Reserved.</div>
+        <div class="flex flex-row mt-2 md:flex-auto md:flex-row-reverse">
           <a href="/#" class="w-6 mx-1">
             <svg
-              class="fill-current cursor-pointer text-gray-500 hover:text-gray-400"
+              class="text-gray-500 cursor-pointer fill-current hover:text-gray-400"
               width="100%"
               height="100%"
               viewBox="0 0 24 24"
@@ -83,7 +70,7 @@
           </a>
           <a href="/#" class="w-6 mx-1">
             <svg
-              class="fill-current cursor-pointer text-gray-500 hover:text-gray-400"
+              class="text-gray-500 cursor-pointer fill-current hover:text-gray-400"
               width="100%"
               height="100%"
               viewBox="0 0 24 24"
@@ -111,7 +98,7 @@
           </a>
           <a href="/#" class="w-6 mx-1">
             <svg
-              class="fill-current cursor-pointer text-gray-500 hover:text-gray-400"
+              class="text-gray-500 cursor-pointer fill-current hover:text-gray-400"
               width="100%"
               height="100%"
               viewBox="0 0 24 24"
@@ -152,7 +139,7 @@
           </a>
           <a href="/#" class="w-6 mx-1">
             <svg
-              class="fill-current cursor-pointer text-gray-500 hover:text-gray-400"
+              class="text-gray-500 cursor-pointer fill-current hover:text-gray-400"
               width="100%"
               height="100%"
               viewBox="0 0 24 24"
@@ -189,7 +176,7 @@
           </a>
           <a href="/#" class="w-6 mx-1">
             <svg
-              class="fill-current cursor-pointer text-gray-500 hover:text-gray-400"
+              class="text-gray-500 cursor-pointer fill-current hover:text-gray-400"
               width="100%"
               height="100%"
               viewBox="0 0 24 24"
@@ -219,7 +206,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </footer>
 </template>
 
 <script>
@@ -230,112 +217,50 @@ export default {
     profile: false,
     menu: [
       {
-        title: 'Аукционы',
-        to: '#',
+        name: 'Площадка',
         children: [
           {
-            name: 'Services',
+            name: 'Новости',
             to: '#',
           },
           {
-            name: 'Products',
+            name: 'О площадке',
             to: '#',
           },
           {
-            name: 'About Us',
+            name: 'Контакты',
             to: '#',
           },
           {
-            name: 'Pricing',
+            name: 'Оператор ЭТП',
             to: '#',
           },
         ],
       },
       {
-        title: 'Новости',
-        to: '#',
+        name: 'Участникам',
         children: [
           {
-            name: 'Services',
+            name: 'Как участвовать',
             to: '#',
           },
           {
-            name: 'Products',
-            to: '#',
-          },
-          {
-            name: 'About Us',
-            to: '#',
-          },
-          {
-            name: 'Pricing',
+            name: 'Регламент ЭТП',
             to: '#',
           },
         ],
       },
       {
-        title: 'Как участвовать',
-        to: '#',
+        name: 'Организаторам',
         children: [
           {
-            name: 'Services',
+            name: 'Как организовывать аукцион',
             to: '#',
           },
           {
-            name: 'Products',
+            name: 'Стоимость услуг',
             to: '#',
-          },
-          {
-            name: 'About Us',
-            to: '#',
-          },
-          {
-            name: 'Pricing',
-            to: '#',
-          },
-        ],
-      },
-      {
-        title: 'Организаторам',
-        to: '#',
-        children: [
-          {
-            name: 'Services',
-            to: '#',
-          },
-          {
-            name: 'Products',
-            to: '#',
-          },
-          {
-            name: 'About Us',
-            to: '#',
-          },
-          {
-            name: 'Pricing',
-            to: '#',
-          },
-        ],
-      },
-      {
-        title: 'О площадке',
-        to: '#',
-        children: [
-          {
-            name: 'Services',
-            to: '#',
-          },
-          {
-            name: 'Products',
-            to: '#',
-          },
-          {
-            name: 'About Us',
-            to: '#',
-          },
-          {
-            name: 'Pricing',
-            to: '#',
+            tag: 'Новое',
           },
         ],
       },
