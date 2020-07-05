@@ -15,10 +15,10 @@
             name="countryId"
             type="text"
             autocomplete="no"
-            :disabled="noCountry"
+            :disabled="!noCountry"
             class="block w-full px-4 py-3 pr-12 bg-white border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
           >
-            <option :selected="noCountry" value="BY">Беларусь</option>
+            <option :selected="!noCountry" value="BY">Беларусь</option>
           </select>
           <div
             class="absolute top-0 bottom-0 right-0 flex items-center px-4 text-gray-400 pointer-events-none"
@@ -61,7 +61,7 @@
       </div>
     </div>
 
-    <div class="w-full xl:w-1/3 xl:pl-4">
+    <div class="w-full lg:w-1/2 lg:pr-4 xl:w-1/3">
       <div class="py-3">
         <label
           for="sity"
@@ -81,7 +81,7 @@
       </div>
     </div>
 
-    <div class="w-full lg:w-1/3 lg:pr-4">
+    <div class="w-full lg:w-1/2 xl:pr-4 xl:w-1/3 lg:pl-4 xl:pl-0">
       <div class="py-3">
         <label
           for="postalCode"
@@ -101,7 +101,7 @@
       </div>
     </div>
 
-    <div class="w-full lg:w-1/3 lg:px-4">
+    <div class="w-full xl:w-2/3 xl:pl-4">
       <div class="py-3">
         <label
           for="address"
