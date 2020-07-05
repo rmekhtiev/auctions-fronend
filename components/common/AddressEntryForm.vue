@@ -11,14 +11,17 @@
         <div class="relative">
           <select
             id="countryId"
-            v-model="formData.country_id"
+            v-model="formData.country_code"
             name="countryId"
             type="text"
             autocomplete="no"
-            :disabled="!noCountry"
+            :disabled="noCountry"
+            :class="{
+              'bg-gray-300': noCountry,
+            }"
             class="block w-full px-4 py-3 pr-12 bg-white border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
           >
-            <option :selected="!noCountry" value="BY">Беларусь</option>
+            <option value="BY">Беларусь</option>
           </select>
           <div
             class="absolute top-0 bottom-0 right-0 flex items-center px-4 text-gray-400 pointer-events-none"
@@ -143,6 +146,13 @@ export default {
       set(formData) {
         this.$emit('input', formData)
       },
+    },
+  },
+  watch: {
+    noCountry(val) {
+      if (val) {
+        this.value.country_code = 'BY'
+      }
     },
   },
 }
