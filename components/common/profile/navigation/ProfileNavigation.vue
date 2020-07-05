@@ -1,10 +1,10 @@
 <template>
-  <div class="flex flex-col justify-between w-64 bg-white shadow-md">
-    <nav class="my-10">
+  <div class="flex flex-col justify-between bg-white shadow-md">
+    <nav class="sticky py-10 top-16">
       <nuxt-link
         :to="{ name: 'account' }"
-        exact-active-class="bg-gray-200 border-r-4 border-gray-700"
-        class="flex items-center py-4 pl-8 pr-2 mb-2 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:bg-gray-200"
+        exact-active-class="bg-gray-200 border-gray-700"
+        class="flex items-center py-4 pl-8 pr-2 mb-2 text-gray-700 transition duration-150 ease-in-out border-r-4 border-transparent hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:bg-gray-200"
         role="menuitem"
       >
         <inbox-icon class="w-5 h-5" />
@@ -20,8 +20,8 @@
 
       <nuxt-link
         :to="{ name: 'account-profile' }"
-        active-class="bg-gray-200 border-r-4 border-gray-700"
-        class="flex items-center py-4 pl-8 pr-2 mb-2 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:bg-gray-200"
+        active-class="bg-gray-200 border-gray-700"
+        class="flex items-center py-4 pl-8 pr-2 mb-2 text-gray-700 transition duration-150 ease-in-out border-r-4 border-transparent hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:bg-gray-200"
         role="menuitem"
       >
         <users-icon class="w-5 h-5" />
@@ -31,8 +31,8 @@
 
       <nuxt-link
         :to="{ name: 'account-settings' }"
-        active-class="bg-gray-200 border-r-4 border-gray-700"
-        class="flex items-center py-4 pl-8 pr-2 mb-2 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:bg-gray-200"
+        active-class="bg-gray-200 border-gray-700"
+        class="flex items-center py-4 pl-8 pr-2 mb-2 text-gray-700 transition duration-150 ease-in-out border-r-4 border-transparent hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:bg-gray-200"
         role="menuitem"
       >
         <settings-icon class="w-5 h-5" />
@@ -41,7 +41,7 @@
       </nuxt-link>
     </nav>
 
-    <nav class="my-10">
+    <nav class="py-10">
       <a
         class="flex items-center py-4 pl-8 pr-2 text-gray-500 transition duration-150 ease-in-out hover:text-gray-600"
         href="#"
