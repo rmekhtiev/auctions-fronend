@@ -76,6 +76,23 @@
       </div>
       <legal-entity-form v-model="counterparty" />
     </div>
+    <div
+      class="flex flex-col w-full p-4 px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md"
+    >
+      <div class="flex items-center mb-2">
+        <div
+          v-show="false"
+          class="flex items-center justify-center w-12 h-12 mr-4 text-gray-500 bg-gray-100 rounded-full"
+        >
+          <user-plus-icon class="w-6 h-6" />
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold text-gray-600">Юридический адрес</h3>
+          <p class="text-sm text-gray-500">Profit Share between customers</p>
+        </div>
+      </div>
+      <address-entry-form v-model="address" no-country />
+    </div>
 
     <div class="flex flex-row justify-end">
       <button
@@ -99,6 +116,9 @@ export default {
     counterparty: {
       _type: 'UL',
       name: {},
+    },
+    address: {
+      country_code: 'BY',
     },
   }),
   methods: {
