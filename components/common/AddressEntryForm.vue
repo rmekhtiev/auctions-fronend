@@ -17,7 +17,7 @@
             autocomplete="no"
             :disabled="noCountry"
             :class="{
-              'bg-gray-300': noCountry,
+              'bg-gray-200 cursor-not-allowed': noCountry,
             }"
             class="block w-full px-4 py-3 pr-12 bg-white border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
           >
@@ -55,7 +55,7 @@
         <input
           id="state"
           v-model.trim="formData.state"
-          placeholder="Введите область"
+          placeholder="напр.: Минская область"
           name="state"
           type="text"
           autocomplete="no"
@@ -75,7 +75,7 @@
         <input
           id="sity"
           v-model.trim="formData.sity"
-          placeholder="Введите населенный пункт"
+          placeholder="напр.: г. Минск"
           name="sity"
           type="text"
           autocomplete="no"
@@ -115,7 +115,7 @@
         <input
           id="address"
           v-model.trim="formData.address"
-          placeholder="Введите адрес"
+          placeholder="Улица, дом, кв./офис"
           name="address"
           type="text"
           autocomplete="no"
