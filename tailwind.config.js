@@ -5,7 +5,14 @@
  ** Default: https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js
  */
 module.exports = {
-  theme: {},
+  theme: {
+    extend: {
+      inset: {
+        10: '2.5rem',
+        16: '4rem',
+      },
+    },
+  },
   variants: {
     borderWidth: ['responsive', 'last'],
   },

@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <div class="flex flex-col min-h-screen">
     <the-navbar />
 
-    <main class="relative h-0 min-h-screen pt-16">
-      <Nuxt />
+    <main class="relative flex-grow pt-16">
+      <nuxt />
     </main>
+
     <the-footer />
   </div>
 </template>
@@ -12,6 +13,7 @@
 <style>
 html,
 body {
-  @apply bg-gray-100 h-screen;
+  @apply bg-gray-100;
+  @apply min-h-screen;
 }
 </style>
