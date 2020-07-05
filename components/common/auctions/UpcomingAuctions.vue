@@ -21,10 +21,10 @@
       >
         <div class="w-1/6">
           <span class="block text-sm text-gray-600">
-            {{ $moment(auction.attributes.starts_at).format('H:mm') }}
+            {{ $moment(auction.attributes.starts_at).format('LT') }}
           </span>
           <span class="block text-sm text-gray-600">
-            {{ $moment(auction.attributes.ends_at).format('H:mm') }}
+            {{ $moment(auction.attributes.ends_at).format('LT') }}
           </span>
         </div>
         <div class="w-5/6">
