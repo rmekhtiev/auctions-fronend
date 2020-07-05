@@ -7,7 +7,7 @@
         <img
           class="object-cover object-center w-full h-56 lg:h-48 xl:h-56"
           src="https://via.placeholder.com/450x450"
-          alt="avatar"
+          :alt="auction.attributes.display_title"
         />
       </picture>
     </div>
@@ -28,12 +28,17 @@
         <div class="px-2 text-sm">Минская область</div>
       </li>
     </ul>
-    <button
-      type="submit"
+    <nuxt-link
+      :to="{
+        name: 'auctions-id',
+        params: {
+          id: auction.id,
+        },
+      }"
       class="block px-6 py-3 m-4 text-lg font-semibold text-center text-black transition duration-150 bg-white border-2 rounded-lg hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
     >
       623 695.41 BYN
-    </button>
+    </nuxt-link>
   </article>
 </template>
 
