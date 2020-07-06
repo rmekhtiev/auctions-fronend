@@ -23,11 +23,11 @@
         </div>
       </div>
 
-      <div class="col-span-2"></div>
+      <div class="md:col-span-2"></div>
     </div>
     <div class="container pt-2 mx-auto bg-gray-100">
       <div
-        class="flex flex-col py-5 m-auto text-sm text-gray-800 border-t md:flex-row"
+        class="flex flex-col-reverse py-5 m-auto text-sm text-gray-800 border-t md:flex-row"
       >
         <div class="mt-2">&copy; Copyright 2020. All Rights Reserved.</div>
         <div class="flex flex-row mt-2 md:flex-auto md:flex-row-reverse">
@@ -235,6 +235,10 @@ export default {
             name: 'Оператор ЭТП',
             to: '#',
           },
+          {
+            name: 'Политика конфиденциальности',
+            to: '#',
+          },
         ],
       },
       {
@@ -260,7 +264,7 @@ export default {
           {
             name: 'Стоимость услуг',
             to: '#',
-            tag: 'Новое',
+            tag: 'Обновлено',
           },
         ],
       },

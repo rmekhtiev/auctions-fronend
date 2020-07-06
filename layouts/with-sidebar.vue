@@ -3,11 +3,11 @@
     <the-navbar />
 
     <div class="relative flex flex-grow pt-16">
-      <aside class="w-64">
+      <aside class="flex-shrink-0 w-64">
         <profile-navigation class="h-full" />
       </aside>
       <div class="flex flex-grow">
-        <main class="flex flex-col w-full p-4">
+        <main class="flex flex-col w-full py-4">
           <nuxt />
         </main>
         <!-- <the-footer class="px-4" /> -->
