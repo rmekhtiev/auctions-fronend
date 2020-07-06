@@ -281,12 +281,10 @@
 </template>
 
 <script>
-import { MapPinIcon, ClockIcon, CheckIcon } from 'vue-feather-icons'
+import { CheckIcon } from 'vue-feather-icons'
 
 export default {
   components: {
-    MapPinIcon,
-    ClockIcon,
     CheckIcon,
   },
 

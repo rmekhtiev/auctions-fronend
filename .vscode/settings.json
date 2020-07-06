@@ -7,5 +7,6 @@
         "javascript",
         "javascriptreact",
         "vue"
-    ]
+    ],
+    "i18n-ally.localesPaths": "lang"
 }
