@@ -38,7 +38,9 @@ export default {
     '~/plugins/vue-string-filter',
     '~/plugins/reststate-vuex',
     '~/plugins/vue-i18n',
-  ],
+    '~/plugins/axios',
+
+],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -63,7 +65,14 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/auth',
     '@nuxtjs/pwa',
+    '@nuxtjs/toast',
   ],
+
+  toast: {
+    position: 'top-right',
+    duration: 3000,
+  },
+
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
