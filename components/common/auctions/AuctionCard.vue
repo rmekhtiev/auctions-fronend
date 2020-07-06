@@ -17,7 +17,10 @@
     <ul class="px-6">
       <li class="flex items-center mt-2 text-gray-700">
         <clock-icon class="w-4 h-4" />
-        <div class="px-2 text-sm">15 августа в в 9:00</div>
+        <div
+          class="px-2 text-sm"
+          v-text="$moment(auction.starts_at).format('LL')"
+        />
       </li>
       <li class="flex items-center mt-2 text-gray-700">
         <users-icon class="w-4 h-4" />
