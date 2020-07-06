@@ -38,7 +38,7 @@
     </div>
     <div class="flex flex-row justify-end">
       <nuxt-link
-        :to="{ name: 'account-profile-new' }"
+        :to="{ name: 'account-profiles-new' }"
         class="inline-flex px-4 py-2 text-sm font-semibold text-white transition duration-150 bg-gray-800 border-2 border-transparent rounded-lg hover:text-white hover:bg-black focus:border-gray-600 focus:outline-none"
       >
         <user-plus-icon class="flex-shrink w-5 h-5 mr-2" />

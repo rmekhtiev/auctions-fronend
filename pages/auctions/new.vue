@@ -1,0 +1,421 @@
+<template>
+  <div>
+    <div class="z-40 mb-6 bg-gray-100 //lg:sticky top-16">
+      <div class="container flex flex-col mx-auto">
+        <div class="my-2 lg:flex lg:items-center lg:justify-between">
+          <div class="flex-1 min-w-0">
+            <h2
+              class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate"
+              v-text="auction.title || 'Новый аукцион'"
+            />
+            <div class="flex flex-col mt-1 sm:mt-0 sm:flex-row sm:flex-wrap">
+              <div
+                v-if="auction.starts_at"
+                class="flex items-center mt-2 text-sm leading-5 text-gray-600 sm:mr-6"
+              >
+                <clock-icon class="flex-shrink-0 w-5 h-5 mr-2 text-gray-500" />
+                {{ $moment(auction.starts_at).format('LL') }}
+              </div>
+
+              <div
+                v-if="address.state"
+                class="flex items-center mt-2 text-sm leading-5 text-gray-600 sm:mr-6"
+              >
+                <map-pin-icon
+                  class="flex-shrink-0 w-5 h-5 mr-2 text-gray-500"
+                />
+                {{ address.state }}
+              </div>
+            </div>
+          </div>
+          <div class="flex mt-5 lg:mt-0 lg:ml-4">
+            <span class="hidden ml-3 sm:block">
+              <button
+                type="button"
+                class="inline-flex px-4 py-2 text-sm font-medium leading-5 text-gray-500 transition duration-150 bg-white border-2 rounded-lg shadow-sm hover:text-gray-700 hover:bg-gray-200 focus:text-gray-700 focus:border-gray-600 focus:outline-none"
+              >
+                <svg
+                  class="w-5 h-5 mr-2 -ml-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                View
+              </button>
+            </span>
+
+            <span class="sm:ml-3">
+              <button
+                type="button"
+                class="inline-flex px-4 py-2 text-sm font-medium leading-5 text-white transition duration-150 bg-indigo-600 border-2 border-transparent rounded-lg shadow-sm hover:text-white hover:bg-indigo-500 focus:border-indigo-300 focus:outline-none"
+                @click="save()"
+              >
+                <check-icon class="w-5 h-5 mr-2 -ml-1" />
+                Сохранить
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container flex flex-col mx-auto">
+      <div
+        class="flex flex-col w-full p-4 px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md"
+      >
+        <div class="flex items-center mb-4">
+          <div>
+            <h3 class="text-xl font-semibold text-gray-600">Новый аукцион</h3>
+            <p class="text-sm text-gray-500">
+              Введите основные данные о предстоящем аукционе
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
+          <div class="w-full lg:col-span-2">
+            <label
+              for="title"
+              class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
+            >
+              Название аукциона <span class="text-red-700">*</span>
+            </label>
+            <input
+              id="title"
+              key="title"
+              v-model.trim="auction.title"
+              placeholder="Введите значение"
+              name="title"
+              type="string"
+              autocomplete="no"
+              minlength="3"
+              maxlength="255"
+              class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+            />
+          </div>
+
+          <div class="w-full">
+            <label
+              for="type"
+              class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
+            >
+              Тип торгов <span class="text-red-700">*</span>
+            </label>
+
+            <div class="relative">
+              <select
+                id="type"
+                v-model="auction._type"
+                name="type"
+                autocomplete="no"
+                class="block w-full px-4 py-3 pr-12 bg-white border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+              >
+                <option value="BANKRUPCY">Банкротство</option>
+              </select>
+              <div
+                class="absolute top-0 bottom-0 right-0 flex items-center px-4 text-gray-400 pointer-events-none"
+              >
+                <svg
+                  class="w-5 h-5"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M7 7l3-3 3 3m0 6l-3 3-3-3"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full">
+            <label
+              for="seller"
+              class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
+            >
+              Продавец <span class="text-red-700">*</span>
+            </label>
+
+            <div class="relative">
+              <select
+                id="seller"
+                v-model="auction.seller_id"
+                name="seller"
+                autocomplete="no"
+                class="block w-full px-4 py-3 pr-12 bg-white border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+              >
+                <option
+                  v-for="counterparty in counterparties"
+                  :key="`counterparty-select-${counterparty.id}`"
+                  :value="counterparty.id"
+                  v-text="counterparty.attributes.display_name"
+                />
+              </select>
+              <div
+                class="absolute top-0 bottom-0 right-0 flex items-center px-4 text-gray-400 pointer-events-none"
+              >
+                <svg
+                  class="w-5 h-5"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M7 7l3-3 3 3m0 6l-3 3-3-3"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full">
+            <label
+              for="organizer"
+              class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
+            >
+              Организатор <span class="text-red-700">*</span>
+            </label>
+
+            <div class="relative">
+              <select
+                id="organizer"
+                v-model="auction.organizer_id"
+                name="organizer"
+                autocomplete="no"
+                class="block w-full px-4 py-3 pr-12 bg-white border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+              >
+                <option
+                  v-for="counterparty in counterparties"
+                  :key="`counterparty-select-${counterparty.id}`"
+                  :value="counterparty.id"
+                  v-text="counterparty.attributes.display_name"
+                />
+              </select>
+              <div
+                class="absolute top-0 bottom-0 right-0 flex items-center px-4 text-gray-400 pointer-events-none"
+              >
+                <svg
+                  class="w-5 h-5"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M7 7l3-3 3 3m0 6l-3 3-3-3"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col w-full p-4 px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md"
+      >
+        <div class="flex items-center mb-4">
+          <div>
+            <h3 class="text-xl font-semibold text-gray-600">Адрес лота</h3>
+            <p class="text-sm text-gray-500">
+              Введите адрес, где будет находится лот, на момент проведения
+              торгов
+            </p>
+          </div>
+        </div>
+
+        <address-entry-form v-model="address" no-country />
+      </div>
+
+      <div
+        class="flex flex-col w-full p-4 px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md"
+      >
+        <div class="flex items-center mb-4">
+          <div>
+            <h3 class="text-xl font-semibold text-gray-600">
+              Дата и время проведения аукциона
+            </h3>
+            <p class="text-sm text-gray-500">
+              Выберите дату и время, когда будут проводится торги
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
+          <div class="w-full lg:col-span-1">
+            <label
+              for="date"
+              class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
+            >
+              День проведения <span class="text-red-700">*</span>
+            </label>
+            <input
+              id="date"
+              key="date"
+              v-model="auction.date"
+              placeholder="День проведения торгов"
+              name="date"
+              type="date"
+              autocomplete="no"
+              class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+            />
+          </div>
+
+          <div class="w-full lg:col-span-1">
+            <label
+              for="startTime"
+              class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
+            >
+              Начало <span class="text-red-700">*</span>
+            </label>
+            <input
+              id="startTime"
+              key="startTime"
+              v-model="auction.start_time"
+              placeholder="Время начала"
+              name="startTime"
+              type="time"
+              autocomplete="no"
+              disabled
+              :class="{
+                'bg-gray-200 cursor-not-allowed': true,
+              }"
+              class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+            />
+          </div>
+
+          <div class="w-full lg:col-span-1">
+            <label
+              for="endTime"
+              class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
+            >
+              Конец <span class="text-red-700">*</span>
+            </label>
+            <input
+              id="endTime"
+              key="endTime"
+              v-model="auction.end_time"
+              placeholder="День проведения торгов"
+              name="end_time"
+              type="time"
+              autocomplete="no"
+              disabled
+              :class="{
+                'bg-gray-200 cursor-not-allowed': true,
+              }"
+              class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { MapPinIcon, ClockIcon, CheckIcon } from 'vue-feather-icons'
+
+export default {
+  components: {
+    MapPinIcon,
+    ClockIcon,
+    CheckIcon,
+  },
+
+  middleware: ['auth', 'verified'],
+
+  async fetch() {
+    await this.loadCounterparties()
+  },
+
+  data: () => ({
+    auction: {
+      title: '',
+      _type: 'BANKRUPCY',
+      start_time: '10:00',
+      end_time: '18:00',
+      seller_id: null,
+      organizer_id: null,
+    },
+    address: {
+      country_code: 'BY',
+    },
+  }),
+
+  computed: {
+    counterparties() {
+      return this.$store.getters['counterparties/related']({
+        parent: this.$auth.user,
+        relation: 'counterparties',
+      })
+    },
+  },
+
+  watch: {
+    'auction.date'() {
+      this.recalculateDatetimes()
+    },
+    'auction.start_time'() {
+      this.recalculateDatetimes()
+    },
+    'auction.end_time'() {
+      this.recalculateDatetimes()
+    },
+  },
+
+  methods: {
+    loadCounterparties() {
+      return this.$store.dispatch('counterparties/loadRelated', {
+        parent: this.$auth.user,
+        relation: 'counterparties',
+      })
+    },
+
+    recalculateDatetimes() {
+      const startsAt = this.$moment(
+        this.auction.date + ' ' + this.auction.start_time
+      ).clone()
+      const endsAt = this.$moment(
+        this.auction.date + ' ' + this.auction.end_time
+      ).clone()
+
+      this.auction.starts_at = startsAt
+      this.auction.ends_at = endsAt
+    },
+
+    save() {
+      const formData = {
+        attributes: this.auction,
+        relationships: {
+          seller: {
+            data: {
+              type: 'counterparties',
+              id: `${this.auction.seller_id}`,
+            },
+          },
+          organizer: {
+            data: {
+              type: 'counterparties',
+              id: `${this.auction.organizer_id}`,
+            },
+          },
+        },
+      }
+      this.$store.dispatch('auctions/create', formData)
+    },
+  },
+}
+</script>

@@ -3,7 +3,7 @@
     <the-navbar />
 
     <main class="relative flex-grow pt-16">
-      <nuxt />
+      <nuxt class="py-4" />
     </main>
 
     <the-footer />
