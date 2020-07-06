@@ -121,7 +121,7 @@ export default {
       this.$store
         .dispatch('counterparties/create', recordData)
         .then((_response) => {
-          this.$router.push({ name: 'account-profile' })
+          this.$router.push({ name: 'account-profiles' })
         })
     },
   },
