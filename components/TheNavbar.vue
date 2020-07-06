@@ -153,7 +153,7 @@ export default {
     menu: [
       {
         title: 'Аукционы',
-        to: '#',
+        to: { name: 'auctions' },
       },
       {
         title: 'Новости',

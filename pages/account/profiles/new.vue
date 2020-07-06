@@ -87,11 +87,10 @@
 </template>
 
 <script>
-import { UserPlusIcon, CheckIcon } from 'vue-feather-icons'
+import { CheckIcon } from 'vue-feather-icons'
 
 export default {
   components: {
-    UserPlusIcon,
     CheckIcon,
   },
   data: () => ({

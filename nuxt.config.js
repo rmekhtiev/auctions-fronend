@@ -102,11 +102,6 @@ export default {
     defaultLocale: 'ru',
     locales: ['ru'],
   },
-
-  router: {
-    middleware: ['auth', 'verified'],
-  },
-
   /*
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/

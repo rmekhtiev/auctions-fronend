@@ -119,6 +119,7 @@
 export default {
   verified: false,
   auth: 'guest',
+  middleware: ['auth', 'verified'],
   data: () => ({
     formData: {
       email: '',
