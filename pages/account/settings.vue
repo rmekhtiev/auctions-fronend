@@ -263,20 +263,18 @@ export default {
       }
     },
   },
-  beforeMount() {
-    this.formData.email = this.$auth.user.attributes.email
-    this.formData.login = this.$auth.user.attributes.login
+  created() {
+    Object.assign(this.formData, this.$auth.user.attributes)
   },
   methods: {
     submit() {
       this.$axios
-        .post('auth/register', this.formData)
-        .then(async (_result) => {
-          await this.$auth.loginWith('local', { data: this.formData })
-          await this.$router.push({ name: 'auth-registration-confirm' })
+        .patch('users/' + this.$auth.user.id, this.formData)
+        .then(() => {
+          this.$auth.fetchUser()
         })
         .catch((_err) => {
-          this.errors = _err.response.data.errors
+          console.error(_err)
         })
     },
   },
