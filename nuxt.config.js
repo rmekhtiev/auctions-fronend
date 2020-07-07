@@ -39,8 +39,7 @@ export default {
     '~/plugins/reststate-vuex',
     '~/plugins/vue-i18n',
     '~/plugins/axios',
-
-],
+  ],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components

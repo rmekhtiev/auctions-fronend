@@ -1,25 +1,22 @@
-export default function(nuxt) {
-  const { $axios, redirect, app } = nuxt;
-  const { $toast, $auth } = app;
+export default function (nuxt) {
+  const { $axios, app } = nuxt
+  const { $toast } = app
 
-  // eslint-disable-next-line no-unused-vars
-  $axios.onRequest(config => {});
+  // eslint-disable-next-line
+  $axios.onRequest((config) => {})
 
-  $axios.onError(error => {
-    switch(error.response.status) {
-      case 500:
-        $toast.error('Ошибка сервера')
-
-
+  $axios.onError((error) => {
+    switch (error.response.status) {
       case 406:
         $toast.error('Ошибка валидации')
-
+        break
+      case 500:
+        $toast.error('Ошибка сервера')
     }
   })
 
-  $axios.onResponse(response => {
-    switch(response.status) {
-
+  $axios.onResponse((response) => {
+    switch (response.status) {
       case 201:
         $toast.success('Успешно создано')
         break
@@ -28,9 +25,6 @@ export default function(nuxt) {
         break
       case 204:
         $toast.success('Удалено')
-        break
-      case 200:
-        $toast.success('Success')
     }
   })
 }
