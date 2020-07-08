@@ -39,6 +39,7 @@ export default {
     '~/plugins/reststate-vuex',
     '~/plugins/vue-i18n',
     '~/plugins/axios',
+    { src: '~plugins/v-calendar.js', ssr: false }
   ],
   /*
    ** Auto import components
