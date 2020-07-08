@@ -106,22 +106,41 @@
       >
         Номер телефона <span class="text-red-700">*</span>
       </label>
-      <input
-        id="phone"
-        key="phone"
-        v-model="formData.phone"
-        placeholder="Для связи при торгах"
-        name="phone"
-        type="tel"
-        autocomplete="no"
-        class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-      />
+      <client-only>
+        <vue-tel-input
+          key="phone"
+          v-model="formData.phone"
+          input-id="phone"
+          placeholder="Для связи при торгах"
+          name="phone"
+          default-country="BY"
+          :preferred-countries="['BY', 'RU']"
+          input-classes="block w-full px-4 py-3 appearance-none bg-grey-lighter text-grey-darker focus:outline-none"
+        />
+
+        <input
+          id="phone"
+          slot="placeholder"
+          key="phone"
+          v-model="formData.phone"
+          placeholder="Для связи при торгах"
+          name="phone"
+          type="tel"
+          autocomplete="no"
+          class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+        />
+      </client-only>
     </div>
   </div>
 </template>
 
 <script>
+import { VueTelInput } from 'vue-tel-input'
+
 export default {
+  components: {
+    VueTelInput,
+  },
   props: {
     value: {
       type: Object,
@@ -140,3 +159,13 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.vue-tel-input {
+  @apply border-2 rounded border-gray-300;
+
+  &:focus-within {
+    @apply shadow-none border-gray-600;
+  }
+}
+</style>

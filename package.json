@@ -29,12 +29,15 @@
     "@nuxtjs/toast": "^3.3.0",
     "@reststate/vuex": "^0.2.2",
     "lodash.groupby": "^4.6.0",
+    "node-sass": "^4.14.1",
     "nuxt": "^2.13.0",
+    "sass-loader": "^9.0.2",
     "vue-feather-icons": "^5.0.0",
     "vue-i18n": "^8.18.2",
     "vue-moment": "^4.1.0"
   },
   "devDependencies": {
+    "@babel/runtime-corejs3": "^7.10.4",
     "@nuxt/typescript-build": "^1.0.3",
     "@nuxtjs/eslint-config": "^3.0.0",
     "@nuxtjs/eslint-config-typescript": "^2.0.0",
@@ -43,7 +46,9 @@
     "@nuxtjs/stylelint-module": "^4.0.0",
     "@nuxtjs/tailwindcss": "^2.0.0",
     "@tailwindcss/custom-forms": "^0.2.1",
+    "@types/vue-tel-input": "^2.1.1",
     "babel-eslint": "^10.1.0",
+    "core-js": "3",
     "eslint": "^7.2.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-formatter-gitlab": "^2.0.0",
@@ -58,6 +63,7 @@
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-standard": "^20.0.0",
     "vue-click-outside": "^1.1.0",
-    "vue-string-filter": "^2.0.0"
+    "vue-string-filter": "^2.0.0",
+    "vue-tel-input": "^4.4.0"
   }
 }
