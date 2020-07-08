@@ -11,6 +11,7 @@
         id="inn"
         key="inn"
         v-model.trim="formData.inn"
+        v-numbers
         placeholder="9 цифр"
         name="inn"
         type="tel"
@@ -151,17 +152,24 @@
 
 <script>
 import { VueTelInput } from 'vue-tel-input'
+import numbers from '~/directives/numbers'
 
 export default {
   components: {
     VueTelInput,
   },
+
+  directives: {
+    numbers,
+  },
+
   props: {
     value: {
       type: Object,
       required: true,
     },
   },
+
   computed: {
     formData: {
       get() {
@@ -172,6 +180,8 @@ export default {
       },
     },
   },
+
+  methods: {},
 }
 </script>
 
