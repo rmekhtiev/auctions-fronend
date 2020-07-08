@@ -126,9 +126,52 @@ export default {
       password: '',
     },
   }),
+  mounted() {
+    // this.tryAutoSignIn()
+  },
   methods: {
     submit() {
-      this.$auth.loginWith('local', { data: this.formData })
+      this.$auth.loginWith('local', { data: this.formData }).then(() => {
+        this.storePassword(this.formData.email, this.formData.password)
+      })
+    },
+
+    storePassword(username, password) {
+      if (!window.PasswordCredential) {
+        return Promise.resolve()
+      }
+
+      const cred = new window.PasswordCredential({
+        id: username,
+        password,
+        name: username,
+      })
+
+      return navigator.credentials.store(cred)
+    },
+
+    tryAutoSignIn() {
+      if (!window.PasswordCredential) {
+        return
+      }
+
+      navigator.credentials
+        .get({
+          password: true,
+          mediation: 'optional',
+        })
+        .then((credential) => {
+          if (!credential) {
+            return
+          }
+
+          this.$auth.loginWith('local', {
+            data: {
+              email: credential.id,
+              password: credential.password,
+            },
+          })
+        })
     },
   },
 }

@@ -161,6 +161,7 @@
             <nuxt-link
               :to="{ name: 'auth' }"
               class="px-3 py-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-blue-500 rounded-md hover:text-white hover:bg-blue-700 focus:outline-none focus:text-white focus:bg-blue-700"
+              @click.native="tryAutoSignIn"
             >
               Войти в аккаунт
             </nuxt-link>
@@ -233,6 +234,31 @@ export default {
         this.$exp.name === 'navbar-contacts' &&
         this.$exp.$activeVariants.some(({ name }) => name === 'notifications')
       )
+    },
+  },
+  methods: {
+    async tryAutoSignIn(event) {
+      if (!window.PasswordCredential) {
+        return
+      }
+
+      const credential = await navigator.credentials.get({
+        password: true,
+        mediation: 'optional',
+      })
+
+      if (!credential) {
+        return
+      }
+
+      const response = await this.$auth.loginWith('local', {
+        data: {
+          email: credential.id,
+          password: credential.password,
+        },
+      })
+
+      if (response) event.preventDefault()
     },
   },
 }

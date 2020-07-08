@@ -40,7 +40,7 @@ export default {
     '~/plugins/vue-string-filter',
     '~/plugins/reststate-vuex',
     '~/plugins/vue-i18n',
-    '~/plugins/axios',
+    { src: '~/plugins/axios', ssr: false },
   ],
   /*
    ** Auto import components
@@ -75,7 +75,6 @@ export default {
   googleAnalytics: {
     id: process.env.GA_ID || 'UA-167845392-3',
   },
-
 
   toast: {
     position: 'top-right',
