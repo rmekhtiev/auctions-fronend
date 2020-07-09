@@ -264,12 +264,23 @@ export default {
     },
   },
   created() {
-    Object.assign(this.formData, this.$auth.user.attributes)
+    Object.assign({
+      attributes: this.formData,
+      id: this.$auth.user.id,
+      types: 'users',
+    })
   },
   methods: {
     submit() {
+      const form = {
+        data: {
+          attributes: this.formData,
+          id: `${this.$auth.user.id}`,
+          type: 'users',
+        },
+      }
       this.$axios
-        .patch('users/' + this.$auth.user.id, this.formData)
+        .patch('users/' + this.$auth.user.id, form)
         .then(() => {
           this.$auth.fetchUser()
         })
