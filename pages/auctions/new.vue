@@ -217,16 +217,31 @@
             >
               День проведения <span class="text-red-700">*</span>
             </label>
-            <input
-              id="date"
-              key="date"
-              v-model="auction.date"
-              placeholder="День проведения торгов"
-              name="date"
-              type="date"
-              autocomplete="no"
-              class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-            />
+            <client-only>
+              <v-date-picker v-model="auction.date">
+                <input
+                  id="date"
+                  key="date"
+                  slot-scope="{ inputProps, inputEvents }"
+                  placeholder="День проведения торгов"
+                  class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+                  autocomplete="no"
+                  v-bind="inputProps"
+                  v-on="inputEvents"
+                />
+              </v-date-picker>
+              <input
+                id="date"
+                slot="placeholder"
+                key="date"
+                v-model="auction.date"
+                placeholder="День проведения торгов"
+                name="date"
+                type="date"
+                autocomplete="no"
+                class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+              />
+            </client-only>
           </div>
 
           <div class="w-full lg:col-span-1">
@@ -339,10 +354,14 @@ export default {
 
     recalculateDatetimes() {
       const startsAt = this.$moment(
-        this.auction.date + ' ' + this.auction.start_time
+        this.$moment(this.auction.date).format('YYYY-MM-DD') +
+          ' ' +
+          this.auction.start_time
       ).clone()
       const endsAt = this.$moment(
-        this.auction.date + ' ' + this.auction.end_time
+        this.$moment(this.auction.date).format('YYYY-MM-DD') +
+          ' ' +
+          this.auction.end_time
       ).clone()
 
       this.auction.starts_at = startsAt

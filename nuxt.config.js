@@ -41,6 +41,7 @@ export default {
     '~/plugins/reststate-vuex',
     '~/plugins/vue-i18n',
     { src: '~/plugins/axios', ssr: false },
+    { src: '~plugins/v-calendar.js', ssr: false },
   ],
   /*
    ** Auto import components
@@ -129,5 +130,19 @@ export default {
       '@reststate/vuex',
       '@reststate/client',
     ],
+    babel: {
+      presets({ isServer }) {
+        return [
+          [
+            require.resolve('@nuxt/babel-preset-app'),
+            // require.resolve('@nuxt/babel-preset-app-edge'), // For nuxt-edge users
+            {
+              buildTarget: isServer ? 'server' : 'client',
+              corejs: { version: 3 },
+            },
+          ],
+        ]
+      },
+    },
   },
 }

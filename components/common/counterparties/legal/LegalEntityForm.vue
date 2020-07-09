@@ -11,6 +11,7 @@
         id="inn"
         key="inn"
         v-model.trim="formData.inn"
+        v-numbers
         placeholder="9 цифр"
         name="inn"
         type="tel"
@@ -68,16 +69,30 @@
       >
         Дата регистрации ЕГР <span class="text-red-700">*</span>
       </label>
-      <input
-        id="egrDate"
-        key="egrDate"
-        v-model="formData.egr_date"
-        placeholder="Дата постановки на учет"
-        name="egr_date"
-        type="date"
-        autocomplete="no"
-        class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-      />
+      <client-only>
+        <v-date-picker v-model="formData.egr_date">
+          <input
+            id="date"
+            slot-scope="{ inputProps, inputEvents }"
+            placeholder="Дата постановки на учет"
+            class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+            autocomplete="no"
+            v-bind="inputProps"
+            v-on="inputEvents"
+          />
+        </v-date-picker>
+        <input
+          id="egrDate"
+          slot="placeholder"
+          key="egrDate"
+          v-model="formData.egr_date"
+          placeholder="Дата постановки на учет"
+          name="egr_date"
+          type="date"
+          autocomplete="no"
+          class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+        />
+      </client-only>
     </div>
 
     <div class="w-full lg:col-span-1">
@@ -93,7 +108,7 @@
         v-model.trim="formData.email"
         placeholder="Для связи при торгах"
         name="email"
-        type="text"
+        type="email"
         autocomplete="no"
         class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
       />
@@ -106,28 +121,55 @@
       >
         Номер телефона <span class="text-red-700">*</span>
       </label>
-      <input
-        id="phone"
-        key="phone"
-        v-model="formData.phone"
-        placeholder="Для связи при торгах"
-        name="phone"
-        type="tel"
-        autocomplete="no"
-        class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-      />
+      <client-only>
+        <vue-tel-input
+          key="phone"
+          v-model="formData.phone"
+          input-id="phone"
+          placeholder="Для связи при торгах"
+          name="phone"
+          type="tel"
+          default-country="BY"
+          :preferred-countries="['BY', 'RU']"
+          input-classes="block w-full px-4 py-3 appearance-none bg-grey-lighter text-grey-darker focus:outline-none"
+        />
+
+        <input
+          id="phone"
+          slot="placeholder"
+          key="phone"
+          v-model="formData.phone"
+          placeholder="Для связи при торгах"
+          name="phone"
+          type="tel"
+          autocomplete="no"
+          class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+        />
+      </client-only>
     </div>
   </div>
 </template>
 
 <script>
+import { VueTelInput } from 'vue-tel-input'
+import numbers from '~/directives/numbers'
+
 export default {
+  components: {
+    VueTelInput,
+  },
+
+  directives: {
+    numbers,
+  },
+
   props: {
     value: {
       type: Object,
       required: true,
     },
   },
+
   computed: {
     formData: {
       get() {
@@ -138,5 +180,17 @@ export default {
       },
     },
   },
+
+  methods: {},
 }
 </script>
+
+<style lang="scss" scoped>
+.vue-tel-input {
+  @apply border-2 rounded border-gray-300;
+
+  &:focus-within {
+    @apply shadow-none border-gray-600;
+  }
+}
+</style>

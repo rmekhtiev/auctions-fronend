@@ -88,6 +88,7 @@
       <input
         id="postalCode"
         v-model="formData.postal_code"
+        v-numbers
         placeholder="Введите индекс"
         name="postal_code"
         type="tel"
@@ -117,7 +118,13 @@
 </template>
 
 <script>
+import numbers from '~/directives/numbers'
+
 export default {
+  directives: {
+    numbers,
+  },
+
   props: {
     value: {
       type: Object,
@@ -128,6 +135,7 @@ export default {
       default: false,
     },
   },
+
   computed: {
     formData: {
       get() {
@@ -138,6 +146,7 @@ export default {
       },
     },
   },
+
   watch: {
     noCountry(val) {
       if (val) {
