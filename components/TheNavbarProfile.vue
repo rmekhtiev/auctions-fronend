@@ -67,19 +67,31 @@
       </a>
     </div>
 
+    <!-- todo: в зависимости от роли показывать разное меню -->
+    <div class="border-b">
+      <nuxt-link
+        :to="{
+          name: 'account-customer',
+        }"
+        class="flex px-4 py-3 hover:bg-gray-100"
+      >
+        <p class="text-sm font-medium leading-none text-gray-800">
+          Покупателю
+        </p>
+      </nuxt-link>
+      <nuxt-link
+        :to="{
+          name: 'account-seller',
+        }"
+        class="flex px-4 py-3 hover:bg-gray-100"
+      >
+        <p class="text-sm font-medium leading-none text-gray-800">
+          Продавцу
+        </p>
+      </nuxt-link>
+    </div>
+
     <div class="">
-      <!--
-      <a href="#" class="flex px-4 py-3 hover:bg-gray-100">
-        <p class="text-sm font-medium leading-none text-gray-800">
-          Product updates
-        </p>
-      </a>
-      <a href="#" class="flex px-4 py-3 hover:bg-gray-100">
-        <p class="text-sm font-medium leading-none text-gray-800">
-          Status updates
-        </p>
-      </a>
-      -->
       <a
         href="#"
         class="flex px-4 py-3 text-sm font-medium leading-none text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
@@ -102,7 +114,8 @@ import {
   InboxIcon,
   UsersIcon,
   SettingsIcon,
-  HelpCircleIcon,
+  ShoppingCartIcon,
+  BriefcaseIcon,
 } from 'vue-feather-icons'
 
 export default {
@@ -110,7 +123,8 @@ export default {
     InboxIcon,
     UsersIcon,
     SettingsIcon,
-    HelpCircleIcon,
+    ShoppingCartIcon,
+    BriefcaseIcon,
   },
   data: () => ({}),
   computed: {
