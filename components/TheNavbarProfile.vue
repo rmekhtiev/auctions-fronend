@@ -1,94 +1,134 @@
 <template>
-  <!-- Profile dropdown -->
-  <div
-    v-click-outside="
-      () => {
-        profile = false
-      }
-    "
-    class="relative ml-3"
-  >
-    <div>
-      <button
-        id="user-menu"
-        class="flex text-sm transition duration-150 ease-in-out border-2 border-transparent rounded-full focus:outline-none focus:border-white"
-        aria-label="User menu"
-        aria-haspopup="true"
-        @click="profile = !profile"
-      >
-        <img
-          class="w-8 h-8 rounded-full"
-          :src="user.attributes.avatar"
-          alt="user.attributes.login"
-        />
-      </button>
-    </div>
-    <!--
-      Profile dropdown panel, show/hide based on dropdown state.
-
-      Entering: "transition ease-out duration-100"
-        From: "transform opacity-0 scale-95"
-        To: "transform opacity-100 scale-100"
-      Leaving: "transition ease-in duration-75"
-        From: "transform opacity-100 scale-100"
-        To: "transform opacity-0 scale-95"
-    -->
-    <transition
-      enter-active-class="transition duration-100 ease-out transform"
-      enter-class="scale-95 opacity-0"
-      enter-to-class="scale-100 opacity-100"
-      leave-active-class="transition duration-75 ease-in transform"
-      leave-class="scale-100 opacity-100"
-      leave-to-class="scale-95 opacity-0"
-    >
-      <div
-        v-show="profile"
-        class="absolute right-0 w-48 mt-2 origin-top-right rounded-md shadow-lg"
-      >
-        <div
-          class="py-1 bg-white rounded-md shadow-xs"
-          role="menu"
-          aria-orientation="vertical"
-          aria-labelledby="user-menu"
+  <div class="w-64 overflow-hidden bg-white rounded shadow-lg">
+    <div class="p-6 text-center border-b">
+      <img
+        class="w-24 h-24 mx-auto rounded-full"
+        :src="user.attributes.avatar"
+        :alt="user.attributes.login"
+      />
+      <p
+        class="pt-2 text-lg font-semibold"
+        v-text="`@${user.attributes.login}`"
+      />
+      <p class="text-sm text-gray-600" v-text="user.attributes.email" />
+      <!--
+      <div class="mt-5">
+        <a
+          href="#"
+          class="px-4 py-2 text-xs font-semibold text-gray-700 transition duration-150 ease-in-out border rounded-full hover:bg-gray-100"
         >
-          <nuxt-link
-            :to="{ name: 'account' }"
-            class="block px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-            role="menuitem"
-          >
-            Личный кабинет
-          </nuxt-link>
-          <nuxt-link
-            :to="{ name: 'account-settings' }"
-            class="block px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-            role="menuitem"
-          >
-            Настройки
-          </nuxt-link>
-          <a
-            href="#"
-            class="block px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-            role="menuitem"
-            @click.prevent="logout"
-          >
-            Выйти
-          </a>
-        </div>
+          Manage your Account
+        </a>
       </div>
-    </transition>
+      -->
+    </div>
+    <div class="border-b">
+      <nuxt-link
+        :to="{ name: 'account' }"
+        class="flex items-center px-4 py-2 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+      >
+        <div>
+          <inbox-icon class="w-5 h-5" />
+        </div>
+        <div class="pl-3">
+          <p class="text-sm font-medium leading-none">
+            Уведомления
+          </p>
+          <p class="text-xs text-gray-500">События и сообщения</p>
+        </div>
+      </nuxt-link>
+      <nuxt-link
+        :to="{ name: 'account-profiles' }"
+        class="flex items-center px-4 py-2 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+      >
+        <div>
+          <users-icon class="w-5 h-5" />
+        </div>
+        <div class="pl-3">
+          <p class="text-sm font-medium leading-none">
+            Профили
+          </p>
+          <p class="text-xs text-gray-500">Юр. лица, ИП и физ. лица</p>
+        </div>
+      </nuxt-link>
+      <a
+        href="#"
+        class="flex items-center px-4 py-2 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+      >
+        <div>
+          <settings-icon class="w-5 h-5" />
+        </div>
+        <div class="pl-3">
+          <p class="text-sm font-medium leading-none">
+            Настройки
+          </p>
+          <p class="text-xs text-gray-500">Email, аккаунт, уведомления</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- todo: в зависимости от роли показывать разное меню -->
+    <div class="border-b">
+      <nuxt-link
+        :to="{
+          name: 'account-customer',
+        }"
+        class="flex px-4 py-3 hover:bg-gray-100"
+      >
+        <p class="text-sm font-medium leading-none text-gray-800">
+          Покупателю
+        </p>
+      </nuxt-link>
+      <nuxt-link
+        :to="{
+          name: 'account-seller',
+        }"
+        class="flex px-4 py-3 hover:bg-gray-100"
+      >
+        <p class="text-sm font-medium leading-none text-gray-800">
+          Продавцу
+        </p>
+      </nuxt-link>
+    </div>
+
+    <div class="">
+      <a
+        href="#"
+        class="flex px-4 py-3 text-sm font-medium leading-none text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+      >
+        Помощь
+      </a>
+      <a
+        href="#"
+        class="flex px-4 py-3 text-sm font-medium leading-none text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+        @click="logout()"
+      >
+        Выйти
+      </a>
+    </div>
   </div>
 </template>
 
 <script>
-import clickOutside from 'vue-click-outside'
+import {
+  InboxIcon,
+  UsersIcon,
+  SettingsIcon,
+  ShoppingCartIcon,
+  BriefcaseIcon,
+} from 'vue-feather-icons'
 
 export default {
-  directives: {
-    clickOutside,
+  components: {
+    InboxIcon,
+    UsersIcon,
+    SettingsIcon,
+    // eslint-disable-next-line vue/no-unused-components
+    ShoppingCartIcon,
+    // eslint-disable-next-line vue/no-unused-components
+    BriefcaseIcon,
   },
-  data: () => ({
-    profile: false,
-  }),
+  data: () => ({}),
   computed: {
     user() {
       return this.$auth.user

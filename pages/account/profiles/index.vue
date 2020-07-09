@@ -1,6 +1,7 @@
 <template>
+  <loading-spinner v-if="$fetchState.pending" />
   <div
-    v-if="Array.isArray(accounts) && accounts.length"
+    v-else-if="Array.isArray(accounts) && accounts.length"
     class="container flex flex-col min-h-full mx-auto"
   >
     <div

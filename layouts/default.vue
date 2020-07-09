@@ -17,3 +17,15 @@ body {
   @apply min-h-screen;
 }
 </style>
+
+<script>
+export default {
+  head() {
+    return {
+      bodyAttrs: {
+        class: this.$exp.$classes.join(' '),
+      },
+    }
+  },
+}
+</script>

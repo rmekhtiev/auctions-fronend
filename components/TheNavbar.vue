@@ -2,7 +2,7 @@
   <nav class="fixed z-40 w-full bg-gray-800">
     <div class="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
       <div class="relative flex items-center justify-between h-16">
-        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+        <div class="absolute inset-y-0 left-0 flex items-center lg:hidden">
           <!-- Mobile menu button-->
           <button
             class="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
@@ -43,21 +43,21 @@
           </button>
         </div>
         <div
-          class="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start"
+          class="flex items-center justify-center flex-1 lg:items-stretch lg:justify-start"
         >
           <nuxt-link :to="{ name: 'index' }" class="flex-shrink-0">
             <img
-              class="block w-auto h-8 lg:hidden"
+              class="block w-auto h-8 md:hidden"
               src="https://tailwindui.com/img/logos/workflow-mark-on-dark.svg"
               alt="Workflow logo"
             />
             <img
-              class="hidden w-auto h-8 lg:block"
+              class="hidden w-auto h-8 md:block"
               src="https://tailwindui.com/img/logos/workflow-logo-on-dark.svg"
               alt="Workflow logo"
             />
           </nuxt-link>
-          <div class="hidden sm:block sm:ml-6">
+          <div class="hidden lg:block lg:ml-6">
             <div class="flex">
               <nuxt-link
                 v-for="(item, index) in menu"
@@ -68,16 +68,27 @@
               >
                 {{ item.title }}
               </nuxt-link>
+
+              <nuxt-link
+                v-if="displayNotifications"
+                :to="'#'"
+                class="px-3 py-2 ml-4 text-sm font-medium leading-5 text-gray-300 transition duration-150 ease-in-out rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+              >
+                Контакты
+              </nuxt-link>
             </div>
           </div>
         </div>
         <div
-          class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
+          class="absolute inset-y-0 right-0 flex items-center pr-2 lg:static lg:inset-auto lg:ml-6 lg:pr-0"
         >
-          <div class="flex flex-col items-end">
+          <div
+            v-if="!displayNotifications"
+            class="flex-col items-end hidden mr-4 md:flex"
+          >
             <a
               href="#"
-              class="font-sans text-xl font-bold leading-none text-gray-300 no-underline hover:text-white focus:text-white"
+              class="text-lg font-bold leading-none text-gray-300 no-underline hover:text-white focus:text-white"
             >
               +375 (29) 357-01-01
             </a>
@@ -89,9 +100,9 @@
             </a>
           </div>
           <template v-if="$auth.$state.loggedIn">
-            <!--
             <button
-              class="p-1 text-gray-400 transition duration-150 ease-in-out border-2 border-transparent rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700"
+              v-if="displayNotifications"
+              class="p-1 mr-3 text-gray-400 transition duration-150 ease-in-out border-2 border-transparent rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700"
               aria-label="Notifications"
             >
               <svg
@@ -108,14 +119,49 @@
                 />
               </svg>
             </button>
-            -->
 
-            <the-navbar-profile />
+            <!-- Profile dropdown -->
+            <div
+              v-click-outside="
+                () => {
+                  profile = false
+                }
+              "
+              class="relative"
+            >
+              <div>
+                <button
+                  id="user-menu"
+                  class="flex text-sm transition duration-150 ease-in-out border-2 border-transparent rounded-full focus:outline-none focus:border-white"
+                  aria-label="User menu"
+                  aria-haspopup="true"
+                  @click="profile = !profile"
+                >
+                  <img
+                    class="w-8 h-8 rounded-full"
+                    :src="user.attributes.avatar"
+                    :alt="user.attributes.login"
+                  />
+                </button>
+              </div>
+
+              <transition
+                enter-active-class="transition duration-100 ease-out transform"
+                enter-class="scale-95 opacity-0"
+                enter-to-class="scale-100 opacity-100"
+                leave-active-class="transition duration-75 ease-in transform"
+                leave-class="scale-100 opacity-100"
+                leave-to-class="scale-95 opacity-0"
+              >
+                <the-navbar-profile v-show="profile" class="absolute right-0" />
+              </transition>
+            </div>
           </template>
           <template v-else>
             <nuxt-link
               :to="{ name: 'auth' }"
               class="px-3 py-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-blue-500 rounded-md hover:text-white hover:bg-blue-700 focus:outline-none focus:text-white focus:bg-blue-700"
+              @click.native="tryAutoSignIn"
             >
               Войти в аккаунт
             </nuxt-link>
@@ -129,7 +175,7 @@
 
       Menu open: "block", Menu closed: "hidden"
     -->
-    <div :class="{ block: open, hidden: !open }" class="sm:hidden">
+    <div :class="{ block: open, hidden: !open }" class="lg:hidden">
       <div class="px-2 pt-2 pb-3">
         <nuxt-link
           v-for="(item, index) in menu"
@@ -140,16 +186,30 @@
         >
           {{ item.title }}
         </nuxt-link>
+
+        <nuxt-link
+          v-if="displayNotifications"
+          :to="'#'"
+          class="block px-3 py-2 mt-1 text-base font-medium text-gray-300 transition duration-150 ease-in-out rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+        >
+          Контакты
+        </nuxt-link>
       </div>
     </div>
   </nav>
 </template>
 
 <script>
+import clickOutside from 'vue-click-outside'
+
 export default {
+  directives: {
+    clickOutside,
+  },
   data: () => ({
     appName: 'Auctions',
     open: false,
+    profile: false,
     menu: [
       {
         title: 'Аукционы',
@@ -173,5 +233,41 @@ export default {
       },
     ],
   }),
+  computed: {
+    user() {
+      return this.$auth.user
+    },
+    displayNotifications() {
+      return (
+        this.$exp.name === 'navbar-contacts' &&
+        this.$exp.$activeVariants.some(({ name }) => name === 'notifications')
+      )
+    },
+  },
+  methods: {
+    async tryAutoSignIn(event) {
+      if (!window.PasswordCredential) {
+        return
+      }
+
+      const credential = await navigator.credentials.get({
+        password: true,
+        mediation: 'optional',
+      })
+
+      if (!credential) {
+        return
+      }
+
+      const response = await this.$auth.loginWith('local', {
+        data: {
+          email: credential.id,
+          password: credential.password,
+        },
+      })
+
+      if (response) event.preventDefault()
+    },
+  },
 }
 </script>
