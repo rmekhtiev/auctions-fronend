@@ -221,7 +221,7 @@
                       formData.password.length == 0,
                   }"
                   class="ml-3 text-sm font-medium"
-                  v-html="
+                  v-text="
                     formData.password == formData.password_confirmation &&
                     formData.password.length > 0
                       ? 'Пароль и подтверждение совпадают'
@@ -266,7 +266,7 @@
                     'text-red-700': formData.password.length < 8,
                   }"
                   class="ml-3 text-sm font-medium"
-                  v-html="
+                  v-text="
                     formData.password.length > 7
                       ? 'Минимальная длина пароля соответствует требованиям платформы'
                       : 'Минимальная длина пароля 8 символов'

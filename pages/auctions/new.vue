@@ -353,8 +353,6 @@ export default {
     },
 
     recalculateDatetimes() {
-      console.log(this.auction.date.getDate())
-
       const startsAt = this.$moment(
         this.$moment(this.auction.date).format('YYYY-MM-DD') +
           ' ' +
