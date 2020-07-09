@@ -40,7 +40,7 @@
       }"
       class="block px-6 py-3 m-4 text-lg font-semibold text-center text-black transition duration-150 bg-white border-2 rounded-lg hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
     >
-      623 695.41 BYN
+      {{ auction.attributes.price_start | currency }}
     </nuxt-link>
   </article>
 </template>

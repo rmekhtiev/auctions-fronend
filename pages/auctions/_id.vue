@@ -107,6 +107,49 @@
                   </dd>
                 </div>
               </div>
+              <div
+                class="pb-2 mb-4 border-b-2 border-gray-200 flex items-center justify-between"
+              >
+                <div>
+                  <div class="mb-2">
+                    <dt class="text-sm font-medium leading-5 text-gray-500">
+                      Начальная цена
+                    </dt>
+                    <dd
+                      class="mt-1 text-lg font-bold text-black leading-5 text-gray-900"
+                    >
+                      {{ auction.attributes.price_start | currency }}
+                    </dd>
+                  </div>
+                  <div class="flex items-center">
+                    <div>
+                      <dt
+                        class="mt-1 text-sm font-medium leading-5 text-gray-500"
+                      >
+                        Минимальная цена
+                      </dt>
+                      <dd class="mt-1 leading-5 text-gray-900">
+                        {{ auction.attributes.price_min | currency }}
+                      </dd>
+                    </div>
+                    <div class="pl-3 ml-3">
+                      <dt
+                        class="mt-1 text-sm font-medium leading-5 text-gray-500"
+                      >
+                        Залог
+                      </dt>
+                      <dd class="mt-1 leading-5 text-gray-900">
+                        {{ auction.attributes.deposit | currency }}
+                      </dd>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="block px-6 py-3 m-4 text-lg font-semibold text-center text-black transition duration-150 bg-white border-2 rounded-lg hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
+                >
+                  Подать заявку
+                </button>
+              </div>
             </dl>
           </div>
         </div>

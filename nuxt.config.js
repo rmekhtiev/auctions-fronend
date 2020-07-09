@@ -42,6 +42,7 @@ export default {
     '~/plugins/vue-i18n',
     { src: '~/plugins/axios', ssr: false },
     { src: '~plugins/v-calendar.js', ssr: false },
+    { src: '~/plugins/currency', ssr: false },
   ],
   /*
    ** Auto import components
