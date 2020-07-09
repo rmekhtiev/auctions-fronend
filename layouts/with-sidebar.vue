@@ -8,7 +8,7 @@
       >
         <profile-navigation class="h-full" />
       </aside>
-      <div class="flex flex-grow pb-16 lg:pb-0">
+      <div class="flex flex-grow pb-16 overflow-hidden lg:pb-0">
         <main class="flex flex-col w-full py-4">
           <nuxt />
         </main>

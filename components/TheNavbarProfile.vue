@@ -123,7 +123,9 @@ export default {
     InboxIcon,
     UsersIcon,
     SettingsIcon,
+    // eslint-disable-next-line vue/no-unused-components
     ShoppingCartIcon,
+    // eslint-disable-next-line vue/no-unused-components
     BriefcaseIcon,
   },
   data: () => ({}),

@@ -2,7 +2,7 @@
   <nav class="fixed z-40 w-full bg-gray-800">
     <div class="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
       <div class="relative flex items-center justify-between h-16">
-        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+        <div class="absolute inset-y-0 left-0 flex items-center lg:hidden">
           <!-- Mobile menu button-->
           <button
             class="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
@@ -43,21 +43,21 @@
           </button>
         </div>
         <div
-          class="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start"
+          class="flex items-center justify-center flex-1 lg:items-stretch lg:justify-start"
         >
           <nuxt-link :to="{ name: 'index' }" class="flex-shrink-0">
             <img
-              class="block w-auto h-8 lg:hidden"
+              class="block w-auto h-8 md:hidden"
               src="https://tailwindui.com/img/logos/workflow-mark-on-dark.svg"
               alt="Workflow logo"
             />
             <img
-              class="hidden w-auto h-8 lg:block"
+              class="hidden w-auto h-8 md:block"
               src="https://tailwindui.com/img/logos/workflow-logo-on-dark.svg"
               alt="Workflow logo"
             />
           </nuxt-link>
-          <div class="hidden sm:block sm:ml-6">
+          <div class="hidden lg:block lg:ml-6">
             <div class="flex">
               <nuxt-link
                 v-for="(item, index) in menu"
@@ -80,15 +80,15 @@
           </div>
         </div>
         <div
-          class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
+          class="absolute inset-y-0 right-0 flex items-center pr-2 lg:static lg:inset-auto lg:ml-6 lg:pr-0"
         >
           <div
             v-if="!displayNotifications"
-            class="flex flex-col items-end mr-4"
+            class="flex-col items-end hidden mr-4 md:flex"
           >
             <a
               href="#"
-              class="font-sans text-xl font-bold leading-none text-gray-300 no-underline hover:text-white focus:text-white"
+              class="text-lg font-bold leading-none text-gray-300 no-underline hover:text-white focus:text-white"
             >
               +375 (29) 357-01-01
             </a>
@@ -175,7 +175,7 @@
 
       Menu open: "block", Menu closed: "hidden"
     -->
-    <div :class="{ block: open, hidden: !open }" class="sm:hidden">
+    <div :class="{ block: open, hidden: !open }" class="lg:hidden">
       <div class="px-2 pt-2 pb-3">
         <nuxt-link
           v-for="(item, index) in menu"
@@ -185,6 +185,14 @@
           class="block px-3 py-2 text-base font-medium text-gray-300 transition duration-150 ease-in-out rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
         >
           {{ item.title }}
+        </nuxt-link>
+
+        <nuxt-link
+          v-if="displayNotifications"
+          :to="'#'"
+          class="block px-3 py-2 mt-1 text-base font-medium text-gray-300 transition duration-150 ease-in-out rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+        >
+          Контакты
         </nuxt-link>
       </div>
     </div>
