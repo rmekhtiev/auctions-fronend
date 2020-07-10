@@ -174,9 +174,12 @@ import {
 
 export default {
   components: {
+    // eslint-disable-next-line vue/no-unused-components
     FacebookIcon,
+    // eslint-disable-next-line vue/no-unused-components
     TwitterIcon,
     Share2Icon,
+    // eslint-disable-next-line vue/no-unused-components
     EyeIcon,
   },
   // async fetch() {
