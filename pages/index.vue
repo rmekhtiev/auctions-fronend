@@ -9,10 +9,14 @@
 <script>
 export default {
   async asyncData({ store }) {
-    await store.dispatch('auctions/loadAll')
+    const filter = {
+      status: 'UPCOMING',
+    }
+
+    await store.dispatch('auctions/loadWhere', { filter })
 
     return {
-      auctions: store.getters['auctions/all'],
+      auctions: store.getters['auctions/where']({ filter }),
     }
   },
 
