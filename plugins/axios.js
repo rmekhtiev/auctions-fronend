@@ -7,8 +7,8 @@ export default function (nuxt) {
 
   $axios.onError((error) => {
     switch (error.response.status) {
-      case 406:
-        $toast.error('Ошибка валидации')
+      case 422:
+        $toast.error('Проверьте введенные данные')
         break
       case 500:
         $toast.error('Ошибка сервера')
