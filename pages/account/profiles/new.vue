@@ -121,7 +121,18 @@ export default {
       this.$store
         .dispatch('counterparties/create', recordData)
         .then((_response) => {
-          this.$router.push({ name: 'account-profiles' })
+          const addressData = {
+            attributes: this.address,
+          }
+          addressData.attributes.addressable_id = this.$store.getters[
+            'counterparties/lastCreated'
+          ].id
+          addressData.attributes.addressable_type = 'counterparties'
+          this.$store
+            .dispatch('addresses/create', addressData)
+            .then((_response) => {
+              this.$router.push({ name: 'account-profiles' })
+            })
         })
     },
   },

@@ -62,16 +62,16 @@
 
     <div class="w-full">
       <label
-        for="sity"
+        for="city"
         class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
       >
         Населенный пункт <span class="text-red-700">*</span>
       </label>
       <input
-        id="sity"
-        v-model.trim="formData.sity"
+        id="city"
+        v-model.trim="formData.city"
         placeholder="напр.: г. Минск"
-        name="sity"
+        name="city"
         type="text"
         autocomplete="address-level2"
         class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
