@@ -87,22 +87,8 @@ export default {
   }),
   methods: {
     save() {
-      const recordData = {
-        attributes: this.counterparty,
-        relationships: {
-          users: {
-            data: [
-              {
-                id: `${this.$auth.user.id}`,
-                type: 'users',
-              },
-            ],
-          },
-        },
-      }
-
       this.$store
-        .dispatch('counterparties/create', recordData)
+        .dispatch('counterparties/create', { attributes: this.counterparty })
         .then((_response) => {
           this.$router.push({ name: 'account-profiles' })
         })
