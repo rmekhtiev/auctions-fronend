@@ -9,12 +9,25 @@
         counterparty.id === $store.getters['counterparties/lastCreated'].id,
     }"
   />
+
+  <IndividualEnterpreneurAccountRow
+    v-else-if="counterparty.attributes._type === 'IP'"
+    :account="account"
+    :counterparty="counterparty"
+    :class="{
+      'bg-yellow-100':
+        $store.getters['counterparties/lastCreated'] &&
+        counterparty.id === $store.getters['counterparties/lastCreated'].id,
+    }"
+  />
 </template>
 
 <script>
 export default {
   components: {
     LegalEntityAccountRow: () => import('./legal/LegalEntityAccountRow'),
+    IndividualEnterpreneurAccountRow: () =>
+      import('./legal/IndividualEnterpreneurAccountRow'),
   },
 
   props: {
