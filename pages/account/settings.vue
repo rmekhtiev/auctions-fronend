@@ -9,109 +9,111 @@
             <h3 class="text-xl font-semibold text-gray-600">Настройки</h3>
           </div>
         </div>
-        <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <div class="w-full lg:col-span-1">
-            <label
-              class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
-            >
-              Email
-            </label>
-            <input
-              id="email"
-              v-model="formData.email"
-              placeholder="pushkin01@gmail.com"
-              name="email"
-              type="email"
-              autocomplete="email"
-              :class="{ 'border-red-600': errors && errors.email }"
-              class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-            />
-            <div v-if="errors" class="text-xs italic text-red-600">
-              <p v-for="error in errors.email" :key="error" class="pt-3">
-                {{ error }}
-              </p>
-            </div>
-          </div>
-
-          <div class="w-full lg:col-span-1">
-            <label
-              for="login"
-              class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
-            >
-              Логин
-            </label>
-            <input
-              id="login"
-              v-model="formData.login"
-              placeholder="pushkin01"
-              name="login"
-              type="text"
-              autocomplete="no"
-              inputmode="verbatim"
-              :class="{ 'border-red-600': errors && errors.login }"
-              class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-            />
-            <div v-if="errors" class="text-xs italic text-red-600">
-              <p v-for="error in errors.login" :key="error" class="pt-3">
-                {{ error }}
-              </p>
-            </div>
-          </div>
-
-          <div class="w-full lg:col-span-1">
-            <label
-              for="password"
-              class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
-            >
-              Пароль
-            </label>
-            <input
-              id="password"
-              v-model="formData.password"
-              placeholder="8+ символов"
-              name="password"
-              type="password"
-              autocomplete="new-password"
-              :class="{ 'border-red-600': errors && errors.password }"
-              class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-            />
-            <div v-if="errors" class="text-xs italic text-red-600">
-              <p v-for="error in errors.password" :key="error" class="pt-3">
-                {{ error }}
-              </p>
-            </div>
-          </div>
-
-          <div class="w-full lg:col-span-1">
-            <label
-              for="passwordConfirmation"
-              class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
-            >
-              Пароль (ещё раз)
-            </label>
-            <input
-              id="passwordConfirmation"
-              v-model="formData.password_confirmation"
-              placeholder="Что бы не опечататься"
-              name="password_confirmation"
-              type="password"
-              autocomplete="new-password"
-              :class="{
-                'border-red-600': errors && errors.password_confirmation,
-              }"
-              class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-            />
-            <div v-if="errors" class="text-xs italic text-red-600">
-              <p
-                v-for="error in errors.password_confirmation"
-                :key="error"
-                class="pt-3"
+        <form>
+          <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <div class="w-full lg:col-span-1">
+              <label
+                class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
               >
-                {{ error }}
-              </p>
+                Email
+              </label>
+              <input
+                id="email"
+                v-model="formData.email"
+                placeholder="pushkin01@gmail.com"
+                name="email"
+                type="email"
+                autocomplete="email"
+                :class="{ 'border-red-600': errors && errors.email }"
+                class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+              />
+              <div v-if="errors" class="text-xs italic text-red-600">
+                <p v-for="error in errors.email" :key="error" class="pt-3">
+                  {{ error }}
+                </p>
+              </div>
+            </div>
+
+            <div class="w-full lg:col-span-1">
+              <label
+                for="login"
+                class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
+              >
+                Логин
+              </label>
+              <input
+                id="login"
+                :value="$auth.user.attributes.login"
+                placeholder="pushkin01"
+                name="login"
+                type="text"
+                autocomplete="no"
+                inputmode="verbatim"
+                disabled
+                class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+              />
+              <div v-if="errors" class="text-xs italic text-red-600">
+                <p v-for="error in errors.login" :key="error" class="pt-3">
+                  {{ error }}
+                </p>
+              </div>
+            </div>
+
+            <div class="w-full lg:col-span-1">
+              <label
+                for="password"
+                class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
+              >
+                Пароль
+              </label>
+              <input
+                id="password"
+                v-model="formData.password"
+                placeholder="8+ символов"
+                name="password"
+                type="password"
+                autocomplete="new-password"
+                :class="{ 'border-red-600': errors && errors.password }"
+                class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+              />
+              <div v-if="errors" class="text-xs italic text-red-600">
+                <p v-for="error in errors.password" :key="error" class="pt-3">
+                  {{ error }}
+                </p>
+              </div>
+            </div>
+
+            <div class="w-full lg:col-span-1">
+              <label
+                for="passwordConfirmation"
+                class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
+              >
+                Пароль (ещё раз)
+              </label>
+              <input
+                id="passwordConfirmation"
+                v-model="formData.password_confirmation"
+                placeholder="Что бы не опечататься"
+                name="password_confirmation"
+                type="password"
+                autocomplete="new-password"
+                :class="{
+                  'border-red-600': errors && errors.password_confirmation,
+                }"
+                class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+              />
+              <div v-if="errors" class="text-xs italic text-red-600">
+                <p
+                  v-for="error in errors.password_confirmation"
+                  :key="error"
+                  class="pt-3"
+                >
+                  {{ error }}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        </form>
         <div class="flex justify-start mt-4">
           <ul>
             <li class="flex items-center py-1">
@@ -164,7 +166,7 @@
                     formData.password.length == 0,
                 }"
                 class="ml-3 text-sm font-medium"
-                v-html="
+                v-text="
                   formData.password == formData.password_confirmation &&
                   formData.password.length > 0
                     ? 'Пароль и подтверждение совпадают'
@@ -208,7 +210,7 @@
                   'text-red-700': formData.password.length < 8,
                 }"
                 class="ml-3 text-sm font-medium"
-                v-html="
+                v-text="
                   formData.password.length > 7
                     ? 'Минимальная длина пароля соответствует требованиям платформы'
                     : 'Минимальная длина пароля 8 символов'
@@ -219,7 +221,7 @@
         </div>
         <button
           type="submit"
-          class="bg-gray-500 bg-gray-800 hover:text-white hover:bg-black block w-full px-6 py-3 mt-4 text-lg font-semibold text-white transition duration-150 border-2 border-transparent rounded-lg focus:border-gray-600 focus:outline-none"
+          class="block w-full px-6 py-3 mt-4 text-lg font-semibold text-white transition duration-150 bg-gray-800 border-2 border-transparent rounded-lg hover:text-white hover:bg-black focus:border-gray-600 focus:outline-none"
           @click="submit"
         >
           Сохранить
@@ -234,22 +236,14 @@ export default {
   data: () => ({
     formData: {
       email: '',
-      login: '',
       password: '',
       password_confirmation: '',
     },
     errors: null,
   }),
-  watch: {
-    'formData.email'(val, old) {
-      const newPossibleLogin =
-        val.indexOf('@') > 1 ? val.substr(0, val.indexOf('@')) : val
-      const oldPossibleLogin =
-        old.indexOf('@') > 1 ? old.substr(0, old.indexOf('@')) : old
-      if (oldPossibleLogin === this.formData.login) {
-        this.formData.login = newPossibleLogin
-      }
-    },
+  watch: {},
+  created() {
+    this.formData.email = this.$auth.user.attributes.email
   },
   methods: {
     submit() {
@@ -264,10 +258,10 @@ export default {
         .patch('users/' + this.$auth.user.id, form)
         .then(() => {
           this.$auth.fetchUser()
-          this.$router.push({ name: 'account' })
+          this.$toast.success('Обновлено')
         })
         .catch((_err) => {
-          console.error(_err)
+          this.$toast.error(_err)
         })
     },
   },
