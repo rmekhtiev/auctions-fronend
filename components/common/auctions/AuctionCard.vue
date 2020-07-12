@@ -28,7 +28,10 @@
       </li>
       <li class="flex items-center mt-2 text-gray-700">
         <map-pin-icon class="w-4 h-4" />
-        <div class="px-2 text-sm">Минская область</div>
+        <div v-if="address.attributes.state" class="px-2 text-sm">
+          {{ address.attributes.state }}
+        </div>
+        <div v-else class="px-2 text-sm">{{ address.attributes.city }}</div>
       </li>
     </ul>
     <nuxt-link
@@ -58,6 +61,14 @@ export default {
     auction: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    address() {
+      return this.$store.getters['addresses/related']({
+        parent: this.auction,
+        relationship: 'address',
+      })
     },
   },
 }
