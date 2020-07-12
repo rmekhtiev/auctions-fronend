@@ -60,32 +60,58 @@
                   <td
                     class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                   >
-                    {{ item.id }}
-                  </td>
-                  <td
-                    class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-                  >
-                    <p class="text-gray-900 whitespace-no-wrap">Admin</p>
+                    {{ auction.id }}
                   </td>
                   <td
                     class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                   >
                     <p class="text-gray-900 whitespace-no-wrap">
-                      Jan 21, 2020
+                      {{ auction.attributes.title }}
                     </p>
                   </td>
                   <td
                     class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                   >
-                    <span
-                      class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight"
-                    >
-                      <span
-                        aria-hidden
-                        class="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                      ></span>
-                      <span class="relative">Active</span>
-                    </span>
+                    <p class="text-gray-900 whitespace-no-wrap">
+                      {{ $moment(auction.attributes.starts_at).format('LL') }},
+                      {{ $moment(auction.attributes.starts_at).format('LT') }}
+                    </p>
+                  </td>
+                  <td
+                    class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                  >
+                    <p class="text-gray-900 whitespace-no-wrap">
+                      {{ auction.attributes.price_min }}
+                    </p>
+                  </td>
+                  <td
+                    class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                  >
+                    <p class="text-gray-900 whitespace-no-wrap">
+                      {{
+                        $store.getters['counterparties/byId']({
+                          id: auction.relationships.seller.data.id,
+                        }).attributes.display_name
+                      }}
+                    </p>
+                  </td>
+                  <td
+                    class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                  >
+                    <p class="text-gray-900 whitespace-no-wrap">
+                      {{
+                        $store.getters['counterparties/byId']({
+                          id: auction.relationships.organizer.data.id,
+                        }).attributes.display_name
+                      }}
+                    </p>
+                  </td>
+                  <td
+                    class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                  >
+                    <p class="text-gray-900 whitespace-no-wrap">
+                      {{ auction.attributes.status }}
+                    </p>
                   </td>
                 </tr>
               </tbody>
@@ -114,32 +140,6 @@ export default {
     })
   },
   data: () => ({
-    auctions: [
-      {
-        id: 0,
-        attributes: {
-          title: 'Проверка',
-          starts_at: '2020-07-05T10:00:00+03:00',
-          ends_at: '2020-07-05T18:00:00+03:00',
-        },
-      },
-      {
-        id: 1,
-        attributes: {
-          title: 'Проверка 2',
-          starts_at: '2020-07-05T12:00:00+03:00',
-          ends_at: '2020-07-05T16:00:00+03:00',
-        },
-      },
-      {
-        id: 2,
-        attributes: {
-          title: 'Проверка',
-          starts_at: '2020-12-05T10:00:00+03:00',
-          ends_at: '2020-12-05T18:00:00+03:00',
-        },
-      },
-    ],
     tableHeaders: [
       { text: '№', value: 'id' },
       { text: 'Название', value: 'attributes.title' },
