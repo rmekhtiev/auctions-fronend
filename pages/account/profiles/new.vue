@@ -123,11 +123,15 @@ export default {
         .then((_response) => {
           const addressData = {
             attributes: this.address,
+            relationships: {
+              addressable: {
+                data: {
+                  id: this.$store.getters['counterparties/lastCreated'].id,
+                  type: 'counterparties',
+                },
+              },
+            },
           }
-          addressData.attributes.addressable_id = this.$store.getters[
-            'counterparties/lastCreated'
-          ].id
-          addressData.attributes.addressable_type = 'counterparties'
           this.$store
             .dispatch('addresses/create', addressData)
             .then((_response) => {
