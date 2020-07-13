@@ -64,11 +64,8 @@
                   <dt class="text-sm font-medium leading-5 text-gray-600">
                     Адрес
                   </dt>
-                  <dd
-                    class="mt-1 text-sm leading-5 text-gray-900"
-                    v-text="address.attributes.display_address"
-                  >
-                    Минская обл., Червенский р-н, г. Червень, ул. Чапаева, д. 21
+                  <dd class="mt-1 text-sm leading-5 text-gray-900">
+                    {{ auction.attributes.display_address }}
                   </dd>
                 </div>
                 <div class="mb-2">
@@ -201,17 +198,12 @@ export default {
         parent: auction,
         relationship: 'organizer',
       }),
+      address: store.getters['addresses/related']({
+        parent: auction,
+        relationship: 'address',
+      }),
     }
   },
-  data: () => ({
-    address: {
-      attributes: {
-        display_address:
-          'Минская обл., Червенский р-н, г. Червень, ул. Чапаева, д. 21',
-        state: 'Минская обл.',
-      },
-    },
-  }),
 
   computed: {
     // auction() {
