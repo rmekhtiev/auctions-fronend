@@ -93,6 +93,7 @@ export default {
   components: {
     CheckIcon,
   },
+
   data: () => ({
     counterparty: {
       _type: 'UL',
@@ -102,42 +103,33 @@ export default {
       country_code: 'BY',
     },
   }),
-  methods: {
-    save() {
-      const recordData = {
+
+  computed: {
+    requestData() {
+      return {
         attributes: this.counterparty,
+      }
+    },
+    addressData() {
+      return {
+        attributes: this.address,
         relationships: {
-          users: {
-            data: [
-              {
-                id: `${this.$auth.user.id}`,
-                type: 'users',
-              },
-            ],
+          addressable: {
+            data: {
+              id: this.$store.getters['counterparties/lastCreated'].id,
+              type: 'counterparties',
+            },
           },
         },
       }
+    },
+  },
 
-      this.$store
-        .dispatch('counterparties/create', recordData)
-        .then((_response) => {
-          const addressData = {
-            attributes: this.address,
-            relationships: {
-              addressable: {
-                data: {
-                  id: this.$store.getters['counterparties/lastCreated'].id,
-                  type: 'counterparties',
-                },
-              },
-            },
-          }
-          this.$store
-            .dispatch('addresses/create', addressData)
-            .then((_response) => {
-              this.$router.push({ name: 'account-profiles' })
-            })
-        })
+  methods: {
+    async save() {
+      await this.$store.dispatch('counterparties/create', this.requestData)
+      await this.$store.dispatch('addresses/create', this.addressData)
+      this.$router.push({ name: 'account-profiles' })
     },
   },
 }
