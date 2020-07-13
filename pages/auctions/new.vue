@@ -330,6 +330,40 @@ export default {
         relation: 'counterparties',
       })
     },
+
+    requestData() {
+      return {
+        attributes: this.auction,
+        relationships: {
+          seller: {
+            data: {
+              type: 'counterparties',
+              id: `${this.auction.seller_id}`,
+            },
+          },
+          organizer: {
+            data: {
+              type: 'counterparties',
+              id: `${this.auction.organizer_id}`,
+            },
+          },
+        },
+      }
+    },
+
+    addressData() {
+      return {
+        attributes: this.address,
+        relationships: {
+          addressable: {
+            data: {
+              id: this.$store.getters['auctions/lastCreated'].id,
+              type: 'auctions',
+            },
+          },
+        },
+      }
+    },
   },
 
   watch: {
@@ -368,25 +402,9 @@ export default {
       this.auction.ends_at = endsAt
     },
 
-    save() {
-      const formData = {
-        attributes: this.auction,
-        relationships: {
-          seller: {
-            data: {
-              type: 'counterparties',
-              id: `${this.auction.seller_id}`,
-            },
-          },
-          organizer: {
-            data: {
-              type: 'counterparties',
-              id: `${this.auction.organizer_id}`,
-            },
-          },
-        },
-      }
-      this.$store.dispatch('auctions/create', formData)
+    async save() {
+      await this.$store.dispatch('auctions/create', this.requestData)
+      await this.$store.dispatch('addresses/create', this.addressData)
     },
   },
 }
