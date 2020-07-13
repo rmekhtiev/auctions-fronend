@@ -31,87 +31,85 @@
     <!-- table-component -->
 
     <div
-      class="container mx-auto px-4 sm:px-8 antialiased font-sans bg-gray-200"
+      class="min-w-full mb-4 align-middle bg-white border-b border-gray-200 rounded shadow-md"
     >
       <div class="py-8">
         <div>
-          <h2 class="text-2xl font-semibold leading-tight">
-            Мои аукционы
-          </h2>
+          <h3 class="px-4 text-xl font-semibold text-gray-600">Мои аукционы</h3>
         </div>
         <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-          <div
-            class="inline-block min-w-full shadow rounded-lg overflow-hidden"
-          >
+          <div class="inline-block min-w-full overflow-hidden">
             <table class="min-w-full leading-normal">
               <thead>
                 <tr>
                   <th
                     v-for="item in tableHeaders"
                     :key="item"
-                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                    class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200"
                   >
                     {{ item.text }}
                   </th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="auction in auctions" :key="auction">
-                  <td
-                    class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-                  >
-                    {{ auction.id }}
+                <tr
+                  v-for="(auction, index) in auctions"
+                  :key="auction"
+                  class="border-b border-gray-200 last:border-b-0"
+                >
+                  <td class="px-6 py-4 whitespace-no-wrap">
+                    <div
+                      class="text-sm font-medium leading-5 text-gray-900"
+                      v-text="index + 1"
+                    />
                   </td>
-                  <td
-                    class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-                  >
-                    <p class="text-gray-900 whitespace-no-wrap">
-                      {{ auction.attributes.title }}
-                    </p>
+                  <td class="px-6 py-4 whitespace-no-wrap">
+                    <div
+                      class="text-sm font-medium leading-5 text-gray-900"
+                      v-text="auction.attributes.title"
+                    />
                   </td>
-                  <td
-                    class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-                  >
-                    <p class="text-gray-900 whitespace-no-wrap">
-                      {{ $moment(auction.attributes.starts_at).format('LL') }},
-                      {{ $moment(auction.attributes.starts_at).format('LT') }}
-                    </p>
+                  <td class="px-6 py-4 whitespace-no-wrap">
+                    <div
+                      class="text-sm font-medium leading-5 text-gray-900"
+                      v-text="
+                        ($moment(auction.attributes.starts_at).format('LL'),
+                        $moment(auction.attributes.starts_at).format('LT'))
+                      "
+                    />
                   </td>
-                  <td
-                    class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-                  >
-                    <p class="text-gray-900 whitespace-no-wrap">
-                      {{ auction.attributes.price_min }}
-                    </p>
+                  <td class="px-6 py-4 whitespace-no-wrap">
+                    <div
+                      class="text-sm font-medium leading-5 text-gray-900"
+                      v-text="auction.attributes.price_min"
+                    />
                   </td>
-                  <td
-                    class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-                  >
-                    <p class="text-gray-900 whitespace-no-wrap">
-                      {{
+                  <td class="px-6 py-4 whitespace-no-wrap">
+                    <div
+                      class="text-sm font-medium leading-5 text-gray-900"
+                      v-text="
                         $store.getters['counterparties/byId']({
                           id: auction.relationships.seller.data.id,
                         }).attributes.display_name
-                      }}
-                    </p>
+                      "
+                    />
                   </td>
-                  <td
-                    class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-                  >
-                    <p class="text-gray-900 whitespace-no-wrap">
-                      {{
+                  <td class="px-6 py-4 whitespace-no-wrap">
+                    <div
+                      class="text-sm font-medium leading-5 text-gray-900"
+                      v-text="
                         $store.getters['counterparties/byId']({
                           id: auction.relationships.organizer.data.id,
                         }).attributes.display_name
-                      }}
-                    </p>
+                      "
+                    />
                   </td>
-                  <td
-                    class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-                  >
-                    <p class="text-gray-900 whitespace-no-wrap">
+                  <td class="px-6 py-4 whitespace-no-wrap">
+                    <span
+                      class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full"
+                    >
                       {{ auction.attributes.status }}
-                    </p>
+                    </span>
                   </td>
                 </tr>
               </tbody>
@@ -159,9 +157,11 @@ export default {
       })
     },
     auctions() {
-      return this.$store.getters['auctions/where']({
-        filter: this.auctionFilter,
-      })
+      return this.counterparties
+        ? this.$store.getters['auctions/where']({
+            filter: this.auctionFilter,
+          })
+        : []
     },
 
     auctionIds() {
