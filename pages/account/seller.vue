@@ -166,10 +166,12 @@ export default {
 
     auctionIds() {
       const organizedIds = this.counterparties.map((counterparty) =>
-        counterparty.relationships.organized.data.map((data) => data.id)
+        counterparty.relationships.organized_auctions.data.map(
+          (data) => data.id
+        )
       )
       const soldIds = this.counterparties.map((counterparty) =>
-        counterparty.relationships.sold.data.map((data) => data.id)
+        counterparty.relationships.sold_auctions.data.map((data) => data.id)
       )
       return [].concat
         .apply([], soldIds)
