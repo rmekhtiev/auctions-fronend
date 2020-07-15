@@ -132,11 +132,12 @@ export default {
   async fetch() {
     await this.$store.dispatch('counterparties/loadRelated', {
       parent: this.$auth.user,
-    })
-    await this.$store.dispatch('auctions/loadWhere', {
-      filter: this.auctionFilter,
+      options: {
+        include: 'organized-auctions,sold-auctions',
+      },
     })
   },
+
   data: () => ({
     tableHeaders: [
       { text: '№', value: 'id' },
@@ -156,32 +157,20 @@ export default {
         parent: this.$auth.user,
       })
     },
+
     auctions() {
-      return this.counterparties
-        ? this.$store.getters['auctions/where']({
-            filter: this.auctionFilter,
-          })
-        : []
-    },
-
-    auctionIds() {
-      const organizedIds = this.counterparties.map((counterparty) =>
-        counterparty.relationships.organized_auctions.data.map(
-          (data) => data.id
-        )
-      )
-      const soldIds = this.counterparties.map((counterparty) =>
-        counterparty.relationships.sold_auctions.data.map((data) => data.id)
-      )
-      return [].concat
-        .apply([], soldIds)
-        .concat([].concat.apply([], organizedIds))
-    },
-
-    auctionFilter() {
-      return {
-        id: this.auctionIds,
-      }
+      const auctions = this.counterparties.map((counterparty) => {
+        const organized = this.$store.getters['auctions/related']({
+          parent: counterparty,
+          relationship: 'organized-auctions',
+        })
+        const sold = this.$store.getters['auctions/related']({
+          parent: counterparty,
+          relationship: 'sold-auctions',
+        })
+        return organized.concat(sold)
+      })
+      return [...new Set(auctions.flat())]
     },
   },
 }
