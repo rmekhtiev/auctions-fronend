@@ -51,7 +51,7 @@
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody v-if="auctions">
                 <tr
                   v-for="(auction, index) in auctions"
                   :key="auction"
@@ -130,12 +130,16 @@ export default {
   },
 
   async fetch() {
-    await this.$store.dispatch('counterparties/loadRelated', {
-      parent: this.$auth.user,
-      options: {
-        include: 'organized-auctions,sold-auctions',
-      },
-    })
+    await this.$store
+      .dispatch('counterparties/loadRelated', {
+        parent: this.$auth.user,
+        options: {
+          include: 'organized-auctions,sold-auctions',
+        },
+      })
+      .then(() => {
+        this.loadCounterparties()
+      })
   },
 
   data: () => ({
@@ -148,16 +152,10 @@ export default {
       { text: 'Организатор', value: 'relationships.organizer.data.id' },
       { text: 'Статус', value: 'attributes.status' },
     ],
-    upcomingAuctions: null,
+    counterparties: [],
   }),
 
   computed: {
-    counterparties() {
-      return this.$store.getters['counterparties/related']({
-        parent: this.$auth.user,
-      })
-    },
-
     auctions() {
       const auctions = this.counterparties.map((counterparty) => {
         const organized = this.$store.getters['auctions/related']({
@@ -170,7 +168,21 @@ export default {
         })
         return organized.concat(sold)
       })
-      return [...new Set(auctions.flat())]
+      // return auctions.flat()
+      return this.removeDuplicates(auctions.flat(), 'id')
+    },
+  },
+  methods: {
+    loadCounterparties() {
+      this.counterparties = this.$store.getters['counterparties/related']({
+        parent: this.$auth.user,
+      })
+    },
+
+    removeDuplicates(myArr, prop) {
+      return myArr.filter((obj, pos, arr) => {
+        return arr.map((mapObj) => mapObj[prop]).indexOf(obj[prop]) === pos
+      })
     },
   },
 }
