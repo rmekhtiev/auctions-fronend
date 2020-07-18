@@ -1,7 +1,7 @@
 <template>
   <div class="container flex flex-col mx-auto">
     <div class="grid grid-cols-1 gap-4 mb-4 lg:grid-cols-2 xl:grid-cols-3">
-      <upcoming-auctions :auctions="auctions.slice(0, 3)" />
+      <!-- <upcoming-auctions :auctions="auctions.slice(0, 3)" /> -->
 
       <div class="p-4 bg-white rounded shadow-md xl:col-span-2">
         <not-implemented suggest="account-seller-top" />
@@ -51,9 +51,21 @@
                   </th>
                 </tr>
               </thead>
-              <tbody v-if="auctions">
+
+              <tbody>
+                <tr
+                  v-if="$fetchState.pending"
+                  class="border-b border-gray-200 last:border-b-0"
+                >
+                  <td class="px-6 py-4 whitespace-no-wrap">
+                    <div class="text-sm font-medium leading-5 text-gray-900" />
+                  </td>
+                  Загрузка аукционов...
+                </tr>
+                <!--todo add lazy loading -->
                 <tr
                   v-for="(auction, index) in auctions"
+                  v-else
                   :key="auction"
                   class="border-b border-gray-200 last:border-b-0"
                 >
@@ -130,16 +142,12 @@ export default {
   },
 
   async fetch() {
-    await this.$store
-      .dispatch('counterparties/loadRelated', {
-        parent: this.$auth.user,
-        options: {
-          include: 'organized-auctions,sold-auctions',
-        },
-      })
-      .then(() => {
-        this.loadCounterparties()
-      })
+    await this.$store.dispatch('counterparties/loadRelated', {
+      parent: this.$auth.user,
+      options: {
+        include: 'organized-auctions,sold-auctions',
+      },
+    })
   },
 
   data: () => ({
@@ -152,10 +160,14 @@ export default {
       { text: 'Организатор', value: 'relationships.organizer.data.id' },
       { text: 'Статус', value: 'attributes.status' },
     ],
-    counterparties: [],
   }),
 
   computed: {
+    counterparties() {
+      return this.$store.getters['counterparties/related']({
+        parent: this.$auth.user,
+      })
+    },
     auctions() {
       const auctions = this.counterparties.map((counterparty) => {
         const organized = this.$store.getters['auctions/related']({
@@ -168,17 +180,10 @@ export default {
         })
         return organized.concat(sold)
       })
-      // return auctions.flat()
       return this.removeDuplicates(auctions.flat(), 'id')
     },
   },
   methods: {
-    loadCounterparties() {
-      this.counterparties = this.$store.getters['counterparties/related']({
-        parent: this.$auth.user,
-      })
-    },
-
     removeDuplicates(myArr, prop) {
       return myArr.filter((obj, pos, arr) => {
         return arr.map((mapObj) => mapObj[prop]).indexOf(obj[prop]) === pos
