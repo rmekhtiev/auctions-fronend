@@ -33,7 +33,7 @@
               :to="{
                 name: 'auctions-id',
                 params: {
-                  id: auctions.id,
+                  id: auction.id,
                 },
               }"
               class="font-semibold text-black border-b-2 border-gray-200 cursor-pointer hover:border-gray-400"

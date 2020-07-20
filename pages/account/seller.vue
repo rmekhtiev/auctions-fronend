@@ -1,7 +1,8 @@
 <template>
-  <div class="container flex flex-col mx-auto">
+  <loading-spinner v-if="$fetchState.pending" />
+  <div v-else class="container flex flex-col mx-auto">
     <div class="grid grid-cols-1 gap-4 mb-4 lg:grid-cols-2 xl:grid-cols-3">
-      <!-- <upcoming-auctions :auctions="auctions.slice(0, 3)" /> -->
+      <upcoming-auctions :auctions="auctions.slice(0, 3)" />
 
       <div class="p-4 bg-white rounded shadow-md xl:col-span-2">
         <not-implemented suggest="account-seller-top" />
@@ -9,13 +10,13 @@
     </div>
 
     <div class="flex justify-end mb-4">
-      <nuxt-link
-        :to="'#'"
-        class="inline-flex px-4 py-2 mr-4 text-sm font-semibold text-black transition duration-150 bg-white border-2 rounded-lg shadow-sm hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
+      <button
+        disabled
+        class="inline-flex px-4 py-2 mr-4 text-sm font-semibold text-gray-800 transition duration-150 bg-gray-200 border-2 rounded-lg shadow-sm cursor-not-allowed focus:border-gray-600 focus:outline-none"
       >
         <plus-icon class="flex-shrink w-5 h-5 mr-2" />
         Новый лот
-      </nuxt-link>
+      </button>
 
       <nuxt-link
         :to="{
@@ -37,15 +38,16 @@
         <div>
           <h3 class="px-4 text-xl font-semibold text-gray-600">Мои аукционы</h3>
         </div>
-        <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+        <div class="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
           <div class="inline-block min-w-full overflow-hidden">
             <table class="min-w-full leading-normal">
               <thead>
                 <tr>
                   <th
                     v-for="item in tableHeaders"
-                    :key="item"
+                    :key="`header-${item.value}`"
                     class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200"
+                    :class="item.class"
                   >
                     {{ item.text }}
                   </th>
@@ -54,47 +56,42 @@
 
               <tbody>
                 <tr
-                  v-if="$fetchState.pending"
-                  class="border-b border-gray-200 last:border-b-0"
-                >
-                  <td class="px-6 py-4 whitespace-no-wrap">
-                    <div class="text-sm font-medium leading-5 text-gray-900" />
-                  </td>
-                  Загрузка аукционов...
-                </tr>
-                <!--todo add lazy loading -->
-                <tr
-                  v-for="(auction, index) in auctions"
-                  v-else
-                  :key="auction"
+                  v-for="auction in auctions"
+                  :key="`auction-row-${auction.id}`"
                   class="border-b border-gray-200 last:border-b-0"
                 >
                   <td class="px-6 py-4 whitespace-no-wrap">
                     <div
                       class="text-sm font-medium leading-5 text-gray-900"
-                      v-text="index + 1"
+                      v-text="auction.id"
                     />
                   </td>
                   <td class="px-6 py-4 whitespace-no-wrap">
-                    <div
-                      class="text-sm font-medium leading-5 text-gray-900"
-                      v-text="auction.attributes.title"
-                    />
+                    <div class="text-sm font-medium leading-5 text-gray-900">
+                      <nuxt-link
+                        :to="{
+                          name: 'auctions-id',
+                          params: { id: auction.id },
+                        }"
+                        class="font-bold text-black border-b-2 border-gray-200 cursor-pointer hover:border-gray-400"
+                        v-text="auction.attributes.title"
+                      />
+                    </div>
                   </td>
                   <td class="px-6 py-4 whitespace-no-wrap">
                     <div
                       class="text-sm font-medium leading-5 text-gray-900"
                       v-text="
-                        ($moment(auction.attributes.starts_at).format('LL'),
-                        $moment(auction.attributes.starts_at).format('LT'))
+                        $moment(auction.attributes.starts_at).format('LLL')
                       "
                     />
                   </td>
                   <td class="px-6 py-4 whitespace-no-wrap">
                     <div
-                      class="text-sm font-medium leading-5 text-gray-900"
-                      v-text="auction.attributes.price_min"
-                    />
+                      class="text-sm font-medium leading-5 text-right text-gray-900"
+                    >
+                      {{ auction.attributes.price_min | currency }}
+                    </div>
                   </td>
                   <td class="px-6 py-4 whitespace-no-wrap">
                     <div
@@ -120,7 +117,7 @@
                     <span
                       class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full"
                     >
-                      {{ auction.attributes.status }}
+                      {{ $t(`auctions.status.${auction.attributes.status}`) }}
                     </span>
                   </td>
                 </tr>
@@ -134,6 +131,7 @@
 </template>
 
 <script>
+import flatten from 'lodash.flatten'
 import { PlusIcon } from 'vue-feather-icons'
 
 export default {
@@ -155,7 +153,11 @@ export default {
       { text: '№', value: 'id' },
       { text: 'Название', value: 'attributes.title' },
       { text: 'Начало торгов', value: 'attributes.starts_at' },
-      { text: 'Начальная цена', value: 'attributes.price_start' },
+      {
+        text: 'Начальная цена',
+        value: 'attributes.price_start',
+        class: 'text-right',
+      },
       { text: 'Продавец', value: 'relationships.seller.data.id' },
       { text: 'Организатор', value: 'relationships.organizer.data.id' },
       { text: 'Статус', value: 'attributes.status' },
@@ -168,19 +170,38 @@ export default {
         parent: this.$auth.user,
       })
     },
+    soldAuctions() {
+      return flatten(
+        this.counterparties
+          .map((counterparty) =>
+            this.$store.getters['auctions/related']({
+              parent: counterparty,
+              relationship: 'organized-auctions',
+            })
+          )
+          .filter((auction) => !!auction)
+      )
+    },
+    organizedAuctions() {
+      return flatten(
+        this.counterparties
+          .map((counterparty) =>
+            this.$store.getters['auctions/related']({
+              parent: counterparty,
+              relationship: 'sold-auctions',
+            })
+          )
+          .filter((auction) => !!auction)
+      )
+    },
     auctions() {
-      const auctions = this.counterparties.map((counterparty) => {
-        const organized = this.$store.getters['auctions/related']({
-          parent: counterparty,
-          relationship: 'organized-auctions',
-        })
-        const sold = this.$store.getters['auctions/related']({
-          parent: counterparty,
-          relationship: 'sold-auctions',
-        })
-        return organized.concat(sold)
-      })
-      return this.removeDuplicates(auctions.flat(), 'id')
+      return this.removeDuplicates(
+        [...this.soldAuctions, ...this.organizedAuctions],
+        'id'
+      ).sort(
+        ({ attributes: { starts_at: a } }, { attributes: { starts_at: b } }) =>
+          this.$moment(a).diff(b)
+      )
     },
   },
   methods: {
