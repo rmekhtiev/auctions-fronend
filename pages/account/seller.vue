@@ -38,7 +38,7 @@ export default {
 
   middleware: 'role',
   meta: {
-    role: ['MODERATOR'],
+    role: ['BANKRUPTCY_MANGER'],
   },
 
   components: {
