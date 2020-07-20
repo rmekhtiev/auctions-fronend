@@ -34,11 +34,9 @@
 import { PlusIcon } from 'vue-feather-icons'
 
 export default {
-  // middleware: ['role'],
-
   middleware: 'role',
   meta: {
-    role: ['BANKRUPTCY_MANGER'],
+    role: ['BANKRUPTCY_MANGER', 'ADMIN'],
   },
 
   components: {
