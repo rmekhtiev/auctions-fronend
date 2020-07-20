@@ -11,6 +11,10 @@ export default function ({ $axios, store }) {
     resourceModule({ name: 'counterparties', httpClient: $axios })
   )
   store.registerModule(
+    'addresses',
+    resourceModule({ name: 'auaddressesctions', httpClient: $axios })
+  )
+  store.registerModule(
     'accounts',
     resourceModule({ name: 'accounts', httpClient: $axios })
   )
@@ -21,6 +25,10 @@ export default function ({ $axios, store }) {
   store.registerModule(
     'auctions',
     resourceModule({ name: 'auctions', httpClient: $axios })
+  )
+  store.registerModule(
+    'lots',
+    resourceModule({ name: 'lots', httpClient: $axios })
   )
 
   // store.registerModule('jv', jsonapiModule($axios))
