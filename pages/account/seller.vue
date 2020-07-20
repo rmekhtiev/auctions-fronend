@@ -34,6 +34,13 @@
 import { PlusIcon } from 'vue-feather-icons'
 
 export default {
+  // middleware: ['role'],
+
+  middleware: 'role',
+  meta: {
+    role: ['MODERATOR'],
+  },
+
   components: {
     PlusIcon,
   },
