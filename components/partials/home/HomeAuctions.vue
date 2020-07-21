@@ -1,13 +1,37 @@
 <template>
   <section>
     <div class="flex items-center justify-between my-4">
-      <button
-        type="button"
-        class="inline-flex justify-center text-sm font-medium leading-5 text-gray-700"
-      >
-        Предстоящие торги
-        <chevron-down-icon class="w-5 h-5 ml-2" />
-      </button>
+      <div class="flex">
+        <slot name="filters">
+          <slot v-for="(filter, name) in filters" :name="`filters.${name}`">
+            <div
+              :key="`filter-${name}`"
+              class="relative mr-4 text-gray-500 duration-150 ease-in-out hover-within:text-gray-800"
+            >
+              <select
+                :id="`option-${name}`"
+                v-model="filters[name]"
+                type="button"
+                :disabled="pending"
+                class="px-4 py-2 pr-12 text-sm leading-none transition-colors bg-white border-2 border-gray-200 rounded-full rounded-l-full appearance-none focus:shadow-outline focus:outline-none"
+              >
+                <option
+                  v-for="filtersOption in filtersOptions[name]"
+                  :key="`filter-${name}-option-${filtersOption}`"
+                  :value="filtersOption"
+                >
+                  {{ $t(`auctions.${name}.${filtersOption}`) }}
+                </option>
+              </select>
+              <div
+                class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none"
+              >
+                <chevron-down-icon class="w-5 h-5" />
+              </div>
+            </div>
+          </slot>
+        </slot>
+      </div>
 
       <div
         class="inline-flex text-sm leading-none text-gray-500 bg-gray-200 border-2 border-gray-200 rounded-full"
@@ -36,20 +60,16 @@
         </button>
       </div>
     </div>
-    <div class="grid grid-cols-1 gap-4 my-4 sm:grid-cols-2 lg:grid-cols-4">
+    <loading-spinner v-if="pending" class="py-16" />
+    <div
+      v-else
+      class="grid grid-cols-1 gap-4 my-4 sm:grid-cols-2 lg:grid-cols-4"
+    >
       <auction-card
         v-for="(auction, index) in auctions"
         :key="`home-auctions-${index}`"
         :auction="auction"
       />
-    </div>
-    <div class="flex flex-row justify-end">
-      <nuxt-link
-        :to="{ name: 'auctions' }"
-        class="block px-6 py-3 text-sm font-semibold text-white transition duration-150 bg-gray-800 border-2 border-transparent rounded-lg hover:text-white hover:bg-black focus:border-gray-600 focus:outline-none"
-      >
-        Смотреть все
-      </nuxt-link>
     </div>
   </section>
 </template>
@@ -67,6 +87,18 @@ export default {
     auctions: {
       type: Array,
       required: true,
+    },
+    filters: {
+      type: Object,
+      default: () => {},
+    },
+    filtersOptions: {
+      type: Object,
+      default: () => [],
+    },
+    pending: {
+      type: Boolean,
+      default: false,
     },
   },
   data: () => ({
