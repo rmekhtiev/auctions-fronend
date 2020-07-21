@@ -4,9 +4,7 @@ export default function ({ $auth, route, error }) {
     if (meta.role && typeof meta.role !== 'undefined') roles = meta.role
   })
 
-  if (roles.includes($auth.user.attributes.role)) {
-    console.log('Allowed') // todo adds redirect
-  } else {
-    error({ statusCode: 403, message: 'Not Allowed' })
+  if (!roles.includes($auth.user.attributes.role)) {
+    error({ statusCode: 403, message: 'Вам сюда нельзя' })
   }
 }
