@@ -135,6 +135,11 @@ import flatten from 'lodash.flatten'
 import { PlusIcon } from 'vue-feather-icons'
 
 export default {
+  middleware: 'role',
+  meta: {
+    role: ['BANKRUPTCY_MANGER', 'ADMIN'],
+  },
+
   components: {
     PlusIcon,
   },
