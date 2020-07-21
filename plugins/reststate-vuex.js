@@ -12,15 +12,11 @@ export default function ({ $axios, store }) {
   )
   store.registerModule(
     'addresses',
-    resourceModule({ name: 'auaddressesctions', httpClient: $axios })
+    resourceModule({ name: 'addresses', httpClient: $axios })
   )
   store.registerModule(
     'accounts',
     resourceModule({ name: 'accounts', httpClient: $axios })
-  )
-  store.registerModule(
-    'addresses',
-    resourceModule({ name: 'addresses', httpClient: $axios })
   )
   store.registerModule(
     'auctions',

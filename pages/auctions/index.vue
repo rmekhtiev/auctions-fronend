@@ -1,35 +1,68 @@
 <template>
-  <div
-    class="container flex flex-col items-center justify-center min-h-full mx-auto"
-  >
-    <div
-      class="flex flex-col items-center justify-center max-w-sm text-center text-gray-700"
-    >
-      <div
-        class="flex items-center justify-center w-24 h-24 m-4 bg-gray-200 rounded-full"
-      >
-        <activity-icon class="w-16 h-16" />
-      </div>
-      <span class="mx-4 mb-4 text-xl font-medium">Сейчас здесь пусто</span>
-      <p class="mx-4 italic">
-        Скоро мы это исправим, а пока что попробуйте
-        <nuxt-link
-          :to="{ name: 'account-profile-new' }"
-          class="font-bold text-black border-b-2 border-gray-200 cursor-pointer hover:border-gray-400"
-        >
-          заполнить профиль
-        </nuxt-link>
-      </p>
-    </div>
+  <div class="container flex flex-col mx-auto">
+    <home-auctions
+      :auctions="auctions"
+      :filters="filter"
+      :filters-options="filterOptions"
+      :pending="$fetchState.pending"
+    />
   </div>
 </template>
 
 <script>
-import { ActivityIcon } from 'vue-feather-icons'
+import omitby from 'lodash.omitby'
 
 export default {
-  components: {
-    ActivityIcon,
+  async fetch() {
+    await this.$store.dispatch('auctions/loadWhere', {
+      options: this.pageOptions,
+      filter: this.pureFilter,
+    })
+  },
+  watchQuery: true,
+  data: () => ({
+    filterOptions: {
+      status: ['UPCOMING'],
+      category: [
+        undefined,
+        'realty',
+        'vehicle',
+        'equipment',
+        'receivables',
+        'enterprise',
+        'spare-part',
+        'inventory',
+      ],
+    },
+    filter: {
+      status: 'UPCOMING',
+      category: undefined,
+    },
+  }),
+  computed: {
+    pureFilter() {
+      return omitby(this.filter, (value) => value === undefined)
+    },
+    pageOptions() {
+      return {
+        'page[number]': this.$route.query.page ?? 1,
+      }
+    },
+    auctions() {
+      return this.$store.getters['auctions/where']({
+        options: this.pageOptions,
+        filter: this.pureFilter,
+      })
+    },
+  },
+  watch: {
+    filter: {
+      deep: true,
+      handler(_newValue) {
+        this.$fetch()
+      },
+    },
+    '$route.query': '$fetch',
   },
 }
 </script>
