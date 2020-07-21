@@ -60,7 +60,7 @@
         </button>
       </div>
     </div>
-    <loading-spinner v-if="pending" />
+    <loading-spinner v-if="pending" class="py-16" />
     <div
       v-else
       class="grid grid-cols-1 gap-4 my-4 sm:grid-cols-2 lg:grid-cols-4"

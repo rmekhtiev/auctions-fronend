@@ -12,7 +12,16 @@
       </picture>
     </div>
     <h2 class="flex-grow px-6 pt-4 text-lg font-semibold text-gray-800">
-      {{ auction.attributes.title }}
+      <nuxt-link
+        :to="{
+          name: 'auctions-id',
+          params: {
+            id: auction.id,
+          },
+        }"
+      >
+        {{ auction.attributes.title }}
+      </nuxt-link>
     </h2>
     <ul class="px-6">
       <li class="flex items-center mt-2 text-gray-700">
@@ -26,7 +35,7 @@
         <users-icon class="w-4 h-4" />
         <div class="px-2 text-sm">Участников еще нет</div>
       </li>
-      <li class="flex items-center mt-2 text-gray-700">
+      <li v-if="address" class="flex items-center mt-2 text-gray-700">
         <map-pin-icon class="w-4 h-4" />
         <div v-if="address.attributes.state" class="px-2 text-sm">
           {{ address.attributes.state }}
