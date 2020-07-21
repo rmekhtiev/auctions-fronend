@@ -47,7 +47,7 @@
           @click="display = 'grid'"
         >
           <grid-icon class="w-4 h-4 mr-2 fill-current" />
-          <span>Grid</span>
+          <span>Сетка</span>
         </button>
         <button
           id="list"
@@ -58,7 +58,7 @@
           @click="display = 'list'"
         >
           <list-icon class="w-4 h-4 mr-2 fill-current" />
-          <span>List</span>
+          <span>Список</span>
         </button>
       </div>
     </div>
@@ -106,7 +106,7 @@ export default {
     },
     filtersOptions: {
       type: Object,
-      default: () => [],
+      default: () => {},
     },
     pending: {
       type: Boolean,
