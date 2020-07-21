@@ -1,19 +1,21 @@
 <template>
   <section>
-    <div class="flex items-center justify-between my-4">
-      <div class="flex">
+    <div
+      class="flex flex-col-reverse items-center justify-between my-4 md:flex-row"
+    >
+      <div class="flex flex-col w-full md:w-auto md:flex-row">
         <slot name="filters">
           <slot v-for="(filter, name) in filters" :name="`filters.${name}`">
             <div
               :key="`filter-${name}`"
-              class="relative mr-4 text-gray-500 duration-150 ease-in-out hover-within:text-gray-800"
+              class="relative mb-2 text-gray-500 duration-150 ease-in-out md:mr-4 hover-within:text-gray-800"
             >
               <select
                 :id="`option-${name}`"
                 v-model="filters[name]"
                 type="button"
                 :disabled="pending"
-                class="px-4 py-2 pr-12 text-sm leading-none transition-colors bg-white border-2 border-gray-200 rounded-full rounded-l-full appearance-none focus:shadow-outline focus:outline-none"
+                class="w-full px-4 py-2 pr-12 text-sm leading-none transition-colors bg-white border-2 border-gray-200 rounded-full rounded-l-full appearance-none md:w-auto focus:shadow-outline focus:outline-none"
               >
                 <option
                   v-for="filtersOption in filtersOptions[name]"
@@ -34,7 +36,7 @@
       </div>
 
       <div
-        class="inline-flex text-sm leading-none text-gray-500 bg-gray-200 border-2 border-gray-200 rounded-full"
+        class="inline-flex self-end mb-2 text-sm leading-none text-gray-500 bg-gray-200 border-2 border-gray-200 rounded-full"
       >
         <button
           id="grid"
