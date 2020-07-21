@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <loading-spinner v-if="$fetchState.pending" />
+  <div v-else>
     <div class="z-40 bg-gray-100 //lg:sticky top-16">
       <div class="container flex flex-col mx-auto">
         <auction-header
@@ -179,48 +180,34 @@ export default {
     // eslint-disable-next-line vue/no-unused-components
     EyeIcon,
   },
-  // async fetch() {
-  //   await this.$store.dispatch('auctions/loadById', {
-  //     id: this.$route.params.id,
-  //   })
-  // },
-  async asyncData({ store, route }) {
-    await store.dispatch('auctions/loadById', { id: route.params.id })
-    const auction = store.getters['auctions/byId']({ id: route.params.id })
-
-    return {
-      auction,
-      seller: store.getters['counterparties/related']({
-        parent: auction,
-        relationship: 'seller',
-      }),
-      organizer: store.getters['counterparties/related']({
-        parent: auction,
-        relationship: 'organizer',
-      }),
-      address: store.getters['addresses/related']({
-        parent: auction,
-        relationship: 'address',
-      }),
-    }
+  async fetch() {
+    await this.$store.dispatch('auctions/loadById', {
+      id: this.$route.params.id,
+    })
   },
 
   computed: {
-    // auction() {
-    //   return this.$store.getters['auctions/byId']({ id: this.$route.params.id })
-    // },
-    // seller() {
-    //   return this.$store.getters['counterparties/related']({
-    //     parent: this.auction,
-    //     relationship: 'seller',
-    //   })
-    // },
-    // organizer() {
-    //   return this.$store.getters['counterparties/related']({
-    //     parent: this.auction,
-    //     relationship: 'organizer',
-    //   })
-    // },
+    auction() {
+      return this.$store.getters['auctions/byId']({ id: this.$route.params.id })
+    },
+    seller() {
+      return this.$store.getters['counterparties/related']({
+        parent: this.auction,
+        relationship: 'seller',
+      })
+    },
+    organizer() {
+      return this.$store.getters['counterparties/related']({
+        parent: this.auction,
+        relationship: 'organizer',
+      })
+    },
+    address() {
+      return this.$store.getters['addresses/related']({
+        parent: this.auction,
+        relationship: 'address',
+      })
+    },
   },
 }
 </script>
