@@ -65,11 +65,18 @@
     <loading-spinner v-if="pending" class="py-16" />
     <div
       v-else
-      class="grid grid-cols-1 gap-4 my-4 sm:grid-cols-2 lg:grid-cols-4"
+      class="my-4"
+      :class="{
+        'grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4':
+          display === 'grid',
+        'flex flex-col align-middle min-w-full shadow overflow-hidden rounded-lg border-b border-gray-200':
+          display === 'list',
+      }"
     >
-      <auction-card
+      <component
+        :is="display === 'grid' ? 'auction-card' : 'auction-list-item'"
         v-for="(auction, index) in auctions"
-        :key="`home-auctions-${index}`"
+        :key="`home-auctions-${index}-${auction.id}`"
         :auction="auction"
       />
     </div>
@@ -81,6 +88,9 @@ import { ChevronDownIcon, GridIcon, ListIcon } from 'vue-feather-icons'
 
 export default {
   components: {
+    AuctionCard: () => import('~/components/common/auctions/AuctionCard'),
+    AuctionListItem: () =>
+      import('~/components/common/auctions/AuctionListItem'),
     ChevronDownIcon,
     GridIcon,
     ListIcon,
