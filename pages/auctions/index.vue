@@ -38,30 +38,14 @@
             </svg>
           </nuxt-link>
           <component
-            :is="
-              p <= 2 ||
-              p >= lastMeta.page['last-page'] - 1 ||
-              Math.abs(p - page) <= 1
-                ? 'nuxt-link'
-                : 'button'
-            "
+            :is="showPaginationItem(p) ? 'nuxt-link' : 'button'"
             v-for="p in lastMeta.page['last-page']"
-            v-show="
-              p <= 2 ||
-              p >= lastMeta.page['last-page'] - 1 ||
-              Math.abs(p - page) <= 1
-            "
+            v-show="showPaginationItem(p) || showPaginationItem(p + 1)"
             :key="`auctions-pagination-${p}`"
             :to="{ path: $route.path, query: { page: p } }"
             class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium leading-5 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700"
           >
-            {{
-              p <= 2 ||
-              p >= lastMeta.page['last-page'] - 1 ||
-              Math.abs(p - page) <= 1
-                ? p
-                : '...'
-            }}
+            {{ showPaginationItem(p) ? p : '...' }}
           </component>
           <nuxt-link
             v-if="$store.getters['auctions/hasNext']"
@@ -149,6 +133,15 @@ export default {
       },
     },
     '$route.query': '$fetch',
+  },
+  methods: {
+    showPaginationItem(p) {
+      return (
+        p <= 2 ||
+        p >= this.lastMeta.page['last-page'] - 1 ||
+        Math.abs(p - this.page) <= 1
+      )
+    },
   },
 }
 </script>
