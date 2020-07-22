@@ -175,10 +175,14 @@ export default {
     EyeIcon,
   },
 
-  computed: {
-    auction() {
-      return this.$store.getters['auctions/byId']({ id: this.$route.params.id })
+  props: {
+    auction: {
+      type: Object,
+      required: true,
     },
+  },
+
+  computed: {
     seller() {
       return this.$store.getters['counterparties/related']({
         parent: this.auction,

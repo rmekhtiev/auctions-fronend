@@ -9,7 +9,7 @@
         ></auction-header>
       </div>
     </div>
-    <nuxt-child />
+    <nuxt-child :auction="auction" />
   </div>
 </template>
 
