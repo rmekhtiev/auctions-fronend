@@ -13,6 +13,27 @@
       </div>
 
       <loading-spinner v-if="$fetchState.pending" />
+      <div
+        v-else-if="hasParticipated"
+        class="flex flex-col items-center justify-center max-w-sm mx-auto text-center text-gray-700"
+      >
+        <span
+          :to="{ name: 'account-profiles-new' }"
+          class="flex items-center justify-center w-24 h-24 m-4 bg-gray-200 rounded-full"
+        >
+          <plus-icon class="w-16 h-16" />
+        </span>
+        <span class="mx-4 text-xl font-medium">Вы уже участвуете</span>
+        <p class="m-4 italic">
+          Вы уже подавали заявку на участие в&nbsp;данном&nbsp;аукционе.
+          <nuxt-link
+            :to="{ name: 'account-customer' }"
+            class="font-bold text-black border-b-2 border-gray-200 cursor-pointer hover:border-gray-400"
+          >
+            Все заявки
+          </nuxt-link>
+        </p>
+      </div>
       <no-profiles v-else-if="!counterparties.length" />
       <form v-else @submit.prevent="submit()">
         <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
@@ -118,10 +139,15 @@ export default {
   },
 
   async fetch() {
-    await this.$store.dispatch('counterparties/loadRelated', {
-      parent: this.$auth.user,
-      relation: 'counterparties',
-    })
+    await Promise.all([
+      this.$store.dispatch('counterparties/loadRelated', {
+        parent: this.$auth.user,
+        relation: 'counterparties',
+      }),
+      this.$store.dispatch('participation-requests/loadRelated', {
+        parent: this.$auth.user,
+      }),
+    ])
   },
 
   data: () => ({
@@ -137,6 +163,18 @@ export default {
         parent: this.$auth.user,
         relation: 'counterparties',
       })
+    },
+    participationRequests() {
+      return this.$store.getters['participation-requests/related']({
+        parent: this.$auth.user,
+      })
+    },
+    hasParticipated() {
+      return !!this.participationRequests.filter(
+        ({ relationships: { auction, author } }) =>
+          auction.data.id == this.auction.id &&
+          author.data.id == this.$auth.user.id
+      ).length
     },
     request() {
       return {

@@ -1,12 +1,12 @@
 <template>
   <loading-spinner v-if="$fetchState.pending" />
-  <div v-else>
+  <div v-else-if="!!auction">
     <div class="z-40 bg-gray-100 //lg:sticky top-16">
       <div class="container flex flex-col mx-auto">
         <auction-header
           :auction="auction.attributes"
-          :address="address.attributes"
-        ></auction-header>
+          :address="address ? address.attributes : null"
+        />
       </div>
     </div>
     <nuxt-child :auction="auction" />
@@ -16,9 +16,13 @@
 <script>
 export default {
   async fetch() {
-    await this.$store.dispatch('auctions/loadById', {
-      id: this.$route.params.id,
-    })
+    try {
+      await this.$store.dispatch('auctions/loadById', {
+        id: this.$route.params.id,
+      })
+    } catch (err) {
+      this.$nuxt.error({ statusCode: 404, message: err.data.message })
+    }
   },
 
   computed: {
