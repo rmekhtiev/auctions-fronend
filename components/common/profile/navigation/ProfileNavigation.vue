@@ -45,6 +45,7 @@
       <div class="my-2 border-t border-gray-300"></div>
 
       <nuxt-link
+        v-if="$roles(['USER'])"
         :to="{
           name: 'account-customer',
         }"
@@ -58,6 +59,7 @@
       </nuxt-link>
 
       <nuxt-link
+        v-if="$roles(['BANKRUPTCY_MANGER'])"
         :to="{
           name: 'account-seller',
         }"
