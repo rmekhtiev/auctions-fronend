@@ -15,7 +15,7 @@
         </div>
 
         <div
-          v-if="address.state"
+          v-if="address && address.state"
           class="flex items-center mt-2 text-sm leading-5 text-gray-600 sm:mr-6"
         >
           <map-pin-icon class="flex-shrink-0 w-5 h-5 mr-2 text-gray-500" />
@@ -44,7 +44,7 @@ export default {
     },
     address: {
       type: Object,
-      default: () => ({}),
+      default: null,
     },
   },
 }

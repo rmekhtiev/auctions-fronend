@@ -70,6 +70,7 @@
     <!-- todo: в зависимости от роли показывать разное меню -->
     <div class="border-b">
       <nuxt-link
+        v-if="$roles(['USER'])"
         :to="{
           name: 'account-customer',
         }"
@@ -80,6 +81,7 @@
         </p>
       </nuxt-link>
       <nuxt-link
+        v-if="$roles(['BANKRUPTCY_MANGER'])"
         :to="{
           name: 'account-seller',
         }"

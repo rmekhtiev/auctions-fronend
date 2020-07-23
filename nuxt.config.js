@@ -88,11 +88,11 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    // host: 'auctions-backend.test',
+    host: 'auctions-backend.test',
     prefix: '/api/v1',
     port: '80',
 
-    proxy: true,
+    // proxy: true,
   },
 
   proxy: {
@@ -100,6 +100,8 @@ export default {
   },
 
   auth: {
+    plugins: ['~/plugins/roles'],
+
     redirect: {
       login: '/auth',
       logout: '/',
