@@ -11,8 +11,32 @@
 
     <div class="flex flex-col">
       <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        <div class="flex">
-          <picture>
+        <div class="flex flex-col">
+          <template v-if="hasImages">
+            <picture class="mb-4">
+              <img
+                :src="auction.attributes.images[imageDisplayIndex]"
+                :alt="auction.attributes.title"
+                class="object-contain object-center w-full h-64 bg-gray-400 border border-gray-200 rounded"
+                @click="lightBoxIndex = imageDisplayIndex"
+              />
+            </picture>
+            <div class="grid grid-cols-4 gap-2">
+              <picture
+                v-for="(image, index) in auction.attributes.images"
+                :key="`auction-image-${index}`"
+              >
+                <img
+                  :src="image"
+                  :alt="auction.attributes.title"
+                  class="object-cover object-center w-full h-full border border-gray-200 rounded"
+                  @mouseover="imageDisplayIndex = index"
+                  @click="lightBoxIndex = index"
+                />
+              </picture>
+            </div>
+          </template>
+          <picture v-else class="mb-4">
             <img
               :src="cover"
               :alt="auction.attributes.title"
@@ -198,6 +222,7 @@ export default {
 
   data: () => ({
     lightBoxIndex: null,
+    imageDisplayIndex: 0,
   }),
 
   computed: {
