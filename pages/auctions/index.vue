@@ -133,8 +133,13 @@ export default {
     },
   }),
   computed: {
-    page() {
-      return parseInt(this.$route.query.page ?? 1)
+    page: {
+      get() {
+        return parseInt(this.$route.query.page ?? 1)
+      },
+      set(val) {
+        this.$router.push({ path: this.$route.path, query: { page: val } })
+      },
     },
     pureFilter() {
       return omitby(this.filter, (value) => value === undefined)
@@ -156,6 +161,7 @@ export default {
     filter: {
       deep: true,
       handler(_newValue) {
+        this.page = 1
         this.$fetch()
       },
     },
