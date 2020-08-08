@@ -10758,6 +10758,13 @@ vue-client-only@^2.0.0:
   resolved "https://registry.yarnpkg.com/vue-client-only/-/vue-client-only-2.0.0.tgz#ddad8d675ee02c761a14229f0e440e219de1da1c"
   integrity sha512-arhk1wtWAfLsJyxGMoEYhoBowM87/i6HLSG2LH/03Yog6i2d9JEN1peMP0Ceis+/n9DxdenGYZZTxbPPJyHciA==
 
+vue-cool-lightbox@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/vue-cool-lightbox/-/vue-cool-lightbox-2.4.1.tgz#caee8af26e2c4dc31a9aa77ab2ad9e04c284ff22"
+  integrity sha512-Rg3RpDxl1lIIJGd7h+u86KJcD5yCAgx3/YjH0DP9/sC8GjSKc9YSpQfppDr6VoppqQMlLP4GxRLPSMiS0D3SAA==
+  dependencies:
+    vue "^2.6.10"
+
 vue-currency-filter@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/vue-currency-filter/-/vue-currency-filter-5.1.0.tgz#f439bbc76193f4794b5ea02d905e8bec27e74234"
@@ -10881,7 +10888,7 @@ vue-toasted@^1.1.27:
   resolved "https://registry.yarnpkg.com/vue-toasted/-/vue-toasted-1.1.28.tgz#dbabb83acc89f7a9e8765815e491d79f0dc65c26"
   integrity sha512-UUzr5LX51UbbiROSGZ49GOgSzFxaMHK6L00JV8fir/CYNJCpIIvNZ5YmS4Qc8Y2+Z/4VVYRpeQL2UO0G800Raw==
 
-vue@>=2.0.0, vue@^2.6.11:
+vue@>=2.0.0, vue@^2.6.10, vue@^2.6.11:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==

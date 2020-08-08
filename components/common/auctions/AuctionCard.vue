@@ -6,7 +6,7 @@
       <picture>
         <img
           class="object-cover object-center w-full h-56 lg:h-48 xl:h-56"
-          src="https://via.placeholder.com/450x450"
+          :src="cover"
           :alt="auction.attributes.title"
         />
       </picture>
@@ -60,12 +60,15 @@
 <script>
 import { ClockIcon, UsersIcon, MapPinIcon } from 'vue-feather-icons'
 
+import auction from '@/mixins/data-types/auction'
+
 export default {
   components: {
     ClockIcon,
     UsersIcon,
     MapPinIcon,
   },
+  mixins: [auction],
   props: {
     auction: {
       type: Object,

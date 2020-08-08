@@ -1,13 +1,47 @@
 <template>
   <div class="container p-4 mx-auto">
+    <CoolLightBox
+      v-if="hasImages"
+      :items="auction.attributes.images"
+      :index="lightBoxIndex"
+      :use-zoom-bar="true"
+      @close="lightBoxIndex = null"
+    >
+    </CoolLightBox>
+
     <div class="flex flex-col">
       <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        <div class="flex">
-          <picture>
+        <div class="flex flex-col">
+          <template v-if="hasImages">
+            <picture class="mb-4">
+              <img
+                :src="auction.attributes.images[imageDisplayIndex]"
+                :alt="auction.attributes.title"
+                class="object-contain object-center w-full h-64 bg-gray-400 border border-gray-200 rounded"
+                @click="lightBoxIndex = imageDisplayIndex"
+              />
+            </picture>
+            <div class="grid grid-cols-4 gap-2">
+              <picture
+                v-for="(image, index) in auction.attributes.images"
+                :key="`auction-image-${index}`"
+              >
+                <img
+                  :src="image"
+                  :alt="auction.attributes.title"
+                  class="object-cover object-center w-full h-full border border-gray-200 rounded"
+                  @mouseover="imageDisplayIndex = index"
+                  @click="lightBoxIndex = index"
+                />
+              </picture>
+            </div>
+          </template>
+          <picture v-else class="mb-4">
             <img
-              class="object-cover object-center w-full border border-gray-200 rounded"
-              src="https://via.placeholder.com/450x450"
+              :src="cover"
               :alt="auction.attributes.title"
+              class="object-cover object-center w-full border border-gray-200 rounded"
+              @click="lightBoxIndex = 0"
             />
           </picture>
         </div>
@@ -164,6 +198,8 @@ import {
   EyeIcon,
 } from 'vue-feather-icons'
 
+import auction from '@/mixins/data-types/auction'
+
 export default {
   components: {
     // eslint-disable-next-line vue/no-unused-components
@@ -175,12 +211,19 @@ export default {
     EyeIcon,
   },
 
+  mixins: [auction],
+
   props: {
     auction: {
       type: Object,
       required: true,
     },
   },
+
+  data: () => ({
+    lightBoxIndex: null,
+    imageDisplayIndex: 0,
+  }),
 
   computed: {
     seller() {
@@ -200,6 +243,13 @@ export default {
         parent: this.auction,
         relationship: 'address',
       })
+    },
+
+    hasImages() {
+      return (
+        Array.isArray(this.auction.attributes.images) &&
+        this.auction.attributes.images.length
+      )
     },
   },
 }

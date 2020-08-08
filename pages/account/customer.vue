@@ -1,13 +1,21 @@
 <template>
-  <div class="container flex flex-col mx-auto">
-    <!-- table-component -->
+  <loading-spinner v-if="$fetchState.pending" />
+  <div v-else class="container flex flex-col mx-auto">
+    <div class="grid grid-cols-1 gap-4 mb-4 lg:grid-cols-2 xl:grid-cols-3">
+      <upcoming-auctions :auctions="auctions.slice(0, 3)" />
 
+      <div class="p-4 bg-white rounded shadow-md xl:col-span-2">
+        <not-implemented suggest="account-seller-top" />
+      </div>
+    </div>
+
+    <!-- table-component -->
     <div
       class="min-w-full mb-4 align-middle bg-white border-b border-gray-200 rounded shadow-md"
     >
       <div class="py-8">
         <div>
-          <h3 class="px-4 text-xl font-semibold text-gray-600">Мои аукционы</h3>
+          <h3 class="px-4 text-xl font-semibold text-gray-600">Мои заявки</h3>
         </div>
         <div class="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
           <div class="inline-block min-w-full overflow-hidden">
@@ -47,14 +55,23 @@
                     />
                   </td>
                   <td class="px-6 py-4 whitespace-no-wrap">
-                    <div
-                      class="text-sm font-medium leading-5 text-gray-900"
-                      v-text="
-                        $store.getters['auctions/byId']({
-                          id: participation.relationships.auction.data.id,
-                        }).attributes.title
-                      "
-                    />
+                    <div class="text-sm font-medium leading-5 text-gray-900">
+                      <nuxt-link
+                        class="font-semibold text-black border-b-2 border-gray-200 cursor-pointer hover:border-gray-400"
+                        :to="{
+                          name: 'auctions-id',
+                          params: {
+                            id: participation.relationships.auction.data.id,
+                          },
+                        }"
+                      >
+                        {{
+                          $store.getters['auctions/byId']({
+                            id: participation.relationships.auction.data.id,
+                          }).attributes.title
+                        }}
+                      </nuxt-link>
+                    </div>
                   </td>
                   <td class="px-6 py-4 whitespace-no-wrap">
                     <div
@@ -150,6 +167,13 @@ export default {
       return this.$store.getters['participation-requests/related']({
         parent: this.$auth.user,
       })
+    },
+    auctions() {
+      return this.participations.map((participation) =>
+        this.$store.getters['auctions/byId']({
+          id: participation.relationships.auction.data.id,
+        })
+      )
     },
   },
   middleware: 'role',
