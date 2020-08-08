@@ -1,13 +1,23 @@
 <template>
   <div class="container p-4 mx-auto">
+    <CoolLightBox
+      v-if="hasImages"
+      :items="auction.attributes.images"
+      :index="lightBoxIndex"
+      :use-zoom-bar="true"
+      @close="lightBoxIndex = null"
+    >
+    </CoolLightBox>
+
     <div class="flex flex-col">
       <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div class="flex">
           <picture>
             <img
-              class="object-cover object-center w-full border border-gray-200 rounded"
-              src="https://via.placeholder.com/450x450"
+              :src="cover"
               :alt="auction.attributes.title"
+              class="object-cover object-center w-full border border-gray-200 rounded"
+              @click="lightBoxIndex = 0"
             />
           </picture>
         </div>
@@ -164,6 +174,8 @@ import {
   EyeIcon,
 } from 'vue-feather-icons'
 
+import auction from '@/mixins/data-types/auction'
+
 export default {
   components: {
     // eslint-disable-next-line vue/no-unused-components
@@ -175,12 +187,18 @@ export default {
     EyeIcon,
   },
 
+  mixins: [auction],
+
   props: {
     auction: {
       type: Object,
       required: true,
     },
   },
+
+  data: () => ({
+    lightBoxIndex: null,
+  }),
 
   computed: {
     seller() {
@@ -200,6 +218,13 @@ export default {
         parent: this.auction,
         relationship: 'address',
       })
+    },
+
+    hasImages() {
+      return (
+        Array.isArray(this.auction.attributes.images) &&
+        this.auction.attributes.images.length
+      )
     },
   },
 }

@@ -43,6 +43,7 @@ export default {
     { src: '~/plugins/axios', ssr: false },
     { src: '~/plugins/v-calendar.js', ssr: false },
     '~/plugins/currency',
+    '~/plugins/cool-light-box',
   ],
   /*
    ** Auto import components
