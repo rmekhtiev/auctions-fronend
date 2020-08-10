@@ -97,9 +97,9 @@
             </span>
 
             <span class="text-sm">
-              Ставок:
+              Шаг:
               <span class="font-semibold">
-                {{ auction.attributes.bets_count }}
+                {{ auction.attributes.step | currency }}
               </span>
             </span>
           </div>
@@ -120,11 +120,12 @@
               @change="(v) => v > 0 || false"
             />
             <button
-              :disabled="bet_amount <= auction.attributes.price_current"
+              :disabled="!canBet"
               :class="{
-                'opacity-50 cursor-not-allowed':
-                  bet_amount <= auction.attributes.price_current,
+                'opacity-50 cursor-not-allowed': !canBet,
               }"
+              :min="auction.attributes.price_current + auction.attributes.step"
+              :step="auction.attributes.step"
               class="block px-4 py-3 text-white transition duration-150 bg-gray-800 border-transparent rounded-r-lg appearance-none hover:text-white hover:bg-black focus:shadow-outline focus:outline-none"
               @click="makeBet()"
             >
@@ -234,6 +235,16 @@ export default {
           },
         },
       }
+    },
+
+    canBet() {
+      return (
+        this.bet_amount &&
+        this.bet_amount > this.auction.attributes.price_current &&
+        (this.bet_amount - this.auction.attributes.price_current) %
+          this.auction.attributes.step ===
+          0
+      )
     },
   },
 
