@@ -4,7 +4,7 @@
       <salesroom-window
         :key="`salesroom-${auction.id}`"
         :auction="auction"
-        class="bottom-0 right-16"
+        class="bottom-0 right-0 md:right-16"
       />
     </template>
   </div>

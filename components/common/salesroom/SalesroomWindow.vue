@@ -1,5 +1,7 @@
 <template>
-  <div class="fixed flex flex-col mx-auto mb-4 bg-white rounded shadow-md w-96">
+  <div
+    class="fixed z-50 flex flex-col w-full mx-auto bg-white rounded shadow-md md:h-auto md:w-96"
+  >
     <div
       class="flex flex-row justify-between p-4 border-b border-gray-200 flex-0"
     >
@@ -17,19 +19,24 @@
       </h4>
 
       <div class="flex flex-row">
-        <button class="ml-4" @click="maximazed = !maximazed">
+        <button
+          class="p-1 ml-2 transition-colors duration-150 rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-200"
+          @click="maximazed = !maximazed"
+        >
           <component
             :is="maximazed ? 'minus-icon' : 'maximize-2-icon'"
-            class="w-6 h-6"
+            class="w-5 h-5"
           ></component>
         </button>
-        <button class="ml-4">
-          <x-icon class="w-6 h-6"></x-icon>
+        <button
+          class="p-1 ml-2 transition-colors duration-150 rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-200"
+        >
+          <x-icon class="w-5 h-5"></x-icon>
         </button>
       </div>
     </div>
     <transition name="smooth">
-      <div v-show="maximazed" class="p-4 px-8 pt-6 pb-8 h-128">
+      <div v-show="maximazed" class="relative flex flex-col bg-gray-100 h-128">
         <loading-spinner v-if="$fetchState.pending" />
         <div
           v-else-if="!fromUserRequest | !participating"
@@ -50,7 +57,10 @@
             Ваша заявка не была одобрена
           </p>
         </div>
-        <div v-else-if="!confirmed" class="flex flex-col w-full">
+        <div
+          v-else-if="!confirmed"
+          class="flex flex-col justify-between flex-1 w-full h-full p-4 px-8 pt-6 pb-8"
+        >
           <div class="flex items-center mb-4">
             <div>
               <h3 class="text-xl font-semibold text-gray-600">
@@ -75,6 +85,53 @@
             Подтвердить участие
           </button>
         </div>
+        <template v-else>
+          <div
+            class="flex flex-row p-4 bg-white border-b border-gray-200 flex-0"
+          >
+            <span class="mr-2 text-sm">
+              Текущая цена:
+              <span class="font-semibold">
+                {{ auction.attributes.price_current | currency }}
+              </span>
+            </span>
+
+            <span class="text-sm">
+              Ставок:
+              <span class="font-semibold">
+                {{ auction.attributes.bets_count }}
+              </span>
+            </span>
+          </div>
+          <div
+            class="flex flex-col flex-1 overflow-y-scroll divide-y divide-gray-200"
+          >
+            <template v-for="bet in bets">
+              <bet-list-item :key="`bet-${bet.id}`" :bet="bet" />
+            </template>
+          </div>
+          <div
+            class="flex flex-row p-4 bg-white border-t border-gray-200 flex-0"
+          >
+            <input
+              v-model.number="bet_amount"
+              type="number"
+              class="block w-full px-4 py-3 border-2 rounded-l-lg appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+              @change="(v) => v > 0 || false"
+            />
+            <button
+              :disabled="bet_amount <= auction.attributes.price_current"
+              :class="{
+                'opacity-50 cursor-not-allowed':
+                  bet_amount <= auction.attributes.price_current,
+              }"
+              class="block px-4 py-3 text-white transition duration-150 bg-gray-800 border-transparent rounded-r-lg appearance-none hover:text-white hover:bg-black focus:shadow-outline focus:outline-none"
+              @click="makeBet()"
+            >
+              <send-icon />
+            </button>
+          </div>
+        </template>
       </div>
     </transition>
   </div>
@@ -86,6 +143,7 @@ import {
   MinusIcon,
   Maximize2Icon,
   XIcon,
+  SendIcon,
 } from 'vue-feather-icons'
 
 import auction from '~/mixins/data-types/auction'
@@ -96,6 +154,7 @@ export default {
     MinusIcon,
     Maximize2Icon,
     XIcon,
+    SendIcon,
   },
 
   mixins: [auction],
@@ -112,6 +171,11 @@ export default {
   data: () => ({
     now: null,
     maximazed: true,
+
+    nowInterval: null,
+    loadBetsInterval: null,
+
+    bet_amount: null,
   }),
 
   computed: {
@@ -127,6 +191,12 @@ export default {
           parseInt(this.$auth.user.id)
       )
     },
+    counterparty() {
+      return this.$store.getters['counterparties/related']({
+        parent: this.fromUserRequest,
+        relationship: 'counterparty',
+      })
+    },
     participating() {
       return (
         !!this.fromUserRequest && !!this.fromUserRequest.attributes.approved_at
@@ -137,6 +207,34 @@ export default {
         !!this.participating && !!this.fromUserRequest.attributes.confirmed_at
       )
     },
+
+    bets() {
+      return this.$store.getters['bets/related']({
+        parent: this.auction,
+      })
+    },
+
+    betData() {
+      return {
+        attributes: {
+          bet_amount: this.bet_amount,
+        },
+        relationships: {
+          auction: {
+            data: {
+              type: 'auctions',
+              id: this.auction.id,
+            },
+          },
+          counterparty: {
+            data: {
+              type: 'counterparties',
+              id: this.counterparty.id,
+            },
+          },
+        },
+      }
+    },
   },
 
   beforeCreate() {
@@ -144,15 +242,27 @@ export default {
   },
 
   mounted() {
-    setInterval(() => {
+    this.nowInterval = setInterval(() => {
       this.now = this.$moment()
     }, 1000)
+
+    this.loadBetsInterval = setInterval(() => {
+      this.loadBets()
+    }, 5000)
+  },
+
+  hide() {
+    clearInterval(this.nowInterval)
+    clearInterval(this.loadBetsInterval)
   },
 
   methods: {
     loadBets() {
-      //
+      return this.$store.dispatch('bets/loadRelated', {
+        parent: this.auction,
+      })
     },
+
     confirm() {
       this.$store.dispatch('participation-requests/update', {
         id: this.fromUserRequest.id,
@@ -162,6 +272,14 @@ export default {
           confirmed_at: this.$moment(),
         },
       })
+    },
+
+    async makeBet() {
+      await this.$store.dispatch('bets/create', this.betData)
+
+      this.bet_amount = null
+
+      await this.loadBets()
     },
   },
 }
