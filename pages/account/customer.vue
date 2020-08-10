@@ -33,94 +33,11 @@
               </thead>
 
               <tbody>
-                <!-- <tr
-                  v-if="$fetchState.pending"
-                  class="border-b border-gray-200 last:border-b-0"
-                >
-                  <td class="px-6 py-4 whitespace-no-wrap">
-                    <div class="text-sm font-medium leading-5 text-gray-900" />
-                  </td>
-                  Загрузка аукционов...
-                </tr>
-                todo add lazy loading-->
-                <tr
+                <participation-request-table-row
                   v-for="participation in participations"
-                  :key="`reqest-${participation.id}`"
-                  class="border-b border-gray-200 last:border-b-0"
-                >
-                  <td class="px-6 py-4 whitespace-no-wrap">
-                    <div
-                      class="text-sm font-medium leading-5 text-gray-900"
-                      v-text="participation.id"
-                    />
-                  </td>
-                  <td class="px-6 py-4 whitespace-no-wrap">
-                    <div class="text-sm font-medium leading-5 text-gray-900">
-                      <nuxt-link
-                        class="font-semibold text-black border-b-2 border-gray-200 cursor-pointer hover:border-gray-400"
-                        :to="{
-                          name: 'auctions-id',
-                          params: {
-                            id: participation.relationships.auction.data.id,
-                          },
-                        }"
-                      >
-                        {{
-                          $store.getters['auctions/byId']({
-                            id: participation.relationships.auction.data.id,
-                          }).attributes.title
-                        }}
-                      </nuxt-link>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-no-wrap">
-                    <div
-                      class="text-sm font-medium leading-5 text-gray-900"
-                      v-text="
-                        $store.getters['counterparties/byId']({
-                          id: participation.relationships.counterparty.data.id,
-                        }).attributes.display_name
-                      "
-                    />
-                  </td>
-                  <td class="px-6 py-4 whitespace-no-wrap">
-                    <div
-                      class="text-sm font-medium leading-5 text-gray-900"
-                      v-text="
-                        $moment(
-                          $store.getters['auctions/byId']({
-                            id: participation.relationships.auction.data.id,
-                          }).attributes.starts_at
-                        ).format('LLL')
-                      "
-                    />
-                  </td>
-                  <td
-                    class="px-5 py-5 text-sm bg-white border-b border-gray-200"
-                  >
-                    <span
-                      v-if="participation.attributes.approved_at"
-                      class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900"
-                    >
-                      <span
-                        aria-hidden
-                        class="absolute inset-0 bg-green-200 rounded-full opacity-50"
-                      ></span>
-                      <span class="relative">Одобрена</span>
-                    </span>
-
-                    <span
-                      v-else
-                      class="relative inline-block px-3 py-1 font-semibold leading-tight text-orange-900"
-                    >
-                      <span
-                        aria-hidden
-                        class="absolute inset-0 bg-orange-200 rounded-full opacity-50"
-                      ></span>
-                      <span class="relative">На&nbsp;рассмотрении</span>
-                    </span>
-                  </td>
-                </tr>
+                  :key="`request-${participation.id}`"
+                  :participation="participation"
+                />
               </tbody>
             </table>
           </div>
