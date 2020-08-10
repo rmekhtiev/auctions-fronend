@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <client-only v-if="$roles(['USER'])">
     <template v-for="auction in openSalesrooms">
       <salesroom-window
         :key="`salesroom-${auction.id}`"
@@ -7,7 +7,7 @@
         class="bottom-0 right-0 md:right-16"
       />
     </template>
-  </div>
+  </client-only>
 </template>
 
 <script>
