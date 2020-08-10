@@ -2,7 +2,7 @@
   <component
     :is="isRunning ? 'nuxt-link' : 'span'"
     :to="{
-      name: 'auctions-id-salesroom',
+      name: 'auctions-id',
       params: {
         id: auction.id,
       },
@@ -16,8 +16,9 @@
       'bg-green-200 text-green-900': status === 'SUCCEEDED',
       'bg-red-200 text-red-900': status === 'CANCELLED' || status === 'FAILED',
     }"
+    @click="isRunning && openSalesroom(auction)"
   >
-    <loader-icon v-if="isRunning" class="inline w-4 h-4" />
+    <loader-icon v-if="isRunning" class="inline w-4 h-4 animate-spin" />
     {{ $t(`auctions.status.${status}`) }}
   </component>
 </template>

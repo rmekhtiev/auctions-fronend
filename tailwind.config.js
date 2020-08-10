@@ -11,6 +11,10 @@ module.exports = {
         center: true,
         padding: '1rem',
       },
+      spacing: {
+        '96': '24rem',
+        '128': '32rem',
+      },
       inset: {
         10: '2.5rem',
         16: '4rem',

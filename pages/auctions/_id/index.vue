@@ -166,7 +166,25 @@
                 </div>
               </div>
               <div class="flex flex-col items-center justify-center">
+                <button
+                  v-if="isRunning"
+                  class="relative block w-full px-6 py-3 mb-2 text-lg font-semibold text-center text-black transition duration-150 bg-white border-2 rounded-lg md:w-64 lg: hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
+                  @click="openSalesroom(auction)"
+                >
+                  Аукционный зал
+                  <span
+                    class="absolute top-0 right-0 flex w-3 h-3 transform translate-x-1/2 -translate-y-1/2"
+                  >
+                    <span
+                      class="absolute inline-flex w-full h-full bg-pink-400 rounded-full opacity-75 animate-ping"
+                    ></span>
+                    <span
+                      class="relative inline-flex w-3 h-3 bg-pink-500 rounded-full"
+                    ></span>
+                  </span>
+                </button>
                 <nuxt-link
+                  v-else
                   :to="{
                     name: 'auctions-id-participate',
                     params: {
@@ -212,13 +230,6 @@ export default {
   },
 
   mixins: [auction],
-
-  props: {
-    auction: {
-      type: Object,
-      required: true,
-    },
-  },
 
   data: () => ({
     lightBoxIndex: null,

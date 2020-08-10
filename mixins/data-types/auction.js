@@ -1,3 +1,5 @@
+import { mapActions } from 'vuex'
+
 export default {
   props: {
     auction: {
@@ -5,6 +7,7 @@ export default {
       required: true,
     },
   },
+
   computed: {
     cover() {
       return this.auction.attributes.images &&
@@ -23,5 +26,9 @@ export default {
         ) && this.auction.attributes.status === 'UPCOMING'
       )
     },
+  },
+
+  methods: {
+    ...mapActions(['openSalesroom']),
   },
 }
