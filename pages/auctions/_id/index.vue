@@ -166,8 +166,15 @@
                 </div>
               </div>
               <div class="flex flex-col items-center justify-center">
+                <div
+                  v-if="isEnded"
+                  class="block w-full px-6 py-3 mb-2 text-lg font-semibold text-center text-black transition duration-150 bg-white border-2 rounded-lg md:w-64 lg: hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
+                >
+                  Торги окончены
+                </div>
+
                 <button
-                  v-if="isRunning"
+                  v-else-if="isRunning"
                   class="relative block w-full px-6 py-3 mb-2 text-lg font-semibold text-center text-black transition duration-150 bg-white border-2 rounded-lg md:w-64 lg: hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
                   @click="openSalesroom(auction)"
                 >
@@ -183,8 +190,9 @@
                     ></span>
                   </span>
                 </button>
+
                 <nuxt-link
-                  v-else
+                  v-else-if="status === 'UPCOMING'"
                   :to="{
                     name: 'auctions-id-participate',
                     params: {
@@ -195,6 +203,13 @@
                 >
                   Подать заявку
                 </nuxt-link>
+
+                <div
+                  v-else
+                  class="block w-full px-6 py-3 mb-2 text-lg font-semibold text-center text-black transition duration-150 bg-white border-2 rounded-lg md:w-64 lg: hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
+                >
+                  Торги отменены
+                </div>
 
                 <nuxt-link :to="'#'" class="mb-2 text-sm text-gray-600">
                   Как участвовать?

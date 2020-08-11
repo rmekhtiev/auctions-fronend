@@ -15,6 +15,10 @@
           }"
         >
           {{ auction.attributes.title }}
+
+          <client-only v-if="isRunning">
+            (до {{ $moment(auction.attributes.real_ends_at).format('LT') }})
+          </client-only>
         </nuxt-link>
       </h4>
 
@@ -30,6 +34,7 @@
         </button>
         <button
           class="p-1 ml-2 transition-colors duration-150 rounded-md focus:outline-none focus:shadow-outline hover:bg-gray-200"
+          @click="closeSalesroom(auction)"
         >
           <x-icon class="w-5 h-5"></x-icon>
         </button>
@@ -87,16 +92,16 @@
         </div>
         <template v-else>
           <div
-            class="flex flex-row p-4 bg-white border-b border-gray-200 flex-0"
+            class="flex flex-col p-4 bg-white border-b border-gray-200 flex-0"
           >
-            <span class="mr-2 text-sm">
+            <span class="flex flex-col mr-2 text-sm">
               Текущая цена:
-              <span class="font-semibold">
+              <span class="text-lg font-semibold">
                 {{ auction.attributes.price_current | currency }}
               </span>
             </span>
 
-            <span class="text-sm">
+            <span class="mt-2 text-sm">
               Шаг:
               <span class="font-semibold">
                 {{ auction.attributes.step | currency }}
@@ -111,26 +116,50 @@
             </template>
           </div>
           <div
-            class="flex flex-row p-4 bg-white border-t border-gray-200 flex-0"
+            class="flex flex-col p-4 bg-white border-t border-gray-200 flex-0"
           >
-            <input
-              v-model.number="bet_amount"
-              type="number"
-              class="block w-full px-4 py-3 border-2 rounded-l-lg appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-              @change="(v) => v > 0 || false"
-            />
-            <button
-              :disabled="!canBet"
-              :class="{
-                'opacity-50 cursor-not-allowed': !canBet,
-              }"
-              :min="auction.attributes.price_current + auction.attributes.step"
-              :step="auction.attributes.step"
-              class="block px-4 py-3 text-white transition duration-150 bg-gray-800 border-transparent rounded-r-lg appearance-none hover:text-white hover:bg-black focus:shadow-outline focus:outline-none"
-              @click="makeBet()"
-            >
-              <send-icon />
-            </button>
+            <div class="mb-2">
+              <span class="mt-2 text-sm text-gray-700">
+                Следующая возможная ставка:
+                <span class="font-semibold text-gray-900">
+                  {{
+                    (auction.attributes.price_current +
+                      auction.attributes.step)
+                      | currency
+                  }}
+                </span>
+              </span>
+            </div>
+            <div class="flex flex-row">
+              <div
+                v-if="isEnded"
+                class="block w-full px-4 py-3 text-lg font-semibold text-center text-black transition duration-150 bg-white border-2 rounded-lg md:w-64 lg: hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
+              >
+                Торги окончены
+              </div>
+              <template v-else>
+                <input
+                  v-model.number="bet_amount"
+                  type="number"
+                  class="block w-full px-4 py-3 border-2 rounded-l-lg appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+                  @change="(v) => v > 0 || false"
+                />
+                <button
+                  :disabled="!canBet"
+                  :class="{
+                    'opacity-50 cursor-not-allowed': !canBet,
+                  }"
+                  :min="
+                    auction.attributes.price_current + auction.attributes.step
+                  "
+                  :step="auction.attributes.step"
+                  class="block px-4 py-3 text-white transition duration-150 bg-gray-800 border-transparent rounded-r-lg appearance-none hover:text-white hover:bg-black focus:shadow-outline focus:outline-none"
+                  @click="makeBet()"
+                >
+                  <send-icon />
+                </button>
+                </template>
+            </div>
           </div>
         </template>
       </div>
@@ -246,6 +275,16 @@ export default {
           0
       )
     },
+
+    isEnded() {
+      return (
+        this.status !== 'UPCOMING' ||
+        !this.isRunning ||
+        this.$moment().isAfter(
+          this.$moment(this.auction.attributes.real_ends_at)
+        )
+      )
+    },
   },
 
   beforeCreate() {
@@ -262,7 +301,7 @@ export default {
     }, 5000)
   },
 
-  hide() {
+  beforeDestroy() {
     clearInterval(this.nowInterval)
     clearInterval(this.loadBetsInterval)
   },
@@ -286,11 +325,17 @@ export default {
     },
 
     async makeBet() {
-      await this.$store.dispatch('bets/create', this.betData)
+      this.betLoading = true
 
-      this.bet_amount = null
-
-      await this.loadBets()
+      try {
+        await this.$store.dispatch('bets/create', this.betData)
+        await this.loadBets()
+      } catch (e) {
+        this.$toast.error('Неправильная ставка')
+      } finally {
+        this.bet_amount = null
+        this.betLoading = false
+      }
     },
   },
 }

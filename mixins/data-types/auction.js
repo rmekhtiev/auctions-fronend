@@ -29,6 +29,15 @@ export default {
   },
 
   methods: {
-    ...mapActions(['openSalesroom']),
+    openSalesroom(auction) {
+      if (!this.$auth.loggedIn) {
+        this.$auth.redirect('login')
+      }
+
+      this.$store.dispatch('openSalesroom', auction)
+    },
+    closeSalesroom(auction) {
+      this.$store.dispatch('closeSalesroom', auction)
+    },
   },
 }
