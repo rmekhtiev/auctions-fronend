@@ -7,7 +7,7 @@
         id: auction.id,
       },
     }"
-    class="relative inline-block px-3 py-1 font-semibold leading-tight bg-opacity-50 rounded-full"
+    class="relative inline-block px-3 py-1 font-semibold leading-tight bg-opacity-50 rounded-full focus:outline-none focus:shadow-outline"
     :class="{
       'bg-yellow-200 text-yellow-900':
         status === 'DRAFT' || status === 'PENDING',
@@ -20,6 +20,9 @@
   >
     <loader-icon v-if="isRunning" class="inline w-4 h-4 animate-spin" />
     {{ $t(`auctions.status.${status}`) }}
+    <client-only v-if="isRunning">
+      (до {{ $moment(auction.attributes.real_ends_at).format('LT') }})
+    </client-only>
   </component>
 </template>
 
@@ -36,6 +39,16 @@ export default {
     auction: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    timeLeft() {
+      return this.$moment(this.auction.attributes.real_ends_at).diff(
+        this.$moment()
+      )
+    },
+    timeLeftDuration() {
+      return this.$moment.utc(this.timeLeft)
     },
   },
 }

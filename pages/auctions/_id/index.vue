@@ -48,36 +48,38 @@
         <div class="lg:col-span-2">
           <dl class="flex flex-col">
             <div
-              class="flex items-center order-first py-2 mb-4 text-sm font-medium leading-5 text-gray-600 border-b-2 border-gray-200"
+              class="flex items-center order-first py-2 mb-4 text-sm font-medium leading-5 text-gray-600 border-b-2 border-gray-200 divide-x-2 divide-gray-200"
             >
-              <div>
+              <div class="pr-2">
                 <dt class="inline">Номер лота:</dt>
                 <dd
                   class="inline font-bold text-gray-900"
                   v-text="auction.id"
                 />
               </div>
-              <!-- <span
-                  class="flex items-center pl-3 ml-3 text-gray-600 border-l-2 border-gray-200"
-                >
-                  <eye-icon class="w-5 h-5" />
-                  <span class="ml-3">4 просмотра</span>
-                </span> -->
 
-              <div
-                class="flex pl-3 ml-3 transition-colors duration-150 ease-in-out border-l-2 border-gray-200"
-              >
-                <!-- <a class="text-gray-600 hover:text-gray-700">
-                    <facebook-icon class="w-5 h-5" />
-                  </a>
-                  <a
-                    class="ml-2 text-gray-600 transition-colors duration-150 ease-in-out hover:text-gray-700"
-                  >
-                    <twitter-icon class="w-5 h-5" />
-                  </a> -->
+              <div class="px-2">
+                <auction-status-chip :auction="auction" />
+              </div>
+
+              <!-- <span class="flex items-center px-2 text-gray-600">
+                <eye-icon class="w-5 h-5" />
+                <span class="ml-3">4 просмотра</span>
+              </span> -->
+
+              <div class="flex px-2 transition-colors duration-150 ease-in-out">
+                <a class="text-gray-600 hover:text-gray-700">
+                  <facebook-icon class="w-5 h-5" />
+                </a>
+                <a
+                  class="ml-2 text-gray-600 transition-colors duration-150 ease-in-out hover:text-gray-700"
+                >
+                  <twitter-icon class="w-5 h-5" />
+                </a>
                 <web-share
                   class="ml-2 text-gray-600 transition-colors duration-150 ease-in-out hover:text-gray-700"
                   :title="auction.attributes.title"
+                  :text="auction.attributes.display_address"
                 >
                   <share-2-icon class="w-5 h-5" />
                 </web-share>
@@ -277,6 +279,18 @@ export default {
         this.auction.attributes.images.length
       )
     },
+
+    isEnded() {
+      return this.$moment().isAfter(
+        this.$moment(this.auction.attributes.real_ends_at)
+      )
+    },
+  },
+
+  head() {
+    return {
+      title: this.auction.title,
+    }
   },
 }
 </script>
