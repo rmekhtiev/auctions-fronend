@@ -158,7 +158,7 @@
                 >
                   <send-icon />
                 </button>
-                </template>
+              </template>
             </div>
           </div>
         </template>
@@ -278,7 +278,7 @@ export default {
 
     isEnded() {
       return (
-        this.status !== 'UPCOMING' ||
+        this.status !== 'RUNNING' ||
         !this.isRunning ||
         this.$moment().isAfter(
           this.$moment(this.auction.attributes.real_ends_at)
