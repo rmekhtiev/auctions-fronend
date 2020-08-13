@@ -136,13 +136,23 @@
               class="flex flex-col pb-2 mb-4 border-b-2 border-gray-200 md:justify-between md:flex-row"
             >
               <div class="flex flex-col flex-1 mb-2">
-                <div class="mb-2">
-                  <dt class="text-sm font-medium leading-5 text-gray-600">
-                    Начальная цена
-                  </dt>
-                  <dd class="mt-1 text-lg font-bold leading-5 text-gray-900">
-                    {{ auction.attributes.price_start | currency }}
-                  </dd>
+                <div class="flex items-center mb-2">
+                  <div class="w-1/2">
+                    <dt class="text-sm font-medium leading-5 text-gray-600">
+                      Начальная цена
+                    </dt>
+                    <dd class="mt-1 text-lg font-bold leading-5 text-gray-900">
+                      {{ auction.attributes.price_start | currency }}
+                    </dd>
+                  </div>
+                  <div class="w-1/2 ml-3">
+                    <dt class="text-sm font-medium leading-5 text-gray-600">
+                      Текущая цена
+                    </dt>
+                    <dd class="mt-1 text-lg font-bold leading-5 text-gray-900">
+                      {{ auction.attributes.price_start | currency }}
+                    </dd>
+                  </div>
                 </div>
                 <div class="flex items-center mb-2">
                   <div class="w-1/2">
