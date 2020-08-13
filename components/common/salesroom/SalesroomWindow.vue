@@ -121,13 +121,12 @@
             <div class="mb-2">
               <span class="mt-2 text-sm text-gray-700">
                 Следующая возможная ставка:
-                <span class="font-semibold text-gray-900">
-                  {{
-                    (auction.attributes.price_current +
-                      auction.attributes.step)
-                      | currency
-                  }}
-                </span>
+                <button
+                  class="font-semibold text-gray-900"
+                  @click="bet_amount = nextBet"
+                >
+                  {{ nextBet | currency }}
+                </button>
               </span>
             </div>
             <div class="flex flex-row">
@@ -145,18 +144,17 @@
                   @change="(v) => v > 0 || false"
                 />
                 <button
-                  :disabled="!canBet"
+                  :disabled="!canBet || betLoading"
                   :class="{
-                    'opacity-50 cursor-not-allowed': !canBet,
+                    'opacity-50 cursor-not-allowed': !canBet || betLoading,
                   }"
-                  :min="
-                    auction.attributes.price_current + auction.attributes.step
-                  "
+                  :min="nextBet"
                   :step="auction.attributes.step"
                   class="block px-4 py-3 text-white transition duration-150 bg-gray-800 border-transparent rounded-r-lg appearance-none hover:text-white hover:bg-black focus:shadow-outline focus:outline-none"
                   @click="makeBet()"
                 >
-                  <send-icon />
+                  <loader-icon v-if="betLoading" class="animate-spin" />
+                  <send-icon v-else />
                 </button>
               </template>
             </div>
@@ -174,6 +172,7 @@ import {
   Maximize2Icon,
   XIcon,
   SendIcon,
+  LoaderIcon,
 } from 'vue-feather-icons'
 
 import auction from '~/mixins/data-types/auction'
@@ -185,6 +184,7 @@ export default {
     Maximize2Icon,
     XIcon,
     SendIcon,
+    LoaderIcon,
   },
 
   mixins: [auction],
@@ -204,6 +204,8 @@ export default {
 
     nowInterval: null,
     loadBetsInterval: null,
+
+    betLoading: false,
 
     bet_amount: null,
   }),
@@ -266,13 +268,22 @@ export default {
       }
     },
 
+    nextBet() {
+      return (
+        // ? какой дурак забыл в ф-цию округления JS добавить сохранения n знаков дроби...
+        Math.round(
+          // eslint-disable-next-line prettier/prettier
+          (this.auction.attributes.price_current + this.auction.attributes.step) * 100
+        ) / 100
+      )
+    },
+
     canBet() {
       return (
-        this.bet_amount &&
-        this.bet_amount > this.auction.attributes.price_current &&
-        (this.bet_amount - this.auction.attributes.price_current) %
-          this.auction.attributes.step ===
-          0
+        this.bet_amount && // ставка указана
+        this.bet_amount > this.auction.attributes.price_current && // ставка больше, чем текущая цена
+        // eslint-disable-next-line prettier/prettier
+        (Math.round((this.bet_amount - this.auction.attributes.price_current) * 100) / 100) % this.auction.attributes.step === 0 // ставка кратна шагу с округлением
       )
     },
 
