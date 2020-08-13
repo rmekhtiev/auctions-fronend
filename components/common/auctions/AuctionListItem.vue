@@ -41,7 +41,7 @@
     <div class="flex flex-col px-6 py-4">
       <div class="text-right">
         <span class="font-bold">
-          {{ auction.attributes.price_start | currency }}
+          {{ auction.attributes.price_current | currency }}
         </span>
       </div>
       <div>

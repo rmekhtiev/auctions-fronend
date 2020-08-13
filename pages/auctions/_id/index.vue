@@ -48,36 +48,38 @@
         <div class="lg:col-span-2">
           <dl class="flex flex-col">
             <div
-              class="flex items-center order-first py-2 mb-4 text-sm font-medium leading-5 text-gray-600 border-b-2 border-gray-200"
+              class="flex items-center order-first py-2 mb-4 text-sm font-medium leading-5 text-gray-600 border-b-2 border-gray-200 divide-x-2 divide-gray-200"
             >
-              <div>
+              <div class="pr-2">
                 <dt class="inline">Номер лота:</dt>
                 <dd
                   class="inline font-bold text-gray-900"
                   v-text="auction.id"
                 />
               </div>
-              <!-- <span
-                  class="flex items-center pl-3 ml-3 text-gray-600 border-l-2 border-gray-200"
-                >
-                  <eye-icon class="w-5 h-5" />
-                  <span class="ml-3">4 просмотра</span>
-                </span> -->
 
-              <div
-                class="flex pl-3 ml-3 transition-colors duration-150 ease-in-out border-l-2 border-gray-200"
-              >
-                <!-- <a class="text-gray-600 hover:text-gray-700">
-                    <facebook-icon class="w-5 h-5" />
-                  </a>
-                  <a
-                    class="ml-2 text-gray-600 transition-colors duration-150 ease-in-out hover:text-gray-700"
-                  >
-                    <twitter-icon class="w-5 h-5" />
-                  </a> -->
+              <div class="px-2">
+                <auction-status-chip :auction="auction" />
+              </div>
+
+              <!-- <span class="flex items-center px-2 text-gray-600">
+                <eye-icon class="w-5 h-5" />
+                <span class="ml-3">4 просмотра</span>
+              </span> -->
+
+              <div class="flex px-2 transition-colors duration-150 ease-in-out">
+                <a class="text-gray-600 hover:text-gray-700">
+                  <facebook-icon class="w-5 h-5" />
+                </a>
+                <a
+                  class="ml-2 text-gray-600 transition-colors duration-150 ease-in-out hover:text-gray-700"
+                >
+                  <twitter-icon class="w-5 h-5" />
+                </a>
                 <web-share
                   class="ml-2 text-gray-600 transition-colors duration-150 ease-in-out hover:text-gray-700"
                   :title="auction.attributes.title"
+                  :text="auction.attributes.display_address"
                 >
                   <share-2-icon class="w-5 h-5" />
                 </web-share>
@@ -134,13 +136,23 @@
               class="flex flex-col pb-2 mb-4 border-b-2 border-gray-200 md:justify-between md:flex-row"
             >
               <div class="flex flex-col flex-1 mb-2">
-                <div class="mb-2">
-                  <dt class="text-sm font-medium leading-5 text-gray-600">
-                    Начальная цена
-                  </dt>
-                  <dd class="mt-1 text-lg font-bold leading-5 text-gray-900">
-                    {{ auction.attributes.price_start | currency }}
-                  </dd>
+                <div class="flex items-center mb-2">
+                  <div class="w-1/2">
+                    <dt class="text-sm font-medium leading-5 text-gray-600">
+                      Начальная цена
+                    </dt>
+                    <dd class="mt-1 text-lg font-bold leading-5 text-gray-900">
+                      {{ auction.attributes.price_start | currency }}
+                    </dd>
+                  </div>
+                  <div class="w-1/2 ml-3">
+                    <dt class="text-sm font-medium leading-5 text-gray-600">
+                      Текущая цена
+                    </dt>
+                    <dd class="mt-1 text-lg font-bold leading-5 text-gray-900">
+                      {{ auction.attributes.price_start | currency }}
+                    </dd>
+                  </div>
                 </div>
                 <div class="flex items-center mb-2">
                   <div class="w-1/2">
@@ -166,7 +178,33 @@
                 </div>
               </div>
               <div class="flex flex-col items-center justify-center">
+                <div
+                  v-if="isEnded"
+                  class="block w-full px-6 py-3 mb-2 text-lg font-semibold text-center text-black transition duration-150 bg-white border-2 rounded-lg md:w-64 lg: hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
+                >
+                  Торги окончены
+                </div>
+
+                <button
+                  v-else-if="isRunning"
+                  class="relative block w-full px-6 py-3 mb-2 text-lg font-semibold text-center text-black transition duration-150 bg-white border-2 rounded-lg md:w-64 lg: hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
+                  @click="openSalesroom(auction)"
+                >
+                  Аукционный зал
+                  <span
+                    class="absolute top-0 right-0 flex w-3 h-3 transform translate-x-1/2 -translate-y-1/2"
+                  >
+                    <span
+                      class="absolute inline-flex w-full h-full bg-pink-400 rounded-full opacity-75 animate-ping"
+                    ></span>
+                    <span
+                      class="relative inline-flex w-3 h-3 bg-pink-500 rounded-full"
+                    ></span>
+                  </span>
+                </button>
+
                 <nuxt-link
+                  v-else-if="status === 'UPCOMING'"
                   :to="{
                     name: 'auctions-id-participate',
                     params: {
@@ -177,6 +215,13 @@
                 >
                   Подать заявку
                 </nuxt-link>
+
+                <div
+                  v-else
+                  class="block w-full px-6 py-3 mb-2 text-lg font-semibold text-center text-black transition duration-150 bg-white border-2 rounded-lg md:w-64 lg: hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
+                >
+                  Торги отменены
+                </div>
 
                 <nuxt-link :to="'#'" class="mb-2 text-sm text-gray-600">
                   Как участвовать?
@@ -213,13 +258,6 @@ export default {
 
   mixins: [auction],
 
-  props: {
-    auction: {
-      type: Object,
-      required: true,
-    },
-  },
-
   data: () => ({
     lightBoxIndex: null,
     imageDisplayIndex: 0,
@@ -251,6 +289,18 @@ export default {
         this.auction.attributes.images.length
       )
     },
+
+    isEnded() {
+      return this.$moment().isAfter(
+        this.$moment(this.auction.attributes.real_ends_at)
+      )
+    },
+  },
+
+  head() {
+    return {
+      title: this.auction.title,
+    }
   },
 }
 </script>

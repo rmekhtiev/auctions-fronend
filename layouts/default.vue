@@ -4,6 +4,7 @@
 
     <main class="relative flex-grow pt-16">
       <nuxt class="py-4" />
+      <salesrooms />
     </main>
 
     <the-footer />

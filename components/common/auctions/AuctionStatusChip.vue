@@ -1,0 +1,55 @@
+<template>
+  <component
+    :is="isRunning ? 'nuxt-link' : 'span'"
+    :to="{
+      name: 'auctions-id',
+      params: {
+        id: auction.id,
+      },
+    }"
+    class="relative inline-block px-3 py-1 font-semibold leading-tight bg-opacity-50 rounded-full focus:outline-none focus:shadow-outline"
+    :class="{
+      'bg-yellow-200 text-yellow-900':
+        status === 'DRAFT' || status === 'PENDING',
+      'bg-blue-200 text-blue-900':
+        status === 'UPCOMING' || status === 'RUNNING',
+      'bg-green-200 text-green-900': status === 'SUCCEEDED',
+      'bg-red-200 text-red-900': status === 'CANCELLED' || status === 'FAILED',
+    }"
+    @click="isRunning && openSalesroom(auction)"
+  >
+    <loader-icon v-if="isRunning" class="inline w-4 h-4 animate-spin" />
+    {{ $t(`auctions.status.${status}`) }}
+    <client-only v-if="isRunning">
+      (до {{ $moment(auction.attributes.real_ends_at).format('LT') }})
+    </client-only>
+  </component>
+</template>
+
+<script>
+import { LoaderIcon } from 'vue-feather-icons'
+import auction from '~/mixins/data-types/auction'
+
+export default {
+  components: {
+    LoaderIcon,
+  },
+  mixins: [auction],
+  props: {
+    auction: {
+      type: Object,
+      required: true,
+    },
+  },
+  computed: {
+    timeLeft() {
+      return this.$moment(this.auction.attributes.real_ends_at).diff(
+        this.$moment()
+      )
+    },
+    timeLeftDuration() {
+      return this.$moment.utc(this.timeLeft)
+    },
+  },
+}
+</script>
