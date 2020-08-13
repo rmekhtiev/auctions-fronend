@@ -11,6 +11,7 @@
       <div class="flex flex-grow pb-16 overflow-hidden lg:pb-0">
         <main class="flex flex-col w-full py-4">
           <nuxt />
+          <salesrooms />
         </main>
         <!-- <the-footer class="px-4" /> -->
       </div>

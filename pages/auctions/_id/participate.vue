@@ -18,7 +18,6 @@
         class="flex flex-col items-center justify-center max-w-sm mx-auto text-center text-gray-700"
       >
         <span
-          :to="{ name: 'account-profiles-new' }"
           class="flex items-center justify-center w-24 h-24 m-4 bg-gray-200 rounded-full"
         >
           <plus-icon class="w-16 h-16" />

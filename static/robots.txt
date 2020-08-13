@@ -1,0 +1,5 @@
+User-Agent: *
+
+Allow: /
+Disallow: /auctions/*/participate
+Disallow: /auctions/*/salesroom
