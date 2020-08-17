@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <counterparty-form :counterparty="counterparty" :address="address" />
+    <counterparty-form :counterparty="counterparty" />
 
     <div class="flex flex-row justify-end">
       <button
@@ -82,9 +82,6 @@ export default {
       name: {},
       document: {},
     },
-    address: {
-      country_code: 'BY',
-    },
   }),
 
   computed: {
@@ -93,26 +90,15 @@ export default {
         attributes: this.counterparty,
       }
     },
-    addressData() {
-      return {
-        attributes: this.address,
-        relationships: {
-          addressable: {
-            data: {
-              id: this.$store.getters['counterparties/lastCreated'].id,
-              type: 'counterparties',
-            },
-          },
-        },
-      }
-    },
   },
 
   methods: {
     async save() {
       await this.$store.dispatch('counterparties/create', this.requestData)
-      await this.$store.dispatch('addresses/create', this.addressData)
-      this.$router.push({ name: 'account-profiles' })
+      this.$router.push({
+        name: 'account-profiles-id-address',
+        params: { id: this.$store.getters['counterparties/lastCreated'].id },
+      })
     },
   },
 }
