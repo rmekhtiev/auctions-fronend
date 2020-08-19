@@ -150,7 +150,7 @@
                       Текущая цена
                     </dt>
                     <dd class="mt-1 text-lg font-bold leading-5 text-gray-900">
-                      {{ auction.attributes.price_start | currency }}
+                      {{ auction.attributes.price_current | currency }}
                     </dd>
                   </div>
                 </div>

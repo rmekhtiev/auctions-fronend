@@ -2,13 +2,22 @@
   <div
     class="flex flex-col items-center justify-center w-full mx-auto md:w-2/3"
   >
-    <div
+    <validation-observer
+      v-slot="{ passed }"
+      ref="form"
+      tag="div"
       class="flex flex-col w-full p-4 px-8 pt-6 pb-8 mx-4 mt-16 bg-white rounded shadow-md"
     >
       <form @submit.prevent="submit()">
         <div class="flex flex-wrap">
           <div class="w-full lg:w-1/2 lg:pr-4">
-            <div class="py-3">
+            <validation-provider
+              v-slot="v"
+              rules="required"
+              name="first_name"
+              tag="div"
+              class="py-3"
+            >
               <label
                 for="firstName"
                 class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
@@ -22,19 +31,25 @@
                 name="first_name"
                 type="text"
                 autocomplete="given-name"
-                :class="{ 'border-red-600': errors && errors.first_name }"
+                :class="{ 'border-red-600': v.failed }"
                 class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
-              <div v-if="errors" class="text-xs italic text-red-600">
-                <p v-for="error in errors.first_name" :key="error" class="pt-3">
+              <div v-if="v.errors" class="mt-3 text-xs italic text-red-600">
+                <p v-for="error in v.errors" :key="error">
                   {{ error }}
                 </p>
               </div>
-            </div>
+            </validation-provider>
           </div>
 
           <div class="w-full lg:w-1/2 lg:pl-4">
-            <div class="py-3">
+            <validation-provider
+              v-slot="v"
+              rules="required"
+              name="last_name"
+              tag="div"
+              class="py-3"
+            >
               <label
                 for="lastName"
                 class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
@@ -48,24 +63,31 @@
                 name="last_name"
                 type="text"
                 autocomplete="family-name"
-                :class="{ 'border-red-600': errors && errors.last_name }"
+                :class="{ 'border-red-600': v.failed }"
                 class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
-              <div v-if="errors" class="text-xs italic text-red-600">
-                <p v-for="error in errors.last_name" :key="error" class="pt-3">
+              <div v-if="v.errors" class="mt-3 text-xs italic text-red-600">
+                <p v-for="error in v.errors" :key="error">
                   {{ error }}
                 </p>
               </div>
-            </div>
+            </validation-provider>
           </div>
 
           <div class="w-full lg:w-1/2 lg:pr-4">
-            <div class="py-3">
+            <validation-provider
+              v-slot="v"
+              rules="required|email"
+              name="email"
+              tag="div"
+              class="py-3"
+            >
               <label
                 for="email"
                 class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
-                >Email</label
               >
+                Email
+              </label>
               <input
                 id="email"
                 v-model="formData.email"
@@ -73,19 +95,25 @@
                 name="email"
                 type="email"
                 autocomplete="email"
-                :class="{ 'border-red-600': errors && errors.email }"
+                :class="{ 'border-red-600': v.failed }"
                 class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
-              <div v-if="errors" class="text-xs italic text-red-600">
-                <p v-for="error in errors.email" :key="error" class="pt-3">
+              <div v-if="v.errors" class="mt-3 text-xs italic text-red-600">
+                <p v-for="error in v.errors" :key="error">
                   {{ error }}
                 </p>
               </div>
-            </div>
+            </validation-provider>
           </div>
 
           <div class="w-full lg:w-1/2 lg:pl-4">
-            <div class="py-3">
+            <validation-provider
+              v-slot="v"
+              rules="required|alpha_num"
+              name="last_name"
+              tag="div"
+              class="py-3"
+            >
               <label
                 for="login"
                 class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
@@ -100,19 +128,25 @@
                 type="text"
                 autocomplete="no"
                 inputmode="verbatim"
-                :class="{ 'border-red-600': errors && errors.login }"
+                :class="{ 'border-red-600': v.failed }"
                 class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
-              <div v-if="errors" class="text-xs italic text-red-600">
-                <p v-for="error in errors.login" :key="error" class="pt-3">
+              <div v-if="v.errors" class="mt-3 text-xs italic text-red-600">
+                <p v-for="error in v.errors" :key="error">
                   {{ error }}
                 </p>
               </div>
-            </div>
+            </validation-provider>
           </div>
 
           <div class="w-full lg:w-1/2 lg:pr-4">
-            <div class="py-3">
+            <validation-provider
+              v-slot="v"
+              rules="required|password:@password_confirmation"
+              name="password"
+              tag="div"
+              class="py-3"
+            >
               <label
                 for="password"
                 class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
@@ -126,19 +160,25 @@
                 name="password"
                 type="password"
                 autocomplete="new-password"
-                :class="{ 'border-red-600': errors && errors.password }"
+                :class="{ 'border-red-600': v.failed }"
                 class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
-              <div v-if="errors" class="text-xs italic text-red-600">
-                <p v-for="error in errors.password" :key="error" class="pt-3">
+              <div v-if="v.errors" class="mt-3 text-xs italic text-red-600">
+                <p v-for="error in v.errors" :key="error">
                   {{ error }}
                 </p>
               </div>
-            </div>
+            </validation-provider>
           </div>
 
           <div class="w-full lg:w-1/2 lg:pl-4">
-            <div class="py-3">
+            <validation-provider
+              v-slot="v"
+              rules="required"
+              name="password_confirmation"
+              tag="div"
+              class="py-3"
+            >
               <label
                 for="passwordConfirmation"
                 class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
@@ -153,127 +193,16 @@
                 type="password"
                 autocomplete="new-password"
                 :class="{
-                  'border-red-600': errors && errors.password_confirmation,
+                  'border-red-600': v.failed,
                 }"
                 class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
               />
-              <div v-if="errors" class="text-xs italic text-red-600">
-                <p
-                  v-for="error in errors.password_confirmation"
-                  :key="error"
-                  class="pt-3"
-                >
+              <div v-if="v.errors" class="mt-3 text-xs italic text-red-600">
+                <p v-for="error in v.errors" :key="error">
                   {{ error }}
                 </p>
               </div>
-            </div>
-          </div>
-
-          <div class="flex justify-start p-1 mt-3 ml-4">
-            <ul>
-              <li class="flex items-center py-1">
-                <div
-                  :class="{
-                    'bg-green-200 text-green-700':
-                      formData.password == formData.password_confirmation &&
-                      formData.password.length > 0,
-                    'bg-red-200 text-red-700':
-                      formData.password != formData.password_confirmation ||
-                      formData.password.length == 0,
-                  }"
-                  class="p-1 rounded-full fill-current"
-                >
-                  <svg
-                    class="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      v-show="
-                        formData.password == formData.password_confirmation &&
-                        formData.password.length > 0
-                      "
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                    <path
-                      v-show="
-                        formData.password != formData.password_confirmation ||
-                        formData.password.length == 0
-                      "
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </div>
-                <span
-                  :class="{
-                    'text-green-700':
-                      formData.password == formData.password_confirmation &&
-                      formData.password.length > 0,
-                    'text-red-700':
-                      formData.password != formData.password_confirmation ||
-                      formData.password.length == 0,
-                  }"
-                  class="ml-3 text-sm font-medium"
-                  v-text="
-                    formData.password == formData.password_confirmation &&
-                    formData.password.length > 0
-                      ? 'Пароль и подтверждение совпадают'
-                      : 'Пароль не совпадают'
-                  "
-                ></span>
-              </li>
-              <li class="flex items-center py-1">
-                <div
-                  :class="{
-                    'bg-green-200 text-green-700':
-                      formData.password.length >= 8,
-                    'bg-red-200 text-red-700': formData.password.length < 8,
-                  }"
-                  class="p-1 rounded-full fill-current"
-                >
-                  <svg
-                    class="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      v-show="formData.password.length >= 8"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                    <path
-                      v-show="formData.password.length < 8"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </div>
-                <span
-                  :class="{
-                    'text-green-700': formData.password.length >= 8,
-                    'text-red-700': formData.password.length < 8,
-                  }"
-                  class="ml-3 text-sm font-medium"
-                  v-text="
-                    formData.password.length > 7
-                      ? 'Минимальная длина пароля соответствует требованиям платформы'
-                      : 'Минимальная длина пароля 8 символов'
-                  "
-                ></span>
-              </li>
-            </ul>
+            </validation-provider>
           </div>
 
           <div class="flex justify-start">
@@ -305,8 +234,8 @@
             type="submit"
             :disabled="!formData.policy"
             :class="{
-              'cursor-not-allowed bg-gray-500': !formData.policy,
-              'bg-gray-800 hover:text-white hover:bg-black': formData.policy,
+              'cursor-not-allowed bg-gray-500': !formData.policy || !passed,
+              'bg-gray-800 hover:text-white hover:bg-black': formData.policy && passed,
             }"
             class="block w-full px-6 py-3 mt-3 text-lg font-semibold text-white transition duration-150 border-2 border-transparent rounded-lg focus:border-gray-600 focus:outline-none"
           >
@@ -314,14 +243,22 @@
           </button>
         </div>
       </form>
-    </div>
+    </validation-observer>
   </div>
 </template>
 
 <script>
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
+
 export default {
   auth: false,
   verified: false,
+
+  components: {
+    ValidationObserver,
+    ValidationProvider,
+  },
+
   data: () => ({
     formData: {
       first_name: '',
@@ -332,8 +269,8 @@ export default {
       password_confirmation: '',
       policy: false,
     },
-    errors: null,
   }),
+
   watch: {
     'formData.email'(val, old) {
       const newPossibleLogin =
@@ -348,6 +285,7 @@ export default {
       }
     },
   },
+
   methods: {
     submit() {
       this.$axios
@@ -356,8 +294,8 @@ export default {
           await this.$auth.loginWith('local', { data: this.formData })
           await this.$router.push({ name: 'auth-registration-confirm' })
         })
-        .catch((_err) => {
-          this.errors = _err.response.data.errors
+        .catch((err) => {
+          this.$refs.form.setErrors(err.response.data.errors)
         })
     },
   },

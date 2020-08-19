@@ -39,6 +39,7 @@ export default {
    */
   plugins: [
     '~/plugins/vue-string-filter',
+    '~/plugins/vee-validate',
     '~/plugins/reststate-vuex',
     '~/plugins/vue-i18n',
     { src: '~/plugins/axios', ssr: false },
@@ -140,6 +141,7 @@ export default {
       //
       '@reststate/vuex',
       '@reststate/client',
+      'vee-validate/dist/rules',
     ],
     babel: {
       presets({ isServer }) {

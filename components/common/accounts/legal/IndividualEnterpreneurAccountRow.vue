@@ -36,7 +36,7 @@
         }"
         class="text-indigo-600 hover:text-indigo-900"
       >
-        Добавить адресс
+        Добавить адрес
       </nuxt-link>
     </td>
   </tr>
