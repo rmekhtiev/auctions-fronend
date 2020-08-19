@@ -35,10 +35,6 @@ export default {
       type: Object,
       required: true,
     },
-    address: {
-      type: Object,
-      required: true,
-    },
   },
 }
 </script>
