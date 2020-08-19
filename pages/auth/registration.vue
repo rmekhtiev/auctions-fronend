@@ -29,7 +29,7 @@
                   'text-gray-500': isFuture(key),
                 }"
                 class="absolute top-0 w-32 mt-16 -ml-10 text-xs font-medium text-center uppercase"
-                v-text="/* $t(`registration.steps.${key}`) */ key"
+                v-text="$t(`registration.steps.${key}`)"
               />
             </div>
             <div

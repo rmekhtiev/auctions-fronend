@@ -3,12 +3,12 @@
     class="flex flex-col items-center justify-center w-full mx-auto md:w-2/3"
   >
     <validation-observer
-      v-slot="{ passed }"
+      v-slot="{ passed, handleSubmit }"
       ref="form"
       tag="div"
       class="flex flex-col w-full p-4 px-8 pt-6 pb-8 mx-4 mt-16 bg-white rounded shadow-md"
     >
-      <form @submit.prevent="submit()">
+      <form @submit.prevent="handleSubmit(submit)">
         <div class="flex flex-wrap">
           <div class="w-full lg:w-1/2 lg:pr-4">
             <validation-provider
@@ -110,7 +110,7 @@
             <validation-provider
               v-slot="v"
               rules="required|alpha_num"
-              name="last_name"
+              name="login"
               tag="div"
               class="py-3"
             >
@@ -234,10 +234,9 @@
             type="submit"
             :disabled="!formData.policy"
             :class="{
-              'cursor-not-allowed bg-gray-500': !formData.policy || !passed,
-              'bg-gray-800 hover:text-white hover:bg-black': formData.policy && passed,
+              'cursor-not-allowed opacity-50': !formData.policy || !passed,
             }"
-            class="block w-full px-6 py-3 mt-3 text-lg font-semibold text-white transition duration-150 border-2 border-transparent rounded-lg focus:border-gray-600 focus:outline-none"
+            class="block w-full px-6 py-3 mt-3 text-lg font-semibold text-white transition duration-150 bg-gray-800 border-2 border-transparent rounded-lg hover:text-white hover:bg-black focus:border-gray-600 focus:outline-none"
           >
             Продолжить
           </button>

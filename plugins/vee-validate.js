@@ -1,12 +1,14 @@
 /* eslint-disable camelcase */
 
 import { localize, extend } from 'vee-validate'
-import { required, email, alpha_num } from 'vee-validate/dist/rules'
+import {
+  required,
+  email,
+  alpha_num,
+  integer,
+  digits,
+} from 'vee-validate/dist/rules'
 import ru from 'vee-validate/dist/locale/ru.json'
-
-localize({
-  ru,
-})
 
 extend('email', {
   ...email,
@@ -20,7 +22,17 @@ extend('required', {
 
 extend('alpha_num', {
   ...alpha_num,
-  message: 'Поле может содержать только латинские буквы и цифры',
+  message: 'Поле должно содержать только латинские буквы и цифры',
+})
+
+extend('digits', {
+  ...digits,
+  message: 'Поле должно содержать {length} цифр',
+})
+
+extend('integer', {
+  ...integer,
+  message: 'Поле должно быть числом',
 })
 
 extend('password', {
@@ -29,4 +41,8 @@ extend('password', {
     return value === target
   },
   message: 'Пароли не совпадают',
+})
+
+localize({
+  ru,
 })
