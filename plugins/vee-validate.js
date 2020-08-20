@@ -43,6 +43,20 @@ extend('password', {
   message: 'Пароли не совпадают',
 })
 
+extend('passport', {
+  validate(value) {
+    return /([A-ZА-Я]{2})(\d{7})/.test(value)
+  },
+  message: 'Введите номер и серию в формате ББЦЦЦЦЦЦЦ',
+})
+
+extend('passport_personal', {
+  validate(value) {
+    return /(\d{7})([A-ZА-Я])(\d{3})([A-ZА-Я]{2})(\d)/.test(value)
+  },
+  message: 'Введите номер в формате ЦЦЦЦЦЦЦБЦЦЦББЦ',
+})
+
 localize({
   ru,
 })
