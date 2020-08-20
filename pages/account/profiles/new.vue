@@ -67,13 +67,19 @@
 
       <div class="flex flex-row justify-end">
         <button
-          :disabled="!passed"
-          :class="{
-            'cursor-not-allowed opacity-50': !passed,
-          }"
           class="inline-flex px-4 py-2 text-sm font-medium leading-5 text-white transition duration-150 bg-indigo-600 border-2 border-transparent rounded-lg shadow-sm hover:text-white hover:bg-indigo-500 focus:border-indigo-300 focus:outline-none"
+          :disabled="loading || !passed"
+          :class="{
+            'cursor-not-allowed opacity-50': loading || !passed,
+          }"
         >
-          <check-icon class="w-5 h-5 mr-2 -ml-1" />
+          <component
+            :is="loading ? 'loader-icon' : 'check-icon'"
+            class="w-5 h-5 mr-2 -ml-1"
+            :class="{
+              'animate-spin': loading,
+            }"
+          />
           Сохранить
         </button>
       </div>
@@ -83,16 +89,18 @@
 
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { CheckIcon } from 'vue-feather-icons'
+import { CheckIcon, LoaderIcon } from 'vue-feather-icons'
 
 export default {
   components: {
     CheckIcon,
+    LoaderIcon,
     ValidationObserver,
     ValidationProvider,
   },
 
   data: () => ({
+    loading: false,
     counterparty: {
       _type: 'UL',
       name: {},
@@ -110,11 +118,19 @@ export default {
 
   methods: {
     async save() {
-      await this.$store.dispatch('counterparties/create', this.requestData)
-      this.$router.push({
-        name: 'account-profiles-id-address',
-        params: { id: this.$store.getters['counterparties/lastCreated'].id },
-      })
+      this.loading = true
+
+      try {
+        await this.$store.dispatch('counterparties/create', this.requestData)
+        this.$router.push({
+          name: 'account-profiles-id-address',
+          params: { id: this.$store.getters['counterparties/lastCreated'].id },
+        })
+      } catch (_err) {
+        // todo: server-side errors
+      } finally {
+        this.loading = false
+      }
     },
   },
 }

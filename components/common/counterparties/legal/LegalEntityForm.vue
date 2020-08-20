@@ -47,16 +47,21 @@
       v-slot="v"
       tag="div"
       rules="required"
+      name=""
       class="w-full lg:col-span-1"
     >
       <label
-        for="egrDate"
+        for="egr_date"
         class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
       >
         Дата регистрации ЕГР <span class="text-red-700">*</span>
       </label>
       <client-only>
-        <v-date-picker v-model="formData.egr_date" :max-date="new Date()">
+        <v-date-picker
+          v-model="formData.egr_date"
+          :max-date="new Date()"
+          @input="v.validate"
+        >
           <input
             id="date"
             slot-scope="{ inputProps, inputEvents }"
