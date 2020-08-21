@@ -42,78 +42,53 @@
       </div>
     </div>
 
-    <div class="w-full">
-      <label
-        for="state"
-        class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
-      >
-        Область
-      </label>
-      <input
-        id="state"
-        v-model.trim="formData.state"
-        placeholder="напр.: Минская область"
-        name="state"
-        type="text"
-        autocomplete="address-level1"
-        class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-      />
-    </div>
+    <app-input
+      id="state"
+      v-model.trim="formData.state"
+      name="state"
+      required
+      label="Область"
+      placeholder="напр.: Минская область"
+      autocomplete="address-level1"
+      class="w-full"
+      rules="required"
+    />
 
-    <div class="w-full">
-      <label
-        for="city"
-        class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
-      >
-        Населенный пункт <span class="text-red-700">*</span>
-      </label>
-      <input
-        id="city"
-        v-model.trim="formData.city"
-        placeholder="напр.: г. Минск"
-        name="city"
-        type="text"
-        autocomplete="address-level2"
-        class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-      />
-    </div>
+    <app-input
+      id="city"
+      v-model.trim="formData.city"
+      name="city"
+      required
+      label="Населенный пункт"
+      placeholder="напр.: г. Минск"
+      autocomplete="address-level2"
+      class="w-full"
+      rules="required"
+    />
 
-    <div class="w-full">
-      <label
-        for="postalCode"
-        class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
-      >
-        Индекс
-      </label>
-      <input
-        id="postalCode"
-        v-model="formData.postal_code"
-        v-numbers
-        placeholder="Введите индекс"
-        name="postal_code"
-        type="tel"
-        autocomplete="postal-code"
-        class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-      />
-    </div>
+    <app-input
+      id="postalCode"
+      v-model.trim="formData.postal_code"
+      name="postalCode"
+      required
+      label="Индекс"
+      placeholder="Введите индекс"
+      autocomplete="postal-code"
+      class="w-full"
+      rules="required|integer"
+    />
 
-    <div class="w-full lg:col-span-2">
-      <label
-        for="address"
-        class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
-      >
-        Адрес <span class="text-red-700">*</span>
-      </label>
-      <input
-        id="address"
-        v-model.trim="formData.address"
-        placeholder="Улица, дом, кв./офис"
-        name="address"
-        type="text"
-        autocomplete="address-line1"
-        class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-      />
-    </div>
+    <app-input
+      id="address"
+      v-model.trim="formData.address"
+      name="address"
+      required
+      label="Адрес"
+      placeholder="Улица, дом, кв./офис"
+      autocomplete="address-line1"
+      class="w-full lg:col-span-2"
+      rules="required"
+    />
   </div>
 </template>
 

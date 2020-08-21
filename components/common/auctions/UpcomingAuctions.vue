@@ -43,7 +43,12 @@
           </div>
           <span
             class="block text-sm"
-            v-text="$tc('auctions.contestants.count', 1)"
+            v-text="
+              $tc(
+                'auctions.contestants.count',
+                auction.attributes.participants_count
+              )
+            "
           />
         </div>
       </div>

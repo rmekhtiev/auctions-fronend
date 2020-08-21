@@ -3,18 +3,28 @@
     <div
       class="flex flex-col items-center justify-center max-w-lg mx-auto mt-16 md:w-1/2"
     >
-      <div
+      <validation-observer
+        v-slot="{ passed, handleSubmit }"
+        ref="form"
+        tag="div"
         class="flex flex-col w-full p-4 px-8 pb-8 mx-4 bg-white rounded shadow-md"
       >
-        <form @submit.prevent="submit()">
+        <form @submit.prevent="handleSubmit(submit)">
           <div class="flex flex-col">
             <div class="w-full">
-              <div class="py-3">
+              <validation-provider
+                v-slot="v"
+                rules="required|email"
+                name="email"
+                tag="div"
+                class="py-3"
+              >
                 <label
                   for="email"
                   class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
-                  >Email</label
                 >
+                  Email
+                </label>
                 <input
                   id="email"
                   v-model="formData.email"
@@ -22,13 +32,25 @@
                   name="email"
                   type="email"
                   autocomplete="email"
+                  :class="{ 'border-red-600': v.failed }"
                   class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
                 />
-              </div>
+                <div v-if="v.errors" class="mt-3 text-xs italic text-red-600">
+                  <p v-for="error in v.errors" :key="error">
+                    {{ error }}
+                  </p>
+                </div>
+              </validation-provider>
             </div>
 
             <div class="w-full">
-              <div class="py-3">
+              <validation-provider
+                v-slot="v"
+                rules="required"
+                name="password"
+                tag="div"
+                class="py-3"
+              >
                 <label
                   for="password"
                   class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
@@ -42,9 +64,15 @@
                   name="password"
                   type="password"
                   autocomplete="password"
+                  :class="{ 'border-red-600': v.failed }"
                   class="block w-full px-4 py-3 transition duration-150 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
                 />
-              </div>
+                <div v-if="v.errors" class="mt-3 text-xs italic text-red-600">
+                  <p v-for="error in v.errors" :key="error">
+                    {{ error }}
+                  </p>
+                </div>
+              </validation-provider>
             </div>
 
             <div class="flex justify-between">
@@ -66,6 +94,10 @@
 
             <button
               type="submit"
+              :disabled="!passed"
+              :class="{
+                'cursor-not-allowed opacity-50': !passed,
+              }"
               class="block w-full px-6 py-3 mt-3 text-lg font-semibold text-white transition duration-150 bg-gray-800 border-2 border-transparent rounded-lg hover:text-white hover:bg-black focus:border-gray-600 focus:outline-none"
             >
               Войти
@@ -87,7 +119,7 @@
           </div> -->
           </div>
         </form>
-      </div>
+      </validation-observer>
 
       <hr class="w-full my-6 border-gray-400 border-b-1" />
 
@@ -116,24 +148,40 @@
 </template>
 
 <script>
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
+
 export default {
   verified: false,
   auth: 'guest',
+
+  components: {
+    ValidationObserver,
+    ValidationProvider,
+  },
+
   middleware: ['auth', 'verified'],
+
   data: () => ({
     formData: {
       email: '',
       password: '',
     },
   }),
+
   mounted() {
     // this.tryAutoSignIn()
   },
+
   methods: {
     submit() {
-      this.$auth.loginWith('local', { data: this.formData }).then(() => {
-        this.storePassword(this.formData.email, this.formData.password)
-      })
+      this.$auth
+        .loginWith('local', { data: this.formData })
+        .then(() => {
+          this.storePassword(this.formData.email, this.formData.password)
+        })
+        .catch((_err) => {
+          this.$toast.error('Неправильный Email или пароль')
+        })
     },
 
     storePassword(username, password) {
@@ -173,6 +221,12 @@ export default {
           })
         })
     },
+  },
+
+  head() {
+    return {
+      title: 'Вход',
+    }
   },
 }
 </script>

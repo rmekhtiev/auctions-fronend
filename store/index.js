@@ -4,6 +4,7 @@
 export const strict = false
 
 export default {
+  strict: false,
   // plugins: [createPersistedState()],
 
   state: () => ({

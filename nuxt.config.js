@@ -16,8 +16,8 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    title: process.env.npm_package_name || '',
-    titleTemplate: `%s - ${process.env.npm_package_name || ''}`,
+    title: 'Реалторги',
+    titleTemplate: '%s - Реалторги',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -39,12 +39,15 @@ export default {
    */
   plugins: [
     '~/plugins/vue-string-filter',
+    '~/plugins/vee-validate',
     '~/plugins/reststate-vuex',
     '~/plugins/vue-i18n',
     { src: '~/plugins/axios', ssr: false },
     { src: '~/plugins/v-calendar.js', ssr: false },
     '~/plugins/currency',
     '~/plugins/cool-light-box',
+    '~/plugins/vue-slider-component.js',
+    { src: '~/plugins/filepond.js', ssr: false },
   ],
   /*
    ** Auto import components
@@ -74,6 +77,15 @@ export default {
     '@nuxtjs/pwa',
     'nuxt-google-optimize',
     '@nuxtjs/toast',
+    [
+      'vue-currency-input/nuxt',
+      {
+        globalOptions: {
+          locale: 'ru',
+          currency: 'BYN',
+        },
+      },
+    ],
   ],
 
   googleAnalytics: {
@@ -140,6 +152,7 @@ export default {
       //
       '@reststate/vuex',
       '@reststate/client',
+      'vee-validate/dist/rules',
     ],
     babel: {
       presets({ isServer }) {

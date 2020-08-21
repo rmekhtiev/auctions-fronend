@@ -45,17 +45,11 @@
         <div
           class="flex items-center justify-center flex-1 lg:items-stretch lg:justify-start"
         >
-          <nuxt-link :to="{ name: 'index' }" class="flex-shrink-0">
-            <img
-              class="block w-auto h-8 md:hidden"
-              src="https://tailwindui.com/img/logos/workflow-mark-on-dark.svg"
-              alt="Workflow logo"
-            />
-            <img
-              class="hidden w-auto h-8 md:block"
-              src="https://tailwindui.com/img/logos/workflow-logo-on-dark.svg"
-              alt="Workflow logo"
-            />
+          <nuxt-link
+            :to="{ name: 'index' }"
+            class="flex-shrink-0 text-2xl text-white"
+          >
+            Realtorgi.by
           </nuxt-link>
           <div class="hidden lg:block lg:ml-6">
             <div class="flex">

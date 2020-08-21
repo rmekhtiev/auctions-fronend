@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="container mx-auto">
     <div
       class="flex flex-col-reverse items-center justify-between my-4 md:flex-row"
     >

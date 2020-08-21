@@ -76,5 +76,11 @@ export default {
       })
     },
   },
+
+  head() {
+    return {
+      title: 'Профили',
+    }
+  },
 }
 </script>

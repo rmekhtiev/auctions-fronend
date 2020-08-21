@@ -1,68 +1,55 @@
 <template>
   <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
-    <div class="w-full lg:col-span-1">
-      <label
-        for="inn"
-        class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
-      >
-        УНП <span class="text-red-700">*</span>
-      </label>
-      <input
-        id="inn"
-        key="inn"
-        v-model.trim="formData.inn"
-        v-numbers
-        placeholder="9 цифр"
-        name="inn"
-        type="tel"
-        pattern="[0-9]{9}"
-        inputmode="number"
-        autocomplete="no"
-        minlength="9"
-        maxlength="9"
-        class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-      />
-    </div>
+    <app-input
+      id="inn"
+      v-model.trim="formData.inn"
+      type="tel"
+      name="inn"
+      required
+      label="УНП"
+      placeholder="9 цифр"
+      pattern="[0-9]{9}"
+      inputmode="number"
+      autocomplete="no"
+      minlength="9"
+      maxlength="9"
+      class="w-full lg:col-span-1"
+      rules="required|digits:9"
+    />
 
-    <div class="w-full lg:col-span-2">
-      <label
-        for="shortName"
-        class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
-      >
-        Короткое название организации <span class="text-red-700">*</span>
-      </label>
-      <input
-        id="shortName"
-        key="shortName"
-        v-model.trim="formData.name.short_name"
-        placeholder="ООО «Ромашка»"
-        name="short_name"
-        type="text"
-        autocomplete="organization"
-        class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-      />
-    </div>
+    <app-input
+      id="shortName"
+      v-model.trim="formData.name.short_name"
+      type="text"
+      name="short_name"
+      required
+      label="Короткое название организации"
+      placeholder="ООО «Ромашка»"
+      autocomplete="organization"
+      class="w-full lg:col-span-2"
+      rules="required"
+    />
 
-    <div class="w-full lg:col-span-3">
-      <label
-        for="fullName"
-        class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
-      >
-        Полное название организации <span class="text-red-700">*</span>
-      </label>
-      <input
-        id="fullName"
-        key="fullName"
-        v-model.trim="formData.name.full_name"
-        placeholder="Общество с ограниченной ответственностью «Ромашка»"
-        name="full_name"
-        type="text"
-        autocomplete="organization"
-        class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-      />
-    </div>
+    <app-input
+      id="fullName"
+      v-model.trim="formData.name.full_name"
+      type="text"
+      name="full_name"
+      required
+      label="Полное название организации"
+      placeholder="Общество с ограниченной ответственностью «Ромашка»"
+      autocomplete="organization"
+      class="w-full lg:col-span-3"
+      rules="required"
+    />
 
-    <div class="w-full lg:col-span-1">
+    <validation-provider
+      v-slot="v"
+      tag="div"
+      rules="required"
+      name=""
+      class="w-full lg:col-span-1"
+    >
       <label
         for="egrDate"
         class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
@@ -70,9 +57,13 @@
         Дата регистрации ЕГР <span class="text-red-700">*</span>
       </label>
       <client-only>
-        <v-date-picker v-model="formData.egr_date">
+        <v-date-picker
+          v-model="formData.egr_date"
+          :max-date="new Date()"
+          @input="v.validate"
+        >
           <input
-            id="date"
+            id="egrDate"
             slot-scope="{ inputProps, inputEvents }"
             placeholder="Дата постановки на учет"
             class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
@@ -93,34 +84,34 @@
           class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
         />
       </client-only>
-    </div>
+      <div v-if="v.errors" class="mt-3 text-xs italic text-red-600">
+        <p v-for="error in v.errors" :key="error">
+          {{ error }}
+        </p>
+      </div>
+    </validation-provider>
 
-    <div class="w-full lg:col-span-1">
-      <label
-        for="email"
-        class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
-      >
-        Электронная почта <span class="text-red-700">*</span>
-      </label>
-      <input
-        id="email"
-        key="email"
-        v-model.trim="formData.email"
-        placeholder="Для связи при торгах"
-        name="email"
-        type="email"
-        autocomplete="no"
-        class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-      />
-    </div>
+    <app-input
+      id="email"
+      v-model.trim="formData.email"
+      name="email"
+      required
+      label="Электронная почта"
+      placeholder="Для связи при торгах"
+      autocomplete="email"
+      class="w-full lg:col-span-1"
+      rules="required|email"
+    />
 
-    <div class="w-full lg:col-span-1">
-      <label
-        for="phone"
-        class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
-      >
-        Номер телефона <span class="text-red-700">*</span>
-      </label>
+    <app-input
+      id="phone"
+      :value="formData.phone"
+      name="phone"
+      required
+      label="Номер телефона"
+      class="w-full lg:col-span-1"
+      rules="required"
+    >
       <client-only>
         <vue-tel-input
           key="phone"
@@ -146,17 +137,19 @@
           class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
         />
       </client-only>
-    </div>
+    </app-input>
   </div>
 </template>
 
 <script>
+import { ValidationProvider } from 'vee-validate'
 import { VueTelInput } from 'vue-tel-input'
 import numbers from '~/directives/numbers'
 
 export default {
   components: {
     VueTelInput,
+    ValidationProvider,
   },
 
   directives: {
