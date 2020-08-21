@@ -2,7 +2,7 @@
   <loading-spinner v-if="$fetchState.pending" />
   <div v-else class="container flex flex-col mx-auto">
     <div class="grid grid-cols-1 gap-4 mb-4 lg:grid-cols-2 xl:grid-cols-3">
-      <upcoming-auctions :auctions="auctions.slice(0, 3)" />
+      <upcoming-auctions :auctions="upcomingAuctions" />
 
       <div class="p-4 bg-white rounded shadow-md xl:col-span-2">
         <not-implemented suggest="account-seller-top" />
@@ -10,14 +10,6 @@
     </div>
 
     <div class="flex justify-end mb-4">
-      <button
-        disabled
-        class="inline-flex px-4 py-2 mr-4 text-sm font-semibold text-gray-800 transition duration-150 bg-gray-200 border-2 rounded-lg shadow-sm cursor-not-allowed focus:border-gray-600 focus:outline-none"
-      >
-        <plus-icon class="flex-shrink w-5 h-5 mr-2" />
-        Новый лот
-      </button>
-
       <nuxt-link
         :to="{
           name: 'auctions-new',
@@ -55,72 +47,11 @@
               </thead>
 
               <tbody>
-                <tr
+                <auction-table-row
                   v-for="auction in auctions"
                   :key="`auction-row-${auction.id}`"
-                  class="border-b border-gray-200 last:border-b-0"
-                >
-                  <td class="px-6 py-4 whitespace-no-wrap">
-                    <div
-                      class="text-sm font-medium leading-5 text-gray-900"
-                      v-text="auction.id"
-                    />
-                  </td>
-                  <td class="px-6 py-4 whitespace-no-wrap">
-                    <div class="text-sm font-medium leading-5 text-gray-900">
-                      <nuxt-link
-                        :to="{
-                          name: 'auctions-id',
-                          params: { id: auction.id },
-                        }"
-                        class="font-bold text-black border-b-2 border-gray-200 cursor-pointer hover:border-gray-400"
-                        v-text="auction.attributes.title"
-                      />
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-no-wrap">
-                    <div
-                      class="text-sm font-medium leading-5 text-gray-900"
-                      v-text="
-                        $moment(auction.attributes.starts_at).format('LLL')
-                      "
-                    />
-                  </td>
-                  <td class="px-6 py-4 whitespace-no-wrap">
-                    <div
-                      class="text-sm font-medium leading-5 text-right text-gray-900"
-                    >
-                      {{ auction.attributes.price_min | currency }}
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-no-wrap">
-                    <div
-                      class="text-sm font-medium leading-5 text-gray-900"
-                      v-text="
-                        $store.getters['counterparties/byId']({
-                          id: auction.relationships.seller.data.id,
-                        }).attributes.display_name
-                      "
-                    />
-                  </td>
-                  <td class="px-6 py-4 whitespace-no-wrap">
-                    <div
-                      class="text-sm font-medium leading-5 text-gray-900"
-                      v-text="
-                        $store.getters['counterparties/byId']({
-                          id: auction.relationships.organizer.data.id,
-                        }).attributes.display_name
-                      "
-                    />
-                  </td>
-                  <td class="px-6 py-4 whitespace-no-wrap">
-                    <span
-                      class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full"
-                    >
-                      {{ $t(`auctions.status.${auction.attributes.status}`) }}
-                    </span>
-                  </td>
-                </tr>
+                  :auction="auction"
+                />
               </tbody>
             </table>
           </div>
@@ -136,6 +67,7 @@ import { PlusIcon } from 'vue-feather-icons'
 
 export default {
   middleware: 'role',
+
   meta: {
     role: ['BANKRUPTCY_MANGER', 'ADMIN'],
   },
@@ -148,7 +80,14 @@ export default {
     await this.$store.dispatch('counterparties/loadRelated', {
       parent: this.$auth.user,
       options: {
-        include: 'organized-auctions,sold-auctions',
+        include: [
+          'organized-auctions',
+          'organized-auctions.seller',
+          'organized-auctions.organizer',
+          'sold-auctions',
+          'sold-auctions.seller',
+          'sold-auctions.organizer',
+        ],
       },
     })
   },
@@ -163,8 +102,17 @@ export default {
         value: 'attributes.price_start',
         class: 'text-right',
       },
+      {
+        text: 'Текущая цена',
+        value: 'attributes.price_current',
+        class: 'text-right',
+      },
+      {
+        text: 'Участников',
+        value: 'attributes.participants_count',
+        class: 'text-center',
+      },
       { text: 'Продавец', value: 'relationships.seller.data.id' },
-      { text: 'Организатор', value: 'relationships.organizer.data.id' },
       { text: 'Статус', value: 'attributes.status' },
     ],
   }),
@@ -207,6 +155,15 @@ export default {
         ({ attributes: { starts_at: a } }, { attributes: { starts_at: b } }) =>
           this.$moment(a).diff(b)
       )
+    },
+    upcomingAuctions() {
+      const now = this.$moment()
+
+      return this.auctions
+        .filter(({ attributes }) =>
+          this.$moment(attributes.real_ends_at).endOf('day').isAfter(now)
+        )
+        .slice(0, 3)
     },
   },
   methods: {
