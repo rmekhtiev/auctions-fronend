@@ -6,6 +6,8 @@ import {
   email,
   alpha_num,
   integer,
+  between,
+  numeric,
   digits,
 } from 'vee-validate/dist/rules'
 import ru from 'vee-validate/dist/locale/ru.json'
@@ -32,6 +34,15 @@ extend('digits', {
 
 extend('integer', {
   ...integer,
+  message: 'Поле должно быть целым числом',
+})
+extend('between', {
+  ...between,
+  message: 'Значение должно быть между {min} и {max}',
+})
+
+extend('numeric', {
+  ...numeric,
   message: 'Поле должно быть числом',
 })
 

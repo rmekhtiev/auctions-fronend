@@ -28,6 +28,9 @@
     "@nuxtjs/pwa": "^3.0.0-beta.20",
     "@nuxtjs/toast": "^3.3.0",
     "@reststate/vuex": "^0.2.2",
+    "filepond": "^4.19.2",
+    "filepond-plugin-file-validate-type": "^1.2.5",
+    "filepond-plugin-image-preview": "^4.6.4",
     "lodash.filter": "^4.6.0",
     "lodash.flatten": "^4.4.0",
     "lodash.groupby": "^4.6.0",
@@ -38,9 +41,12 @@
     "vee-validate": "^3.3.9",
     "vue-cool-lightbox": "^2.4.1",
     "vue-currency-filter": "^5.1.0",
+    "vue-currency-input": "^1.21.0",
     "vue-feather-icons": "^5.0.0",
+    "vue-filepond": "^6.0.2",
     "vue-i18n": "^8.18.2",
     "vue-moment": "^4.1.0",
+    "vue-slider-component": "^3.2.5",
     "vuex-persistedstate": "^3.1.0"
   },
   "devDependencies": {

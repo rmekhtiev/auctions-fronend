@@ -15,7 +15,7 @@
         {{ label }} <sup v-if="required" class="text-red-700">*</sup>
       </slot>
     </label>
-    <slot :value="innerValue">
+    <slot :value="innerValue" :v="v">
       <input
         :id="`app-input-${id}`"
         :key="name"
@@ -23,12 +23,14 @@
         :placeholder="placeholder"
         :name="name"
         :type="type"
+        :disabled="disabled"
         :autocomplete="autocomplete"
         :pattern="pattern"
         :minlength="minlength"
         :maxlength="maxlength"
         :class="{
           'border-red-600': v.failed,
+          'bg-gray-200 cursor-not-allowed': disabled,
         }"
         class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
       />
@@ -53,6 +55,11 @@ export default {
     value: {
       type: null,
       default: '',
+    },
+
+    disabled: {
+      type: Boolean,
+      default: false,
     },
 
     id: {
@@ -82,6 +89,7 @@ export default {
           'search',
           'number',
           'email',
+          'time',
         ].includes(value)
       },
     },

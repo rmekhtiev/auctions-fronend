@@ -46,6 +46,8 @@ export default {
     { src: '~/plugins/v-calendar.js', ssr: false },
     '~/plugins/currency',
     '~/plugins/cool-light-box',
+    '~/plugins/vue-slider-component.js',
+    { src: '~/plugins/filepond.js', ssr: false },
   ],
   /*
    ** Auto import components
@@ -75,6 +77,15 @@ export default {
     '@nuxtjs/pwa',
     'nuxt-google-optimize',
     '@nuxtjs/toast',
+    [
+      'vue-currency-input/nuxt',
+      {
+        globalOptions: {
+          locale: 'ru',
+          currency: 'BYN',
+        },
+      },
+    ],
   ],
 
   googleAnalytics: {
