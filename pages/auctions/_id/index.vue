@@ -253,6 +253,10 @@
           </dl>
         </div>
       </div>
+
+      <div>
+        <p v-html="description" />
+      </div>
     </div>
   </div>
 </template>
@@ -343,6 +347,10 @@ export default {
           counterparty.id === this.seller.id ||
           counterparty === this.organizer.id
       )
+    },
+
+    description() {
+      return this.auction.description
     },
   },
 
