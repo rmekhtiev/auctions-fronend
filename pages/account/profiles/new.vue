@@ -39,6 +39,7 @@
                 >
                   <option value="UL">Юридическое лицо</option>
                   <option value="IP">Индивидуальный предприниматель</option>
+                  <option value="FL">Физическое лицо</option>
                 </select>
                 <div
                   class="absolute top-0 bottom-0 right-0 flex items-center px-4 text-gray-400 pointer-events-none"

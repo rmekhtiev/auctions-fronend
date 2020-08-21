@@ -18,6 +18,10 @@
           v-if="counterparty._type === 'IP'"
           v-model="counterparty"
         />
+        <physical-form
+          v-if="counterparty._type === 'FL'"
+          v-model="counterparty"
+        />
       </template>
     </div>
   </div>
@@ -29,6 +33,7 @@ export default {
     LegalEntityForm: () => import('./legal/LegalEntityForm'),
     IndividualEnterpreneurForm: () =>
       import('./legal/IndividualEnterpreneurForm'),
+    PhysicalForm: () => import('./legal/PhysicalForm'),
   },
   props: {
     counterparty: {

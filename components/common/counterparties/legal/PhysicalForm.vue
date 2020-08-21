@@ -1,0 +1,198 @@
+<template>
+  <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
+    <app-input
+      id="fullName"
+      v-model.trim="formData.name.full_name"
+      name="fullName"
+      required
+      label="ФИО (полностью)"
+      placeholder="Александр Сергеевич Пушкин"
+      autocomplete="name"
+      class="w-full lg:col-span-2"
+      rules="required"
+    />
+
+    <app-input
+      id="passportNumber"
+      v-model.trim="formData.document.passport_number"
+      name="passport_number"
+      required
+      label="Серия и номер паспорта"
+      placeholder="МС1234567"
+      autocomplete="no"
+      minlength="9"
+      maxlength="9"
+      class="w-full"
+      rules="required|passport"
+    />
+
+    <app-input
+      id="passportIssuer"
+      v-model.trim="formData.document.passport_issuer"
+      name="passport_number"
+      required
+      label="Кем выдан паспорт"
+      placeholder="Кем выдан паспорт"
+      autocomplete="no"
+      class="w-full"
+      rules="required"
+    />
+
+    <validation-provider
+      v-slot="v"
+      tag="div"
+      rules="required"
+      name="passportDate"
+      class="w-full lg:col-span-1"
+    >
+      <label
+        for="passportDate"
+        class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
+      >
+        Дата выдачи паспорта <span class="text-red-700">*</span>
+      </label>
+      <client-only>
+        <v-date-picker
+          v-model="formData.document.passport_date"
+          :max-date="new Date()"
+          @input="v.validate"
+        >
+          <input
+            id="passportDate"
+            slot-scope="{ inputProps, inputEvents }"
+            placeholder="Когда выдан паспорт"
+            class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+            autocomplete="no"
+            v-bind="inputProps"
+            v-on="inputEvents"
+          />
+        </v-date-picker>
+        <input
+          id="passportDate"
+          slot="placeholder"
+          key="passportDate"
+          v-model="formData.document.passport_date"
+          placeholder="Когда выдан паспорт"
+          name="passportDate"
+          type="date"
+          autocomplete="no"
+          class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+        />
+      </client-only>
+      <div v-if="v.errors" class="mt-3 text-xs italic text-red-600">
+        <p v-for="error in v.errors" :key="error">
+          {{ error }}
+        </p>
+      </div>
+    </validation-provider>
+
+    <app-input
+      id="passportNumber"
+      v-model.trim="formData.document.passport_personal"
+      name="passport_number"
+      required
+      label="Личный номер паспорта"
+      placeholder="4131087B052PB4"
+      autocomplete="no"
+      minlength="14"
+      maxlength="14"
+      class="w-full"
+      rules="required|passport_personal"
+    />
+
+    <app-input
+      id="email"
+      v-model.trim="formData.email"
+      name="email"
+      required
+      label="Электронная почта"
+      placeholder="Для связи при торгах"
+      autocomplete="email"
+      class="w-full lg:col-span-1"
+      rules="required|email"
+    />
+
+    <app-input
+      id="phone"
+      :value="formData.phone"
+      name="phone"
+      required
+      label="Номер телефона"
+      class="w-full lg:col-span-1"
+      rules="required"
+    >
+      <client-only>
+        <vue-tel-input
+          key="phone"
+          v-model="formData.phone"
+          input-id="phone"
+          placeholder="Для связи при торгах"
+          name="phone"
+          type="tel"
+          default-country="BY"
+          :preferred-countries="['BY', 'RU']"
+          input-classes="block w-full px-4 py-3 appearance-none bg-grey-lighter text-grey-darker focus:outline-none"
+        />
+
+        <input
+          id="phone"
+          slot="placeholder"
+          key="phone"
+          v-model="formData.phone"
+          placeholder="Для связи при торгах"
+          name="phone"
+          type="tel"
+          autocomplete="no"
+          class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+        />
+      </client-only>
+    </app-input>
+  </div>
+</template>
+
+<script>
+import { ValidationProvider } from 'vee-validate'
+import { VueTelInput } from 'vue-tel-input'
+import numbers from '~/directives/numbers'
+
+export default {
+  components: {
+    ValidationProvider,
+    VueTelInput,
+  },
+
+  directives: {
+    numbers,
+  },
+
+  props: {
+    value: {
+      type: Object,
+      required: true,
+    },
+  },
+
+  computed: {
+    formData: {
+      get() {
+        return this.value
+      },
+      set(formData) {
+        this.$emit('input', formData)
+      },
+    },
+  },
+
+  methods: {},
+}
+</script>
+
+<style lang="scss" scoped>
+.vue-tel-input {
+  @apply border-2 rounded border-gray-300;
+
+  &:focus-within {
+    @apply shadow-none border-gray-600;
+  }
+}
+</style>
