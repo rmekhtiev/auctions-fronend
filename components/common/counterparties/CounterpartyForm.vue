@@ -18,18 +18,11 @@
           v-if="counterparty._type === 'IP'"
           v-model="counterparty"
         />
+        <physical-form
+          v-if="counterparty._type === 'FL'"
+          v-model="counterparty"
+        />
       </template>
-    </div>
-    <div
-      class="flex flex-col w-full p-4 px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md"
-    >
-      <div class="flex items-center mb-4">
-        <div>
-          <h3 class="text-xl font-semibold text-gray-600">Юридический адрес</h3>
-          <p class="text-sm text-gray-500">Profit Share between customers</p>
-        </div>
-      </div>
-      <address-entry-form v-model="address" no-country />
     </div>
   </div>
 </template>
@@ -40,13 +33,10 @@ export default {
     LegalEntityForm: () => import('./legal/LegalEntityForm'),
     IndividualEnterpreneurForm: () =>
       import('./legal/IndividualEnterpreneurForm'),
+    PhysicalForm: () => import('./legal/PhysicalForm'),
   },
   props: {
     counterparty: {
-      type: Object,
-      required: true,
-    },
-    address: {
       type: Object,
       required: true,
     },

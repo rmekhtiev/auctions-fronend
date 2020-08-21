@@ -150,7 +150,7 @@
                       Текущая цена
                     </dt>
                     <dd class="mt-1 text-lg font-bold leading-5 text-gray-900">
-                      {{ auction.attributes.price_start | currency }}
+                      {{ auction.attributes.price_current | currency }}
                     </dd>
                   </div>
                 </div>
@@ -216,6 +216,28 @@
                   Подать заявку
                 </nuxt-link>
 
+                <button
+                  v-else-if="status === 'DRAFT' && isAuthor"
+                  class="block w-full px-6 py-3 mb-2 text-lg font-semibold text-center text-black transition duration-150 bg-white border-2 rounded-lg md:w-64 lg: hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
+                  @click="updateStatus(auction, 'PENDING')"
+                >
+                  <loader-icon
+                    v-if="loading"
+                    class="w-5 h-5 mr-2 -ml-1"
+                    :class="{
+                      'animate-spin': loading,
+                    }"
+                  />
+                  На модерацию
+                </button>
+
+                <div
+                  v-else-if="status === 'PENDING'"
+                  class="block w-full px-6 py-3 mb-2 text-lg font-semibold text-center text-black transition duration-150 bg-white border-2 rounded-lg md:w-64 lg: hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
+                >
+                  На модерации
+                </div>
+
                 <div
                   v-else
                   class="block w-full px-6 py-3 mb-2 text-lg font-semibold text-center text-black transition duration-150 bg-white border-2 rounded-lg md:w-64 lg: hover:text-black hover:bg-gray-200 focus:border-gray-600 focus:outline-none"
@@ -231,6 +253,10 @@
           </dl>
         </div>
       </div>
+
+      <div>
+        <p v-html="description" />
+      </div>
     </div>
   </div>
 </template>
@@ -241,6 +267,7 @@ import {
   TwitterIcon,
   Share2Icon,
   EyeIcon,
+  LoaderIcon,
 } from 'vue-feather-icons'
 
 import auction from '@/mixins/data-types/auction'
@@ -254,11 +281,22 @@ export default {
     Share2Icon,
     // eslint-disable-next-line vue/no-unused-components
     EyeIcon,
+    LoaderIcon,
   },
 
   mixins: [auction],
 
+  async fetch() {
+    if (this.$auth.loggedIn) {
+      await this.$store.dispatch('counterparties/loadRelated', {
+        parent: this.$auth.user,
+        relation: 'counterparties',
+      })
+    }
+  },
+
   data: () => ({
+    loading: false,
     lightBoxIndex: null,
     imageDisplayIndex: 0,
   }),
@@ -294,6 +332,45 @@ export default {
       return this.$moment().isAfter(
         this.$moment(this.auction.attributes.real_ends_at)
       )
+    },
+
+    isAuthor() {
+      if (!this.$auth.loggedIn) return false
+
+      const myCounterparties = this.$store.getters['counterparties/related']({
+        parent: this.$auth.user,
+        relation: 'counterparties',
+      })
+
+      return myCounterparties.some(
+        (counterparty) =>
+          counterparty.id === this.seller.id ||
+          counterparty === this.organizer.id
+      )
+    },
+
+    description() {
+      return this.auction.description
+    },
+  },
+
+  methods: {
+    async updateStatus(auction, newStatus) {
+      this.loading = true
+
+      try {
+        auction.attributes.status = newStatus
+
+        return await this.$store.dispatch('auctions/update', {
+          id: auction.id,
+          type: auction.type,
+          attributes: auction.attributes,
+        })
+      } catch (_err) {
+        // todo: error
+      } finally {
+        this.loading = false
+      }
     },
   },
 

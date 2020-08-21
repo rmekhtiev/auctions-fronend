@@ -26,9 +26,16 @@
     <td
       class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap"
     >
-      <a href="#" class="text-indigo-600 hover:text-indigo-900">
-        Редактировать
-      </a>
+      <nuxt-link
+        v-if="!counterparty.attributes.display_address"
+        :to="{
+          name: 'account-profiles-id-address',
+          params: { id: counterparty.id },
+        }"
+        class="text-indigo-600 hover:text-indigo-900"
+      >
+        Добавить адрес
+      </nuxt-link>
     </td>
   </tr>
 </template>

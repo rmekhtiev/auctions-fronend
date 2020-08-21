@@ -8,5 +8,6 @@
         "javascriptreact",
         "vue"
     ],
-    "i18n-ally.localesPaths": "lang"
+    "i18n-ally.localesPaths": "lang",
+    "i18n-ally.keystyle": "nested"
 }

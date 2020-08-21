@@ -1,23 +1,6 @@
 <template>
   <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
     <app-input
-      id="inn"
-      v-model.trim="formData.inn"
-      type="tel"
-      name="inn"
-      required
-      label="УНП"
-      placeholder="9 цифр"
-      pattern="[0-9]{9}"
-      inputmode="number"
-      autocomplete="no"
-      minlength="9"
-      maxlength="9"
-      class="w-full"
-      rules="required|digits:9"
-    />
-
-    <app-input
       id="fullName"
       v-model.trim="formData.name.full_name"
       name="fullName"
@@ -25,105 +8,9 @@
       label="ФИО (полностью)"
       placeholder="Александр Сергеевич Пушкин"
       autocomplete="name"
-      class="w-full"
+      class="w-full lg:col-span-2"
       rules="required"
     />
-
-    <validation-provider
-      v-slot="v"
-      tag="div"
-      rules="required"
-      name="egr_date"
-      class="w-full"
-    >
-      <label
-        for="egrDate"
-        class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker"
-      >
-        Дата регистрации ЕГР <span class="text-red-700">*</span>
-      </label>
-      <client-only>
-        <v-date-picker
-          v-model="formData.egr_date"
-          :max-date="new Date()"
-          @input="v.validate"
-        >
-          <input
-            id="egrDate"
-            slot-scope="{ inputProps, inputEvents }"
-            placeholder="Дата постановки на учет"
-            class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-            autocomplete="no"
-            v-bind="inputProps"
-            v-on="inputEvents"
-          />
-        </v-date-picker>
-        <input
-          id="egrDate"
-          slot="placeholder"
-          key="egrDate"
-          v-model="formData.egr_date"
-          placeholder="Дата постановки на учет"
-          name="egr_date"
-          type="date"
-          autocomplete="no"
-          class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-        />
-      </client-only>
-      <div v-if="v.errors" class="mt-3 text-xs italic text-red-600">
-        <p v-for="error in v.errors" :key="error">
-          {{ error }}
-        </p>
-      </div>
-    </validation-provider>
-
-    <app-input
-      id="email"
-      v-model.trim="formData.email"
-      name="email"
-      required
-      label="Электронная почта"
-      placeholder="Для связи при торгах"
-      autocomplete="email"
-      class="w-full lg:col-span-1"
-      rules="required|email"
-    />
-
-    <app-input
-      id="phone"
-      :value="formData.phone"
-      name="phone"
-      required
-      label="Номер телефона"
-      class="w-full lg:col-span-1"
-      rules="required"
-    >
-      <client-only>
-        <vue-tel-input
-          key="phone"
-          v-model="formData.phone"
-          input-id="phone"
-          placeholder="Для связи при торгах"
-          name="phone"
-          type="tel"
-          default-country="BY"
-          :preferred-countries="['BY', 'RU']"
-          input-classes="block w-full px-4 py-3 appearance-none bg-grey-lighter text-grey-darker focus:outline-none"
-        />
-
-        <input
-          id="phone"
-          slot="placeholder"
-          key="phone"
-          v-model="formData.phone"
-          placeholder="Для связи при торгах"
-          name="phone"
-          type="tel"
-          autocomplete="no"
-          class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
-        />
-      </client-only>
-    </app-input>
 
     <app-input
       id="passportNumber"
@@ -212,6 +99,54 @@
       class="w-full"
       rules="required|passport_personal"
     />
+
+    <app-input
+      id="email"
+      v-model.trim="formData.email"
+      name="email"
+      required
+      label="Электронная почта"
+      placeholder="Для связи при торгах"
+      autocomplete="email"
+      class="w-full lg:col-span-1"
+      rules="required|email"
+    />
+
+    <app-input
+      id="phone"
+      :value="formData.phone"
+      name="phone"
+      required
+      label="Номер телефона"
+      class="w-full lg:col-span-1"
+      rules="required"
+    >
+      <client-only>
+        <vue-tel-input
+          key="phone"
+          v-model="formData.phone"
+          input-id="phone"
+          placeholder="Для связи при торгах"
+          name="phone"
+          type="tel"
+          default-country="BY"
+          :preferred-countries="['BY', 'RU']"
+          input-classes="block w-full px-4 py-3 appearance-none bg-grey-lighter text-grey-darker focus:outline-none"
+        />
+
+        <input
+          id="phone"
+          slot="placeholder"
+          key="phone"
+          v-model="formData.phone"
+          placeholder="Для связи при торгах"
+          name="phone"
+          type="tel"
+          autocomplete="no"
+          class="block w-full px-4 py-3 border-2 rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter focus:border-gray-600 focus:outline-none"
+        />
+      </client-only>
+    </app-input>
   </div>
 </template>
 

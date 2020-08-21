@@ -265,5 +265,11 @@ export default {
         })
     },
   },
+
+  head() {
+    return {
+      title: 'Настройки',
+    }
+  },
 }
 </script>

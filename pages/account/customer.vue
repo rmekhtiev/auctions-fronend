@@ -62,14 +62,21 @@
 import { ArrowRightIcon } from 'vue-feather-icons'
 
 export default {
+  middleware: 'role',
+  meta: {
+    role: ['USER'],
+  },
+
   components: {
     ArrowRightIcon,
   },
+
   async fetch() {
     await this.$store.dispatch('participation-requests/loadRelated', {
       parent: this.$auth.user,
     })
   },
+
   data: () => ({
     tableHeaders: [
       { text: '№', value: 'id' },
@@ -79,6 +86,7 @@ export default {
       { text: 'Статус', value: 'attributes.status' },
     ],
   }),
+
   computed: {
     participations() {
       return this.$store.getters['participation-requests/related']({
@@ -93,9 +101,11 @@ export default {
       )
     },
   },
-  middleware: 'role',
-  meta: {
-    role: ['USER'],
+
+  head() {
+    return {
+      title: 'Покупателю',
+    }
   },
 }
 </script>
