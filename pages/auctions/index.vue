@@ -176,5 +176,11 @@ export default {
       )
     },
   },
+
+  head() {
+    return {
+      title: 'Аукционы',
+    }
+  },
 }
 </script>

@@ -166,12 +166,19 @@ export default {
         .slice(0, 3)
     },
   },
+
   methods: {
     removeDuplicates(myArr, prop) {
       return myArr.filter((obj, pos, arr) => {
         return arr.map((mapObj) => mapObj[prop]).indexOf(obj[prop]) === pos
       })
     },
+  },
+
+  head() {
+    return {
+      title: 'Продавцу',
+    }
   },
 }
 </script>

@@ -133,5 +133,11 @@ export default {
       }
     },
   },
+
+  head() {
+    return {
+      title: 'Новый профиль',
+    }
+  },
 }
 </script>

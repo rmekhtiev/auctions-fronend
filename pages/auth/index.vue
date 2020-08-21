@@ -222,5 +222,11 @@ export default {
         })
     },
   },
+
+  head() {
+    return {
+      title: 'Вход',
+    }
+  },
 }
 </script>

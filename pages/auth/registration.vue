@@ -114,5 +114,11 @@ export default {
       )
     },
   },
+
+  head() {
+    return {
+      title: 'Регистрация',
+    }
+  },
 }
 </script>

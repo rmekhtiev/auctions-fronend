@@ -471,5 +471,11 @@ export default {
       }
     },
   },
+
+  head() {
+    return {
+      title: 'Новый аукцион',
+    }
+  },
 }
 </script>

@@ -1,8 +1,7 @@
 <template>
-  <div class="container p-4 mx-auto">
-    <div class="flex flex-col">
-      <home-auctions :auctions="auctions" :pending="$fetchState.pending" />
-    </div>
+  <div class="flex flex-col">
+    <home-auctions :auctions="auctions" :pending="$fetchState.pending" />
+    <home-faq />
   </div>
 </template>
 

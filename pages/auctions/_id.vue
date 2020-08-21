@@ -36,5 +36,11 @@ export default {
       })
     },
   },
+
+  head() {
+    return {
+      title: this.auction.title,
+    }
+  },
 }
 </script>

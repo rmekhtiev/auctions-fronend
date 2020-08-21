@@ -94,5 +94,11 @@ export default {
       }
     },
   },
+
+  head() {
+    return {
+      title: 'Адрес',
+    }
+  },
 }
 </script>

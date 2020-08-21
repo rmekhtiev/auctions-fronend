@@ -202,5 +202,11 @@ export default {
       this.$router.push({ name: 'account-customer' })
     },
   },
+
+  head() {
+    return {
+      title: 'Подача заявки',
+    }
+  },
 }
 </script>
