@@ -20,6 +20,17 @@
         counterparty.id === $store.getters['counterparties/lastCreated'].id,
     }"
   />
+
+  <PhysicalAccountRow
+    v-else-if="counterparty.attributes._type === 'FL'"
+    :account="account"
+    :counterparty="counterparty"
+    :class="{
+      'bg-yellow-100':
+        $store.getters['counterparties/lastCreated'] &&
+        counterparty.id === $store.getters['counterparties/lastCreated'].id,
+    }"
+  />
 </template>
 
 <script>
