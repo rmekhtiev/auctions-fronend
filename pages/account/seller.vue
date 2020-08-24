@@ -157,13 +157,9 @@ export default {
       )
     },
     upcomingAuctions() {
-      const now = this.$moment()
-
       return this.auctions
-        .filter(({ attributes }) =>
-          this.$moment(attributes.real_ends_at).endOf('day').isAfter(now)
-        )
-        .slice(0, 3)
+        .filter(({ attributes }) => attributes.status === 'UPCOMING')
+        .slice(0, 5)
     },
   },
 

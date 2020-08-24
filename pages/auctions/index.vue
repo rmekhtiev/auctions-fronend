@@ -115,7 +115,7 @@ export default {
   watchQuery: true,
   data: () => ({
     filterOptions: {
-      status: ['UPCOMING'],
+      status: ['UPCOMING', 'CANCELLED', 'FAILED', 'SUCCEEDED'],
       category: [
         undefined,
         'realty',

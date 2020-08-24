@@ -369,7 +369,7 @@ export default {
       title: '',
       _type: 'BANKRUPCY',
       start_time: '10:00',
-      end_time: '18:00',
+      end_time: '17:00',
       seller_id: null,
       organizer_id: null,
       description: '',
