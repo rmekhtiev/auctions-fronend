@@ -13,11 +13,11 @@
 
         <span class="hidden mx-4 font-medium lg:inline">Уведомления</span>
 
-        <span
+        <!-- <span
           class="absolute inline-flex px-2 text-xs font-semibold leading-5 text-red-800 transform translate-x-1/2 -translate-y-1/2 bg-red-300 bg-opacity-25 rounded-full lg:transform-none lg:static"
         >
           24
-        </span>
+        </span> -->
       </nuxt-link>
 
       <nuxt-link

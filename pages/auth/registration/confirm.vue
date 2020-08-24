@@ -72,7 +72,7 @@
 
             <button
               class="mt-3 font-bold text-center text-gray-500"
-              @click="sendCode"
+              @click.prevent="sendCode"
             >
               <small>Отправить еще раз</small>
             </button>

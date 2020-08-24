@@ -5,14 +5,17 @@
         class="text-sm font-medium leading-5 text-gray-900"
         v-text="counterparty.attributes.display_name"
       />
-      <div class="text-sm leading-5 text-gray-500">Юридическое лицо</div>
+      <div class="text-sm leading-5 text-gray-500">
+        Физическое лицо
+      </div>
     </td>
     <td class="px-6 py-4 whitespace-no-wrap">
       <div class="text-sm leading-5 text-gray-900">
-        УНП {{ counterparty.attributes.inn }}
+        Паспорт {{ counterparty.attributes.document.passport_number }}
       </div>
       <div class="text-sm leading-5 text-gray-500">
-        от {{ $moment(counterparty.attributes.egr_date).format('LL') }}
+        выдан
+        {{ $moment(counterparty.attributes.document.passport_date).format('LL') }}
       </div>
     </td>
     <td class="px-6 py-4 whitespace-no-wrap">

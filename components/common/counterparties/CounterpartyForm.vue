@@ -6,7 +6,7 @@
       <div class="flex items-center mb-4">
         <div>
           <h3 class="text-xl font-semibold text-gray-600">Основные данные</h3>
-          <p class="text-sm text-gray-500">Profit Share between customers</p>
+          <p class="text-sm text-gray-500">Внесите юридические данные</p>
         </div>
       </div>
       <template>

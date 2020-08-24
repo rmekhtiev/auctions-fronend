@@ -6,23 +6,22 @@
         v-text="counterparty.attributes.display_name"
       />
       <div class="text-sm leading-5 text-gray-500">
-        Индивидуальный предпрениматель
+        Индивидуальный предприниматель
       </div>
     </td>
     <td class="px-6 py-4 whitespace-no-wrap">
-      <div
-        class="text-sm leading-5 text-gray-900"
-        v-text="counterparty.attributes.inn"
-      />
+      <div class="text-sm leading-5 text-gray-900">
+        УНП {{ counterparty.attributes.inn }}
+      </div>
       <div class="text-sm leading-5 text-gray-500">
-        от {{ counterparty.attributes.egr_date }}
+        от {{ $moment(counterparty.attributes.egr_date).format('LL') }}
       </div>
     </td>
     <td class="px-6 py-4 whitespace-no-wrap">
       <span
         class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full"
       >
-        Active
+        Активный
       </span>
     </td>
     <td

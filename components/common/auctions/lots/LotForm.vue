@@ -149,14 +149,14 @@
       label="Залог"
       autocomplete="no"
       class="w-full"
-      :rules="`required|numeric|between:1,${formData.price_start}`"
+      :rules="`required|numeric|between:1,${maxDeposit}`"
     >
       <template v-slot:default="{ v }">
         <currency-input
           v-model.number="formData.deposit"
           placeholder="200 BYN"
           :min="1"
-          :max="formData.price_start"
+          :max="maxDeposit"
           :class="{
             'border-red-600': v.failed,
           }"
@@ -165,7 +165,7 @@
         <vue-slider
           v-model="formData.deposit"
           :min="1"
-          :max="formData.price_start"
+          :max="maxDeposit"
           :interval="1"
         ></vue-slider>
       </template>
@@ -214,6 +214,14 @@ export default {
     minPrice() {
       return Math.round(
         ((this.formData.price_start * 0.8 + Number.EPSILON) * 100) / 100
+      )
+    },
+
+    maxDeposit() {
+      return (
+        Math.round(
+          ((this.formData.price_start * 0.1 + Number.EPSILON) * 100) / 100
+        ) - 1
       )
     },
 

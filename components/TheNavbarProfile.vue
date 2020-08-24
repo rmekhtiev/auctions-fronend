@@ -51,8 +51,10 @@
           <p class="text-xs text-gray-500">Юр. лица, ИП и физ. лица</p>
         </div>
       </nuxt-link>
-      <a
-        href="#"
+      <nuxt-link
+        :to="{
+          name: 'account-settings',
+        }"
         class="flex items-center px-4 py-2 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
       >
         <div>
@@ -64,7 +66,7 @@
           </p>
           <p class="text-xs text-gray-500">Email, аккаунт, уведомления</p>
         </div>
-      </a>
+      </nuxt-link>
     </div>
 
     <!-- todo: в зависимости от роли показывать разное меню -->
@@ -100,13 +102,12 @@
       >
         Помощь
       </a>
-      <a
-        href="#"
+      <button
         class="flex px-4 py-3 text-sm font-medium leading-none text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
         @click="logout()"
       >
         Выйти
-      </a>
+      </button>
     </div>
   </div>
 </template>
