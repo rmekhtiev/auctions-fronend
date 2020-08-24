@@ -2,7 +2,7 @@
   <loading-spinner v-if="$fetchState.pending" />
   <div v-else class="container flex flex-col mx-auto">
     <div class="grid grid-cols-1 gap-4 mb-4 lg:grid-cols-2 xl:grid-cols-3">
-      <upcoming-auctions :auctions="auctions.slice(0, 3)" />
+      <upcoming-auctions :auctions="upcomingAuctions" />
 
       <div class="p-4 bg-white rounded shadow-md xl:col-span-2">
         <not-implemented suggest="account-seller-top" />
@@ -99,6 +99,11 @@ export default {
           id: participation.relationships.auction.data.id,
         })
       )
+    },
+    upcomingAuctions() {
+      return this.auctions
+        .filter(({ attributes }) => attributes.status === 'UPCOMING')
+        .slice(0, 5)
     },
   },
 

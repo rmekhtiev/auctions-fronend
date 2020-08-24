@@ -68,14 +68,14 @@
               </span> -->
 
               <div class="flex px-2 transition-colors duration-150 ease-in-out">
-                <a class="text-gray-600 hover:text-gray-700">
+                <!-- <a class="text-gray-600 hover:text-gray-700">
                   <facebook-icon class="w-5 h-5" />
                 </a>
                 <a
                   class="ml-2 text-gray-600 transition-colors duration-150 ease-in-out hover:text-gray-700"
                 >
                   <twitter-icon class="w-5 h-5" />
-                </a>
+                </a> -->
                 <web-share
                   class="ml-2 text-gray-600 transition-colors duration-150 ease-in-out hover:text-gray-700"
                   :title="auction.attributes.title"

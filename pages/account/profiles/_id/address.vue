@@ -14,7 +14,7 @@
             <h3 class="text-xl font-semibold text-gray-600">
               Юридический адрес
             </h3>
-            <p class="text-sm text-gray-500">Profit Share between customers</p>
+            <p class="text-sm text-gray-500">Внесите адрес регистрации</p>
           </div>
         </div>
         <address-entry-form v-model="address" no-country />

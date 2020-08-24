@@ -6,7 +6,7 @@
         v-text="counterparty.attributes.display_name"
       />
       <div class="text-sm leading-5 text-gray-500">
-        Индивидуальный предпрениматель
+        Индивидуальный предприниматель
       </div>
     </td>
     <td class="px-6 py-4 whitespace-no-wrap">

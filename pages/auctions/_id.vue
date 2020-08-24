@@ -39,7 +39,7 @@ export default {
 
   head() {
     return {
-      title: this.auction.title,
+      title: this.auction.attributes.title,
     }
   },
 }
