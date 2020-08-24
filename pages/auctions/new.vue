@@ -330,8 +330,8 @@
               'cursor-not-allowed opacity-50': loading || !passed,
             }"
           >
-            <component
-              :is="loading ? 'loader-icon' : 'check-icon'"
+            <loader-icon
+              v-if="loading"
               class="w-5 h-5 mr-2 -ml-1"
               :class="{
                 'animate-spin': loading,
@@ -347,13 +347,12 @@
 
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { CheckIcon, LoaderIcon } from 'vue-feather-icons'
+import { LoaderIcon } from 'vue-feather-icons'
 
 export default {
   components: {
     ValidationObserver,
     ValidationProvider,
-    CheckIcon,
     LoaderIcon,
   },
 
