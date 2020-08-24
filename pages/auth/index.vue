@@ -82,14 +82,14 @@
                   Запомнить меня
                 </span>
               </label>
-              <label class="block my-4 font-bold text-gray-500">
-                <a
-                  href="#"
+              <div class="block my-4 font-bold text-gray-500">
+                <nuxt-link
+                  :to="{ name: 'auth-reset-email' }"
                   class="tracking-tighter text-black border-b-2 border-gray-200 cursor-pointer hover:border-gray-400"
                 >
-                  <span>Забыли пароль?</span>
-                </a>
-              </label>
+                  Забыли пароль?
+                </nuxt-link>
+              </div>
             </div>
 
             <button
