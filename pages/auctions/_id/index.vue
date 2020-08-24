@@ -350,7 +350,7 @@ export default {
     },
 
     description() {
-      return this.auction.description
+      return this.auction.attributes.description
     },
   },
 
